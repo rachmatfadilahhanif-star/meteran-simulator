@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>kWh Meter PLN Prabayar — Itron ACE9000</title>
+    <title>kWh Meter PLN Prabayar — Itron ACE9000 (Authentic STS Engine)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter, Share Tech Mono (LCD 7-Segment), JetBrains Mono -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -23,7 +23,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Tekstur Casing Plastik Abu-Abu Industrial Matte */
         .meter-casing {
             background: linear-gradient(160deg, #e5e7eb 0%, #d1d5db 48%, #9ca3af 100%);
             box-shadow: 
@@ -34,22 +33,20 @@
             position: relative;
         }
 
-        /* Bezel Layar LCD Gelap */
         .lcd-bezel {
             background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
             box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.6);
             border: 2px solid #4b5563;
         }
 
-        /* Layar LCD Monokrom Kehijauan Klasik */
         .lcd-screen {
             font-family: 'Share Tech Mono', monospace;
             background-color: #7d8f73;
             color: #141e10;
             box-shadow: inset 0 5px 14px rgba(0, 0, 0, 0.55);
-            transition: background-color 0.35s ease, box-shadow 0.35s ease;
             position: relative;
             overflow: hidden;
+            transition: background-color 0.3s ease;
         }
 
         .lcd-screen.backlight-active {
@@ -62,13 +59,6 @@
             box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.35), 0 0 22px rgba(245, 158, 11, 0.65);
         }
 
-        /* Segmen Bayangan LCD */
-        .lcd-ghost {
-            color: rgba(20, 30, 16, 0.085);
-            user-select: none;
-        }
-
-        /* Indikator LED 3 Warna & Impulse */
         .led-bulb {
             width: 11px;
             height: 11px;
@@ -81,7 +71,6 @@
         .led-yellow { background-color: #f59e0b; box-shadow: 0 0 8px #f59e0b, 0 0 14px #d97706, inset 0 1px 2px #fef08a; }
         .led-red { background-color: #ef4444; box-shadow: 0 0 9px #ef4444, 0 0 16px #dc2626, inset 0 1px 2px #fecaca; }
 
-        /* Tombol Keypad Karet Fisik */
         .key-rubber {
             background: linear-gradient(180deg, #374151 0%, #1f2937 100%);
             box-shadow: 0 4px 0 #111827, 0 6px 10px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.25);
@@ -94,27 +83,18 @@
             box-shadow: 0 1px 0 #111827, 0 2px 4px rgba(0, 0, 0, 0.45);
         }
 
-        /* Tombol Koreksi Kuning */
         .key-yellow {
             background: linear-gradient(180deg, #eab308 0%, #ca8a04 100%);
             box-shadow: 0 4px 0 #713f12, 0 6px 10px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.45);
             color: #111827;
         }
-        .key-yellow:active, .key-yellow.is-pressed {
-            box-shadow: 0 1px 0 #713f12;
-        }
 
-        /* Tombol Enter Merah */
         .key-red {
             background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
             box-shadow: 0 4px 0 #450a0a, 0 6px 10px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35);
             color: #ffffff;
         }
-        .key-red:active, .key-red.is-pressed {
-            box-shadow: 0 1px 0 #450a0a;
-        }
 
-        /* Barcode Garis */
         .barcode-strip {
             background: repeating-linear-gradient(
                 90deg,
@@ -127,7 +107,6 @@
             );
         }
 
-        /* Penutup Terminal Kabel Transparan di Bawah Meteran */
         .terminal-cover {
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(209, 213, 219, 0.25) 100%);
             backdrop-filter: blur(2px);
@@ -138,26 +117,26 @@
 </head>
 <body class="text-slate-100 min-h-screen flex flex-col items-center justify-between py-4 px-3 sm:px-6">
 
-    <!-- Header Minimalis -->
+    <!-- Header -->
     <header class="w-full max-w-md flex items-center justify-between mb-3">
         <div class="flex items-center gap-2.5">
             <div class="w-8 h-8 rounded-lg bg-amber-400 text-slate-950 flex items-center justify-center font-black shadow">
                 <i class="fa-solid fa-bolt"></i>
             </div>
             <div>
-                <h1 class="text-sm font-extrabold tracking-tight text-white leading-none">kWh METER PRABAYAR</h1>
-                <span class="text-[10px] font-mono text-slate-400">UNIT 1 • OFFLINE STS DECODER</span>
+                <h1 class="text-sm font-extrabold tracking-tight text-white leading-none">METERAN PLN PRABAYAR</h1>
+                <span class="text-[10px] font-mono text-slate-400">Itron ACE9000 • Authentic STS Engine</span>
             </div>
         </div>
 
         <div class="flex items-center gap-2">
             <button onclick="toggleSound()" id="btn-audio" class="px-2.5 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition">
                 <i id="audio-icon" class="fa-solid fa-volume-high text-emerald-400"></i>
-                <span id="audio-label" class="hidden sm:inline">Suara</span>
+                <span class="hidden sm:inline">Suara</span>
             </button>
             <button onclick="toggleControlDrawer()" class="px-2.5 py-1.5 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/30 text-sky-300 text-xs font-semibold flex items-center gap-1.5 transition">
                 <i class="fa-solid fa-sliders"></i>
-                <span>Panel Simulasi</span>
+                <span>Pengaturan</span>
             </button>
         </div>
     </header>
@@ -165,17 +144,14 @@
     <!-- Toast Notifikasi -->
     <div id="toast-box" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none w-[90%] max-w-sm"></div>
 
-    <!-- ========================================================================= -->
-    <!-- UNIT UTAMA: FISIK METERAN PLN PRABAYAR (ITRON ACE9000)                    -->
-    <!-- ========================================================================= -->
+    <!-- Fisik Meteran PLN -->
     <main class="w-full max-w-md flex flex-col items-center my-auto">
         
         <div class="meter-casing w-full rounded-[2rem] p-4 sm:p-6 text-slate-900 select-none">
             
-            <!-- 1. Plat Identitas Atas: Logo PLN & Spesifikasi Teknis -->
+            <!-- Plat Identitas Atas -->
             <div class="flex items-start justify-between border-b-2 border-slate-400/70 pb-3 mb-3.5">
                 <div class="flex items-center gap-2.5">
-                    <!-- Logo Resmi PLN SVG -->
                     <div class="w-10 h-11 bg-amber-400 rounded border border-slate-900 p-1 shadow-sm flex items-center justify-center shrink-0">
                         <svg viewBox="0 0 40 40" class="w-full h-full">
                             <polygon points="22,2 8,22 19,22 15,38 32,16 21,16" fill="#dc2626"/>
@@ -197,11 +173,16 @@
                 </div>
             </div>
 
-            <!-- 2. Bezel & Layar LCD Monokrom -->
+            <!-- Layar LCD & Tombol Paste -->
             <div class="lcd-bezel rounded-2xl p-3 mb-3.5">
+                <div class="flex justify-between items-center mb-1.5 px-1">
+                    <span class="text-[10px] font-mono font-bold text-slate-300">LAYAR DIGITAL STS</span>
+                    <button onclick="pasteTokenFromClipboard()" class="px-2 py-0.5 rounded bg-amber-400 hover:bg-amber-300 text-slate-950 text-[10px] font-extrabold flex items-center gap-1 shadow transition" title="Tempel token dari clipboard dan langsung proses enter">
+                        <i class="fa-solid fa-paste"></i> PASTE & ENTER
+                    </button>
+                </div>
+
                 <div id="lcd-screen" class="lcd-screen backlight-active rounded-xl p-3 sm:p-3.5 h-32 flex flex-col justify-between">
-                    
-                    <!-- Baris Status Atas LCD -->
                     <div class="flex items-center justify-between text-[11px] font-bold tracking-wider">
                         <div class="flex items-center gap-1.5">
                             <span id="lcd-relay-icon" class="px-1.5 py-0.2 border border-current rounded text-[9.5px]">
@@ -214,17 +195,12 @@
                         </div>
                     </div>
 
-                    <!-- Angka Utama 7-Segment -->
                     <div class="relative my-auto text-right">
-                        <div id="lcd-ghost" class="lcd-ghost text-4xl sm:text-[42px] tracking-widest font-bold absolute inset-0 flex items-center justify-end pointer-events-none">
-                            88888888
-                        </div>
                         <div id="lcd-main-digits" class="text-4xl sm:text-[42px] tracking-wider font-bold relative z-10 leading-none truncate">
                             20.00
                         </div>
                     </div>
 
-                    <!-- Baris Info Bawah LCD -->
                     <div class="flex items-center justify-between text-[10.5px] font-bold">
                         <div id="lcd-bottom-left" class="truncate max-w-[74%] opacity-90">
                             450W • 220.4V • 2.04A
@@ -235,18 +211,18 @@
                     </div>
                 </div>
 
-                <!-- Baris Indikator LED 3 Warna & LED Impulse 1000 imp/kWh -->
+                <!-- Indikator LED -->
                 <div class="mt-2.5 px-1 flex items-center justify-between">
                     <div class="flex items-center gap-2.5 bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-700/80">
-                        <div class="flex items-center gap-1" title="Kredit Cukup">
+                        <div class="flex items-center gap-1">
                             <span id="led-status-green" class="led-bulb led-green"></span>
                             <span class="text-[8px] font-bold text-slate-400">CUKUP</span>
                         </div>
-                        <div class="flex items-center gap-1" title="Kredit Rendah / Alarm">
+                        <div class="flex items-center gap-1">
                             <span id="led-status-yellow" class="led-bulb led-off"></span>
                             <span class="text-[8px] font-bold text-slate-400">KRITIS</span>
                         </div>
-                        <div class="flex items-center gap-1" title="Kredit Habis / Listrik Putus">
+                        <div class="flex items-center gap-1">
                             <span id="led-status-red" class="led-bulb led-off"></span>
                             <span class="text-[8px] font-bold text-slate-400">HABIS</span>
                         </div>
@@ -259,21 +235,21 @@
                 </div>
             </div>
 
-            <!-- 3. Plat Barcode & Nomor Seri Meteran (11 Digit) -->
-            <div class="bg-white/95 border border-slate-400 rounded-xl px-3 py-2 mb-4 flex items-center justify-between shadow-sm">
+            <!-- Plat Nomor Meter (Klik untuk salin) -->
+            <div onclick="copyMeterId()" class="bg-white/95 border border-slate-400 rounded-xl px-3 py-2 mb-4 flex items-center justify-between shadow-sm cursor-pointer hover:bg-slate-50 transition" title="Klik untuk menyalin 11 digit ID Meter">
                 <div>
-                    <div class="text-[8.5px] font-extrabold text-slate-500 uppercase tracking-wider">Nomor Meter / Serial No.</div>
+                    <div class="text-[8.5px] font-extrabold text-slate-500 uppercase tracking-wider">Nomor Meter (Klik untuk Salin)</div>
                     <div id="meter-serial-text" class="font-mono text-base sm:text-lg font-extrabold tracking-widest text-slate-950">
                         3201 8849 201
                     </div>
                 </div>
                 <div class="flex flex-col items-end">
                     <div class="w-24 h-6 barcode-strip"></div>
-                    <span class="text-[8px] font-mono font-bold text-slate-600 mt-0.5">STS-64 • 2026</span>
+                    <span class="text-[8px] font-mono font-bold text-slate-600 mt-0.5">STS-64 • AUTHENTIC</span>
                 </div>
             </div>
 
-            <!-- 4. Keypad Karet 12 Tombol -->
+            <!-- Keypad -->
             <div class="bg-slate-400/50 p-3 rounded-2xl border border-slate-400/80 shadow-inner">
                 <div class="grid grid-cols-3 gap-2.5">
                     <button data-key="1" onclick="pressKeypad('1')" class="key-rubber text-white font-bold text-xl py-2.5 rounded-xl">1</button>
@@ -288,66 +264,40 @@
                     <button data-key="8" onclick="pressKeypad('8')" class="key-rubber text-white font-bold text-xl py-2.5 rounded-xl">8</button>
                     <button data-key="9" onclick="pressKeypad('9')" class="key-rubber text-white font-bold text-xl py-2.5 rounded-xl">9</button>
 
-                    <button data-key="Backspace" onclick="pressKeypad('Backspace')" class="key-rubber key-yellow font-extrabold text-base py-2.5 rounded-xl flex items-center justify-center" title="Koreksi / Hapus 1 Digit">
+                    <button data-key="Backspace" onclick="pressKeypad('Backspace')" class="key-rubber key-yellow font-extrabold text-base py-2.5 rounded-xl flex items-center justify-center">
                         <i class="fa-solid fa-delete-left text-lg"></i>
                     </button>
-
                     <button data-key="0" onclick="pressKeypad('0')" class="key-rubber text-white font-bold text-xl py-2.5 rounded-xl">0</button>
-
-                    <button data-key="Enter" onclick="pressKeypad('Enter')" class="key-rubber key-red font-extrabold text-base py-2.5 rounded-xl flex items-center justify-center" title="Enter / Kirim Token">
+                    <button data-key="Enter" onclick="pressKeypad('Enter')" class="key-rubber key-red font-extrabold text-base py-2.5 rounded-xl flex items-center justify-center">
                         <i class="fa-solid fa-turn-down fa-rotate-90 text-lg"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- 5. Segel Metrologi Kawat & Timah di Baut Bawah -->
+            <!-- Segel -->
             <div class="mt-3.5 pt-2.5 border-t border-slate-400/70 flex items-center justify-between text-[9.5px] font-bold text-slate-700">
                 <div class="flex items-center gap-1.5">
-                    <div class="relative flex items-center">
-                        <span class="w-4 h-4 rounded-full bg-red-600 border border-red-900 flex items-center justify-center text-[7px] text-white font-black shadow">PLN</span>
-                        <span class="w-4 h-0.5 bg-slate-600 -ml-0.5"></span>
-                        <span class="w-3.5 h-3.5 rounded-full bg-slate-500 border border-slate-700 flex items-center justify-center text-[6.5px] text-white font-bold shadow">M</span>
-                    </div>
+                    <span class="w-4 h-4 rounded-full bg-red-600 border border-red-900 flex items-center justify-center text-[7px] text-white font-black shadow">PLN</span>
                     <span>SEGEL SAH METROLOGI</span>
                 </div>
-                <div class="font-mono text-[9px] text-slate-600">IP54 • DOUBLE INSULATED</div>
+                <div class="font-mono text-[9px] text-slate-600">IP54 • RELAY ACTIVE</div>
             </div>
         </div>
 
-        <!-- 6. Penutup Terminal Kabel Transparan -->
+        <!-- Terminal Kabel -->
         <div class="terminal-cover w-[86%] rounded-b-2xl px-5 py-3 -mt-1 flex flex-col items-center">
-            <div class="w-full flex justify-around items-end h-9">
-                <div class="flex flex-col items-center">
-                    <div class="w-4 h-3 bg-amber-600 rounded-t border border-amber-800 shadow-inner"></div>
-                    <div class="w-3 h-7 bg-gradient-to-r from-red-700 via-red-500 to-red-800 rounded-b shadow"></div>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="w-4 h-3 bg-amber-600 rounded-t border border-amber-800 shadow-inner"></div>
-                    <div class="w-3 h-7 bg-gradient-to-r from-blue-800 via-blue-500 to-blue-900 rounded-b shadow"></div>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="w-4 h-3 bg-amber-600 rounded-t border border-amber-800 shadow-inner"></div>
-                    <div class="w-3 h-7 bg-gradient-to-r from-blue-800 via-blue-500 to-blue-900 rounded-b shadow"></div>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="w-4 h-3 bg-amber-600 rounded-t border border-amber-800 shadow-inner"></div>
-                    <div class="w-3 h-7 bg-gradient-to-r from-slate-900 via-slate-700 to-slate-950 rounded-b shadow"></div>
-                </div>
-            </div>
-            <div class="text-[8px] font-mono font-bold text-slate-400 tracking-widest mt-1">
-                L-IN &nbsp;&nbsp; N-IN &nbsp;&nbsp; N-OUT &nbsp;&nbsp; L-OUT
+            <div class="text-[8px] font-mono font-bold text-slate-400 tracking-widest">
+                L-IN &nbsp;&nbsp; N-IN &nbsp;&nbsp; N-OUT &nbsp;&nbsp; L-OUT (REALTIME RELAY CUTOFF)
             </div>
         </div>
 
     </main>
 
-    <!-- ========================================================================= -->
-    <!-- PANEL SIMULASI & PENGATURAN                                               -->
-    <!-- ========================================================================= -->
+    <!-- Panel Pengaturan -->
     <section id="control-drawer" class="w-full max-w-md mt-4 bg-slate-900/95 border border-slate-800 rounded-2xl p-4 shadow-2xl transition-all">
         <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-800">
             <h2 class="text-xs font-extrabold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                <i class="fa-solid fa-gauge-high text-amber-400"></i> Simulasi Beban Rumah & Info Meter
+                <i class="fa-solid fa-gear text-amber-400"></i> Pengaturan Beban & Kecepatan
             </h2>
             <button onclick="toggleControlDrawer()" class="text-slate-400 hover:text-white text-xs">
                 <i class="fa-solid fa-chevron-down" id="drawer-chevron"></i>
@@ -355,31 +305,13 @@
         </div>
 
         <div id="drawer-content" class="space-y-4">
-            
-            <!-- TOMBOL PASTE TOKEN DARI CLIPBOARD -->
-            <div class="bg-sky-500/10 border border-sky-500/30 p-2.5 rounded-xl">
-                <div class="text-[11px] text-sky-300 font-semibold mb-1.5 flex items-center gap-1.5">
-                    <i class="fa-solid fa-bolt"></i> Ingin input token dari generator?
-                </div>
-                <button onclick="pasteTokenFromClipboard()" class="w-full py-2 px-3 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold flex items-center justify-center gap-2 transition shadow">
-                    <i class="fa-solid fa-paste"></i> Paste & Masukkan Token Otomatis
-                </button>
-            </div>
-
-            <!-- Pengaturan Beban Watt -->
             <div>
                 <div class="flex justify-between items-center text-xs mb-1.5">
-                    <span class="text-slate-400">Beban Pemakaian Rumah:</span>
-                    <span id="sim-watt-label" class="font-mono font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">450 W (2.04 A)</span>
+                    <span class="text-slate-400">Beban Rumah:</span>
+                    <span id="sim-watt-label" class="font-mono font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">450 W</span>
                 </div>
                 <input id="sim-watt-slider" type="range" min="0" max="2200" step="50" value="450" oninput="setWattLoad(this.value)"
                     class="w-full h-2 bg-slate-800 rounded-lg accent-amber-400 cursor-pointer">
-                <div class="grid grid-cols-4 gap-1.5 mt-2">
-                    <button onclick="setWattLoad(100)" class="py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 border border-slate-700">💡 100W</button>
-                    <button onclick="setWattLoad(450)" class="py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 border border-slate-700">🧊 450W</button>
-                    <button onclick="setWattLoad(1100)" class="py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 border border-slate-700">❄️ 1100W</button>
-                    <button onclick="setWattLoad(2000)" class="py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 border border-slate-700">🔥 2000W</button>
-                </div>
             </div>
 
             <!-- Kecepatan Waktu Simulasi -->
@@ -387,92 +319,89 @@
                 <span class="text-xs text-slate-400">Kecepatan Waktu:</span>
                 <div class="flex gap-1.5">
                     <button onclick="setSimSpeed(1)" id="spd-1" class="spd-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-sky-500 text-slate-950">Normal (1x)</button>
-                    <button onclick="setSimSpeed(100)" id="spd-100" class="spd-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">100x</button>
-                    <button onclick="setSimSpeed(1000)" id="spd-1000" class="spd-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">1000x</button>
+                    <button onclick="setSimSpeed(50)" id="spd-50" class="spd-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">50x</button>
+                    <button onclick="setSimSpeed(500)" id="spd-500" class="spd-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">500x</button>
                 </div>
             </div>
 
-            <!-- Kode Shortcode Cepat PLN -->
             <div class="pt-2 border-t border-slate-800/80">
-                <div class="text-[11px] text-slate-400 mb-1.5">Kode Cek Meteran PLN (Klik atau ketik di keypad):</div>
+                <div class="text-[11px] text-slate-400 mb-1.5">Kode Pendek (Shortcode):</div>
                 <div class="flex flex-wrap gap-1.5">
-                    <button onclick="quickShortcode('00')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400">00↵ Tes LCD</button>
-                    <button onclick="quickShortcode('03')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sky-400">03↵ Total kWh</button>
-                    <button onclick="quickShortcode('07')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-400">07↵ Batas Alarm</button>
-                    <button onclick="quickShortcode('09')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-purple-400">09↵ Daya (W)</button>
-                    <button onclick="quickShortcode('41')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-400">41↵ Voltase</button>
-                    <button onclick="quickShortcode('44')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-pink-400">44↵ Ampere</button>
-                    <button onclick="quickShortcode('47')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-indigo-400">47↵ Daya (kW)</button>
-                    <button onclick="quickShortcode('75')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200">75↵ ID Meter</button>
-                    <button onclick="quickShortcode('78')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300">78↵ Jeda Alarm</button>
-                    <button onclick="quickShortcode('79')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-teal-300">79↵ Jml Token</button>
+                    <button onclick="quickShortcode('00')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-emerald-400">00↵ Tes LCD</button>
+                    <button onclick="quickShortcode('03')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-sky-400">03↵ Total kWh</button>
+                    <button onclick="quickShortcode('07')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-amber-400">07↵ Alarm</button>
+                    <button onclick="quickShortcode('09')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-purple-400">09↵ Daya (W)</button>
+                    <button onclick="quickShortcode('41')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-cyan-400">41↵ Voltase</button>
+                    <button onclick="quickShortcode('75')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">75↵ ID Meter</button>
+                    <button onclick="quickShortcode('79')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-teal-300">79↵ Jml Token</button>
                 </div>
             </div>
 
-            <!-- Pengaturan ID Meter & Reset -->
-            <div class="pt-2.5 border-t border-slate-800/80 flex flex-col gap-2">
-                <div class="flex items-center justify-between gap-2">
-                    <label for="input-meter-id" class="text-[11px] text-slate-400 shrink-0">ID Meter (11 Digit):</label>
-                    <div class="flex items-center gap-1.5 w-full max-w-[220px]">
-                        <input id="input-meter-id" type="text" maxlength="11" value="32018849201"
-                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                            class="w-full bg-slate-950 border border-slate-700 focus:border-sky-500 rounded-lg px-2.5 py-1 font-mono text-xs font-bold text-white outline-none">
-                        <button onclick="applyCustomMeterId()" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shrink-0">Simpan</button>
-                    </div>
-                </div>
-
-                <div class="flex items-center justify-between pt-1">
-                    <span class="text-[10px] text-slate-500">Siap menerima token dari generator</span>
-                    <button onclick="resetMeterStorage()" class="text-[11px] text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1">
-                        <i class="fa-solid fa-rotate-left"></i> Reset Data Meteran
-                    </button>
-                </div>
+            <div class="pt-2.5 border-t border-slate-800/80 flex items-center justify-between">
+                <span class="text-[10px] text-slate-500">Data tersimpan otomatis (Offline)</span>
+                <button onclick="resetMeterStorage()" class="text-[11px] text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-rotate-left"></i> Reset & Acak ID Baru
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- ========================================================================= -->
-    <!-- SCRIPT LOGIKA                                                             -->
-    <!-- ========================================================================= -->
+    <!-- Script Inti STS & Simulasi -->
     <script>
         const PLN_STS_SECRET_KEY = "PLN_STS_VENDING_KEY_2026";
-        const STORAGE_KEY = "PLN_METER_ITRON_ACE9000_STATE_V1";
+        // Menggunakan nama storage unik tanpa kunci keras bawaan agar HP lain otomatis membuat ID baru yang berbeda
+        const STORAGE_KEY = "PLN_METER_ITRON_ACE9000_DYNAMIC_ID_V4";
 
         const meterState = {
-            meterId: "32018849201",
+            meterId: "",
             balanceKwh: 20.00,
             totalConsumedKwh: 128.45,
             alarmThresholdKwh: 5.00,
-            alarmDelayMinutes: 15,
             currentWatt: 450,
             voltage: 220.4,
             simSpeed: 1,
-            usedTids: [],
+            usedTids: [], 
             tokensAcceptedCount: 0,
             inputBuffer: "",
             displayMode: "IDLE",
-            tempMainText: "",
-            tempSubText: "",
-            tempUnit: "",
-            tempModeLabel: "",
             soundEnabled: true,
             relayClosed: true
         };
+
+        // Fungsi Generate 11 Digit ID Meter Acak Baru (Khas PLN)
+        function generateRandomMeterId() {
+            const prefixes = ["3201", "1402", "5411", "3310", "4105", "5204", "1210"];
+            const randomPrefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+            let randomSuffix = "";
+            for (let i = 0; i < 7; i++) {
+                randomSuffix += Math.floor(Math.random() * 10);
+            }
+            return randomPrefix + randomSuffix;
+        }
 
         function loadSavedState() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
                 if (raw) {
                     const parsed = JSON.parse(raw);
-                    if (parsed.meterId && /^\d{11}$/.test(parsed.meterId)) meterState.meterId = parsed.meterId;
+                    // Jika di browser ini sudah pernah tersimpan, gunakan ID yang sudah ada sebelumnya
+                    if (parsed.meterId && /^\d{11}$/.test(parsed.meterId)) {
+                        meterState.meterId = parsed.meterId;
+                    }
                     if (typeof parsed.balanceKwh === "number") meterState.balanceKwh = parsed.balanceKwh;
                     if (typeof parsed.totalConsumedKwh === "number") meterState.totalConsumedKwh = parsed.totalConsumedKwh;
-                    if (typeof parsed.alarmThresholdKwh === "number") meterState.alarmThresholdKwh = parsed.alarmThresholdKwh;
-                    if (typeof parsed.currentWatt === "number") meterState.currentWatt = parsed.currentWatt;
                     if (Array.isArray(parsed.usedTids)) meterState.usedTids = parsed.usedTids;
                     if (typeof parsed.tokensAcceptedCount === "number") meterState.tokensAcceptedCount = parsed.tokensAcceptedCount;
                 }
             } catch (e) {}
+
+            // Jika BELUM ADA sama sekali di perangkat/browser ini (pengguna baru pertama kali datang / buka di HP lain), 
+            // maka otomatis buat ID 11 digit ACAK BARU secara permanen untuk perangkat tersebut.
+            if (!meterState.meterId || !/^\d{11}$/.test(meterState.meterId)) {
+                meterState.meterId = generateRandomMeterId();
+                saveState();
+            }
+
             meterState.relayClosed = meterState.balanceKwh > 0;
         }
 
@@ -482,32 +411,22 @@
                     meterId: meterState.meterId,
                     balanceKwh: meterState.balanceKwh,
                     totalConsumedKwh: meterState.totalConsumedKwh,
-                    alarmThresholdKwh: meterState.alarmThresholdKwh,
-                    currentWatt: meterState.currentWatt,
                     usedTids: meterState.usedTids.slice(-500),
                     tokensAcceptedCount: meterState.tokensAcceptedCount
                 }));
             } catch (e) {}
         }
 
+        // Web Audio API untuk Suara Buzzer & Relay Asli
         let audioCtx = null;
-        function ensureAudioCtx() {
-            if (!audioCtx) {
-                const AC = window.AudioContext || window.webkitAudioContext;
-                audioCtx = new AC();
-            }
-            if (audioCtx.state === "suspended") {
-                audioCtx.resume();
-            }
-        }
-
-        function playBuzzer(freq, durationSec, waveType = "sine", gainVal = 0.12) {
+        function playBuzzer(freq, durationSec, wave = "sine", gainVal = 0.12) {
             if (!meterState.soundEnabled) return;
             try {
-                ensureAudioCtx();
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === "suspended") audioCtx.resume();
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
-                osc.type = waveType;
+                osc.type = wave;
                 osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
                 gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + durationSec);
@@ -518,29 +437,17 @@
             } catch (e) {}
         }
 
-        function playKeyBeep() { playBuzzer(2650, 0.05, "sine", 0.11); }
-        function playAcceptBeep() { playBuzzer(2450, 0.45, "sine", 0.15); }
-        function playErrorBeeps() {
-            playBuzzer(1100, 0.11, "square", 0.09);
-            setTimeout(() => playBuzzer(1100, 0.11, "square", 0.09), 160);
-            setTimeout(() => playBuzzer(1100, 0.18, "square", 0.09), 320);
+        function playRelayClick() {
+            playBuzzer(140, 0.04, "triangle", 0.3);
         }
-        function playRelayClick() { playBuzzer(140, 0.035, "triangle", 0.25); }
-        function playLowCreditBeep() { playBuzzer(2950, 0.07, "sine", 0.06); }
 
         function toggleSound() {
             meterState.soundEnabled = !meterState.soundEnabled;
-            const icon = document.getElementById("audio-icon");
-            if (meterState.soundEnabled) {
-                icon.className = "fa-solid fa-volume-high text-emerald-400";
-                playKeyBeep();
-                showToast("Suara Buzzer Meteran Aktif", "info");
-            } else {
-                icon.className = "fa-solid fa-volume-xmark text-rose-400";
-                showToast("Suara Buzzer Dimatikan", "info");
-            }
+            document.getElementById("audio-icon").className = meterState.soundEnabled ? "fa-solid fa-volume-high text-emerald-400" : "fa-solid fa-volume-xmark text-rose-400";
+            showToast(meterState.soundEnabled ? "Suara Buzzer Aktif" : "Suara Dimatikan", "info");
         }
 
+        // Algoritma Kriptografi STS 64-bit Feistel Decryption
         function fnv1aHash32(str, seed = 2166136261) {
             let h = seed >>> 0;
             for (let i = 0; i < str.length; i++) {
@@ -576,19 +483,10 @@
         }
 
         function decryptAndValidateToken20(meterId, token20Str) {
-            if (!/^\d{20}$/.test(token20Str)) {
-                return { status: "GAGAL", message: "FORMAT SALAH" };
-            }
+            if (!/^\d{20}$/.test(token20Str)) return { status: "GAGAL", message: "FORMAT SALAH" };
             let cipher64;
-            try {
-                cipher64 = BigInt(token20Str);
-            } catch (e) {
-                return { status: "GAGAL", message: "ANGKA INVALID" };
-            }
-            const MAX_UINT64 = 18446744073709551615n;
-            if (cipher64 > MAX_UINT64) {
-                return { status: "GAGAL", message: "OVERFLOW 64-BIT" };
-            }
+            try { cipher64 = BigInt(token20Str); } catch (e) { return { status: "GAGAL", message: "INVALID" }; }
+
             const roundKeys = deriveFeistelRoundKeys(meterId);
             let left = (cipher64 >> 32n) & 0xFFFFFFFFn;
             let right = cipher64 & 0xFFFFFFFFn;
@@ -607,7 +505,7 @@
             const tid = Number((plain64 >> 27n) & 0xFFFFFn);
             const kwhCents = Number((plain64 >> 47n) & 0x1FFFFn);
 
-            if (versionTag !== 5 || tid < 1 || tid > 999999 || kwhCents < 1 || kwhCents > 99999) {
+            if (versionTag !== 5 || tid < 1 || tid > 999999 || kwhCents < 1) {
                 return { status: "GAGAL", message: "TOKEN TIDAK VALID" };
             }
 
@@ -617,165 +515,77 @@
             }
 
             if (meterState.usedTids.includes(tid)) {
-                return { status: "SUDAH", message: "TOKEN SUDAH TERPAKAI" };
+                return { status: "SUDAH", message: "TOKEN HANGUS / SUDAH DIPAKAI" };
             }
 
-            return {
-                status: "BENAR",
-                kwh: kwhCents / 100,
-                tid: tid
-            };
+            return { status: "BENAR", kwh: kwhCents / 100, tid };
         }
 
-        let backlightTimeout = null;
-        let tempMsgTimeout = null;
-
-        function wakeBacklight() {
-            const lcd = document.getElementById("lcd-screen");
-            lcd.classList.add("backlight-active");
-            clearTimeout(backlightTimeout);
-            backlightTimeout = setTimeout(() => {
-                if (meterState.balanceKwh >= meterState.alarmThresholdKwh) {
-                    lcd.classList.remove("backlight-active");
+        async function pasteTokenFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                const cleaned = text.replace(/[^0-9]/g, "");
+                if (cleaned.length === 20) {
+                    meterState.inputBuffer = cleaned;
+                    updateLCD();
+                    showToast("Token dipaste, memproses Enter...", "info");
+                    setTimeout(() => processEnterAction(), 300);
+                } else {
+                    showToast(`Clipboard tidak valid (${cleaned.length}/20 digit)`, "error");
                 }
-            }, 14000);
-        }
-
-        function formatGroupedInput(digits) {
-            const grouped = digits.replace(/(.{4})/g, "$1 ").trim();
-            if (grouped.length > 14) {
-                return ".." + grouped.slice(-13);
+            } catch (err) {
+                showToast("Gagal membaca clipboard. Izinkan akses atau ketik manual.", "error");
             }
-            return grouped;
         }
 
         function pressKeypad(key) {
-            playKeyBeep();
-            wakeBacklight();
-
-            const btn = document.querySelector(`[data-key="${key}"]`);
-            if (btn) {
-                btn.classList.add("is-pressed");
-                setTimeout(() => btn.classList.remove("is-pressed"), 90);
-            }
-
-            clearTimeout(tempMsgTimeout);
-
+            playBuzzer(2650, 0.05);
             if (/^[0-9]$/.test(key)) {
-                if (meterState.displayMode === "TEMP_MSG") {
-                    meterState.inputBuffer = "";
-                }
-                if (meterState.inputBuffer.length < 20) {
-                    meterState.inputBuffer += key;
-                    meterState.displayMode = "INPUT";
-                }
+                if (meterState.inputBuffer.length < 20) meterState.inputBuffer += key;
             } else if (key === "Backspace") {
-                if (meterState.inputBuffer.length > 0) {
-                    meterState.inputBuffer = meterState.inputBuffer.slice(0, -1);
-                    meterState.displayMode = meterState.inputBuffer.length > 0 ? "INPUT" : "IDLE";
-                } else {
-                    meterState.displayMode = "IDLE";
-                }
+                meterState.inputBuffer = meterState.inputBuffer.slice(0, -1);
             } else if (key === "Enter") {
                 processEnterAction();
                 return;
             }
-
-            updateLcdDisplay();
+            updateLCD();
         }
 
         function processEnterAction() {
             const code = meterState.inputBuffer;
             meterState.inputBuffer = "";
 
-            if (code.length === 0) {
-                meterState.displayMode = "IDLE";
-                updateLcdDisplay();
-                return;
-            }
-
             if (code.length === 2) {
                 handleShortcode(code);
                 return;
             }
 
-            if (code.length === 5 && code.startsWith("456")) {
-                const newLimit = parseInt(code.slice(3), 10);
-                if (newLimit >= 1 && newLimit <= 99) {
-                    meterState.alarmThresholdKwh = newLimit;
-                    saveState();
-                    playAcceptBeep();
-                    showTempLcd("BENAR", `BATAS ALARM: ${newLimit.toFixed(2)}`, "kWh", "SET ALARM", 2500);
-                    showToast(`Batas alarm kWh rendah diubah ke ${newLimit.toFixed(2)} kWh`, "success");
-                } else {
-                    playErrorBeeps();
-                    showTempLcd("GAGAL", "BATAS 01 - 99 KWH", "ERR", "ERROR", 2000);
-                }
-                return;
-            }
-
             if (code.length === 20) {
-                showTempLcd("TUNGGU", "DEKRIPSI TOKEN STS...", "", "PROSES", 800, () => {
-                    const res = decryptAndValidateToken20(meterState.meterId, code);
-                    if (res.status === "BENAR") {
-                        const wasEmpty = meterState.balanceKwh <= 0;
-                        meterState.balanceKwh = parseFloat((meterState.balanceKwh + res.kwh).toFixed(2));
-                        meterState.usedTids.push(res.tid);
-                        meterState.tokensAcceptedCount += 1;
-                        saveState();
+                const res = decryptAndValidateToken20(meterState.meterId, code);
+                if (res.status === "BENAR") {
+                    const wasEmpty = meterState.balanceKwh <= 0;
+                    meterState.balanceKwh = parseFloat((meterState.balanceKwh + res.kwh).toFixed(2));
+                    meterState.usedTids.push(res.tid);
+                    meterState.tokensAcceptedCount += 1;
+                    saveState();
 
-                        playAcceptBeep();
-                        if (wasEmpty && meterState.balanceKwh > 0) {
-                            setTimeout(playRelayClick, 300);
-                        }
+                    playBuzzer(2450, 0.4);
+                    if (wasEmpty) setTimeout(playRelayClick, 300);
 
-                        showToast(`Token Diterima! +${res.kwh.toFixed(2)} kWh masuk ke meteran.`, "success");
-                        showTempLcd("BENAR", `TID #${res.tid} VALID`, "OK", "SUKSES", 1200, () => {
-                            showTempLcd(`+${res.kwh.toFixed(2)}`, `SALDO: ${meterState.balanceKwh.toFixed(2)} KWH`, "kWh", "ISI ULANG", 2200);
-                        });
-                    } else if (res.status === "SUDAH") {
-                        playErrorBeeps();
-                        showToast("Token ditolak: Sudah pernah digunakan!", "error");
-                        showTempLcd("SUDAH", "TOKEN TELAH DIPAKAI", "ERR", "DITOLAK", 2600);
-                    } else {
-                        playErrorBeeps();
-                        showToast("Token ditolak: Kode salah atau ID Meter tidak cocok!", "error");
-                        showTempLcd("GAGAL", res.message, "ERR", "DITOLAK", 2600);
-                    }
-                });
+                    showToast(`Token Diterima! +${res.kwh.toFixed(2)} kWh`, "success");
+                    showTempLcd(`+${res.kwh.toFixed(2)}`, `SALDO: ${meterState.balanceKwh.toFixed(2)} KWH`, 2500);
+                } else if (res.status === "SUDAH") {
+                    playBuzzer(1100, 0.15, "square");
+                    showToast("Token Ditolak: Sudah hangus / pernah digunakan!", "error");
+                    showTempLcd("SUDAH", "TOKEN HANGUS", 2000);
+                } else {
+                    playBuzzer(1100, 0.15, "square");
+                    showToast("Token Ditolak: Kode salah atau ID Meter berbeda!", "error");
+                    showTempLcd("GAGAL", res.message, 2000);
+                }
                 return;
             }
-
-            playErrorBeeps();
-            showTempLcd("GAGAL", `DIGIT: ${code.length}/20`, "ERR", "INVALID", 2000);
-        }
-
-        // FITUR BARU: PASTE TOKEN DARI CLIPBOARD
-        async function pasteTokenFromClipboard() {
-            try {
-                const text = await navigator.clipboard.readText();
-                const cleanText = text.replace(/[^0-9]/g, "");
-
-                if (cleanText.length === 0) {
-                    showToast("Clipboard kosong atau tidak berisi angka!", "error");
-                    return;
-                }
-
-                meterState.inputBuffer = cleanText;
-                updateLcdDisplay();
-                playKeyBeep();
-
-                if (cleanText.length === 20) {
-                    showToast("Token 20 digit berhasil di-paste. Memproses...", "success");
-                    setTimeout(() => {
-                        processEnterAction();
-                    }, 400);
-                } else {
-                    showToast(`Berhasil mempaste ${cleanText.length} digit angka.`, "info");
-                }
-            } catch (err) {
-                showToast("Gagal membaca clipboard. Berikan izin akses clipboard pada browser.", "error");
-            }
+            showToast("Panjang kode kurang dari 20 digit", "error");
         }
 
         function quickShortcode(code) {
@@ -784,79 +594,45 @@
         }
 
         function handleShortcode(code) {
+            playBuzzer(2800, 0.08);
             switch (code) {
                 case "00":
-                    playAcceptBeep();
-                    showTempLcd("88888888", "TES LAYAR & LED AKTIF", "kWh", "TEST MODE", 2200);
+                    showTempLcd("88888888", "TES LAYAR & LED", 2500);
                     break;
                 case "03":
-                    showTempLcd(meterState.totalConsumedKwh.toFixed(2), "TOTAL KWH TERPAKAI", "kWh", "KODE 03", 3200);
+                    showTempLcd(meterState.totalConsumedKwh.toFixed(2), "TOTAL KWH", 3000);
                     break;
                 case "07":
-                    showTempLcd(meterState.alarmThresholdKwh.toFixed(2), "BATAS KREDIT RENDAH", "kWh", "KODE 07", 3200);
+                    showTempLcd(meterState.alarmThresholdKwh.toFixed(2), "BATAS ALARM", 3000);
                     break;
                 case "09":
-                    const activeW = meterState.balanceKwh > 0 ? meterState.currentWatt : 0;
-                    showTempLcd(String(activeW), "DAYA BEBAN AKTIF", "W", "KODE 09", 3200);
+                    showTempLcd(String(meterState.currentWatt), "DAYA (W)", 3000);
                     break;
                 case "41":
-                    showTempLcd(meterState.voltage.toFixed(1), "TEGANGAN JARINGAN", "V", "KODE 41", 3200);
-                    break;
-                case "44":
-                    const amp = meterState.balanceKwh > 0 ? (meterState.currentWatt / meterState.voltage) : 0;
-                    showTempLcd(amp.toFixed(2), "ARUS BEBAN SESAAT", "A", "KODE 44", 3200);
-                    break;
-                case "47":
-                    const kw = meterState.balanceKwh > 0 ? (meterState.currentWatt / 1000) : 0;
-                    showTempLcd(kw.toFixed(3), "DAYA SESAAT (KW)", "kW", "KODE 47", 3200);
+                    showTempLcd(meterState.voltage.toFixed(1), "TEGANGAN (V)", 3000);
                     break;
                 case "75":
-                    const part1 = meterState.meterId.slice(0, 6);
-                    const part2 = meterState.meterId.slice(6, 11);
-                    showTempLcd(part1, `ID METER (1/2): ${meterState.meterId}`, "ID", "KODE 75", 1800, () => {
-                        showTempLcd(part2, `ID METER (2/2): ${meterState.meterId}`, "ID", "KODE 75", 2200);
-                    });
-                    break;
-                case "78":
-                    showTempLcd(String(meterState.alarmDelayMinutes), "JEDA BUNYI ALARM", "MIN", "KODE 78", 3200);
+                    showTempLcd(meterState.meterId, "ID METER 11 DIGIT", 3000);
                     break;
                 case "79":
-                    showTempLcd(String(meterState.tokensAcceptedCount), "JUMLAH TOKEN MASUK", "PCS", "KODE 79", 3200);
+                    showTempLcd(String(meterState.tokensAcceptedCount), "JML TOKEN MASUK", 3000);
                     break;
                 default:
-                    playErrorBeeps();
-                    showTempLcd("TIDAK ADA", `KODE ${code} UNKNOWN`, "ERR", "INFO", 1800);
-                    break;
+                    showTempLcd("INFO", `KODE ${code}`, 2000);
             }
         }
 
-        function showTempLcd(mainText, subText, unit, modeLabel, durationMs, nextCallback = null) {
-            meterState.displayMode = "TEMP_MSG";
-            meterState.tempMainText = mainText;
-            meterState.tempSubText = subText;
-            meterState.tempUnit = unit;
-            meterState.tempModeLabel = modeLabel;
-            updateLcdDisplay();
-
-            clearTimeout(tempMsgTimeout);
-            tempMsgTimeout = setTimeout(() => {
-                if (nextCallback) {
-                    nextCallback();
-                } else {
-                    meterState.displayMode = "IDLE";
-                    updateLcdDisplay();
-                }
-            }, durationMs);
+        function showTempLcd(main, sub, ms) {
+            document.getElementById("lcd-mode-label").textContent = sub;
+            document.getElementById("lcd-main-digits").textContent = main;
+            setTimeout(() => updateLCD(), ms);
         }
 
-        function updateLcdDisplay() {
-            const mainEl = document.getElementById("lcd-main-digits");
-            const subEl = document.getElementById("lcd-bottom-left");
-            const unitEl = document.getElementById("lcd-unit");
-            const modeEl = document.getElementById("lcd-mode-label");
-            const relayEl = document.getElementById("lcd-relay-icon");
+        function updateLCD() {
+            const main = document.getElementById("lcd-main-digits");
+            const mode = document.getElementById("lcd-mode-label");
+            const relayIcon = document.getElementById("lcd-relay-icon");
             const lcdEl = document.getElementById("lcd-screen");
-
             const ledGreen = document.getElementById("led-status-green");
             const ledYellow = document.getElementById("led-status-yellow");
             const ledRed = document.getElementById("led-status-red");
@@ -869,45 +645,54 @@
             if (meterState.balanceKwh <= 0) {
                 ledRed.className = "led-bulb led-red";
                 lcdEl.classList.add("backlight-alarm");
-                relayEl.innerHTML = '<i class="fa-solid fa-plug-circle-xmark"></i> PUTUS';
+                relayIcon.innerHTML = '<i class="fa-solid fa-plug-circle-xmark"></i> PUTUS';
             } else if (meterState.balanceKwh < meterState.alarmThresholdKwh) {
                 ledYellow.className = "led-bulb led-yellow";
                 lcdEl.classList.add("backlight-alarm");
-                relayEl.innerHTML = '<i class="fa-solid fa-plug"></i> ON';
+                relayIcon.innerHTML = '<i class="fa-solid fa-plug"></i> ON';
             } else {
                 ledGreen.className = "led-bulb led-green";
-                relayEl.innerHTML = '<i class="fa-solid fa-plug"></i> ON';
+                relayIcon.innerHTML = '<i class="fa-solid fa-plug"></i> ON';
             }
 
-            if (meterState.displayMode === "INPUT") {
-                modeEl.textContent = `INPUT (${meterState.inputBuffer.length}/20)`;
-                mainEl.textContent = formatGroupedInput(meterState.inputBuffer);
-                subEl.textContent = meterState.inputBuffer.length === 20 ? "TEKAN ENTER MERAH [↵]" : "MASUKKAN 20 DIGIT TOKEN";
-                unitEl.textContent = "DIGIT";
-            } else if (meterState.displayMode === "TEMP_MSG") {
-                modeEl.textContent = meterState.tempModeLabel;
-                mainEl.textContent = meterState.tempMainText;
-                subEl.textContent = meterState.tempSubText;
-                unitEl.textContent = meterState.tempUnit;
+            if (meterState.inputBuffer.length > 0) {
+                mode.textContent = `INPUT (${meterState.inputBuffer.length}/20)`;
+                main.textContent = meterState.inputBuffer.replace(/(.{4})/g, "$1 ").trim();
             } else {
-                const isLow = meterState.balanceKwh > 0 && meterState.balanceKwh < meterState.alarmThresholdKwh;
                 const isEmpty = meterState.balanceKwh <= 0;
-                modeEl.textContent = isEmpty ? "KREDIT HABIS!" : (isLow ? "KREDIT RENDAH!" : "SISA KWH");
-                mainEl.textContent = meterState.balanceKwh.toFixed(2);
-                const activeW = isEmpty ? 0 : meterState.currentWatt;
-                const amp = (activeW / meterState.voltage).toFixed(2);
-                subEl.textContent = `${activeW}W • ${meterState.voltage.toFixed(1)}V • ${amp}A`;
-                unitEl.textContent = "kWh";
+                mode.textContent = isEmpty ? "KREDIT HABIS!" : "SISA KWH";
+                main.textContent = meterState.balanceKwh.toFixed(2);
             }
+        }
+
+        function copyMeterId() {
+            navigator.clipboard.writeText(meterState.meterId);
+            showToast(`Nomor Meter (${meterState.meterId}) disalin ke clipboard!`, "success");
+        }
+
+        function toggleControlDrawer() {
+            document.getElementById("drawer-content").classList.toggle("hidden");
+            document.getElementById("drawer-chevron").classList.toggle("fa-rotate-180");
+        }
+
+        function setWattLoad(watt) {
+            meterState.currentWatt = parseInt(watt, 10);
+            document.getElementById("sim-watt-label").textContent = `${meterState.currentWatt} W`;
+        }
+
+        function setSimSpeed(speed) {
+            meterState.simSpeed = speed;
+            document.querySelectorAll(".spd-btn").forEach(b => {
+                b.className = "spd-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700";
+            });
+            document.getElementById(`spd-${speed}`).className = "spd-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-sky-500 text-slate-950";
+            showToast(`Kecepatan waktu: ${speed}x`, "info");
         }
 
         let impulseCounter = 0;
         let tickCount = 0;
-        let saveTick = 0;
 
         setInterval(() => {
-            meterState.voltage = 220 + (Math.random() * 1.6 - 0.5);
-
             if (meterState.balanceKwh > 0 && meterState.currentWatt > 0) {
                 const deltaHours = (0.1 / 3600) * meterState.simSpeed;
                 const usedKwh = (meterState.currentWatt / 1000) * deltaHours;
@@ -918,138 +703,54 @@
                 if (meterState.balanceKwh === 0 && meterState.relayClosed) {
                     meterState.relayClosed = false;
                     playRelayClick();
-                    showToast("Saldo kWh habis! Relay listrik rumah terputus otomatis.", "error");
-                } else if (meterState.balanceKwh > 0) {
-                    meterState.relayClosed = true;
+                    showToast("Saldo kWh habis! Relay meteran memutus aliran listrik.", "error");
                 }
 
                 impulseCounter += usedKwh * 1000;
                 if (impulseCounter >= 1) {
                     impulseCounter %= 1;
-                    triggerImpulseFlash();
+                    const ledImp = document.getElementById("led-impulse");
+                    ledImp.className = "led-bulb led-red";
+                    setTimeout(() => ledImp.className = "led-bulb led-off", 60);
                 }
             }
 
             tickCount++;
             if (meterState.balanceKwh > 0 && meterState.balanceKwh < meterState.alarmThresholdKwh) {
                 if (tickCount % 40 === 0) {
-                    playLowCreditBeep();
+                    playBuzzer(2950, 0.07, "sine", 0.06);
                 }
             }
 
-            saveTick++;
-            if (saveTick % 30 === 0) {
-                saveState();
-            }
-
-            if (meterState.displayMode === "IDLE") {
-                updateLcdDisplay();
-            }
+            if (tickCount % 30 === 0) saveState();
+            if (meterState.inputBuffer.length === 0) updateLCD();
         }, 100);
-
-        function triggerImpulseFlash() {
-            const led = document.getElementById("led-impulse");
-            led.className = "led-bulb led-red";
-            setTimeout(() => {
-                led.className = "led-bulb led-off";
-            }, 60);
-        }
-
-        function toggleControlDrawer() {
-            const content = document.getElementById("drawer-content");
-            const chevron = document.getElementById("drawer-chevron");
-            content.classList.toggle("hidden");
-            chevron.classList.toggle("fa-rotate-180");
-        }
-
-        function setWattLoad(watt) {
-            meterState.currentWatt = parseInt(watt, 10);
-            document.getElementById("sim-watt-slider").value = meterState.currentWatt;
-            const amp = (meterState.currentWatt / 220).toFixed(2);
-            document.getElementById("sim-watt-label").textContent = `${meterState.currentWatt} W (${amp} A)`;
-            saveState();
-            if (meterState.displayMode === "IDLE") updateLcdDisplay();
-        }
-
-        function setSimSpeed(speed) {
-            meterState.simSpeed = speed;
-            document.querySelectorAll(".spd-btn").forEach(b => {
-                b.className = "spd-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700";
-            });
-            const active = document.getElementById(`spd-${speed}`);
-            if (active) {
-                active.className = "spd-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-sky-500 text-slate-950";
-            }
-            showToast(`Kecepatan waktu simulasi: ${speed}x`, "info");
-        }
-
-        function renderSerialPlate() {
-            const id = meterState.meterId;
-            document.getElementById("meter-serial-text").textContent = `${id.slice(0, 4)} ${id.slice(4, 8)} ${id.slice(8, 11)}`;
-            document.getElementById("input-meter-id").value = id;
-        }
-
-        function applyCustomMeterId() {
-            const val = document.getElementById("input-meter-id").value.trim();
-            if (!/^\d{11}$/.test(val)) {
-                showToast("ID Meter harus tepat 11 digit angka!", "error");
-                return;
-            }
-            meterState.meterId = val;
-            renderSerialPlate();
-            saveState();
-            playKeyBeep();
-            showToast(`ID Meter aktif diubah ke: ${val}`, "success");
-        }
 
         function resetMeterStorage() {
             localStorage.removeItem(STORAGE_KEY);
-            meterState.meterId = "32018849201";
+            meterState.meterId = generateRandomMeterId();
             meterState.balanceKwh = 20.00;
-            meterState.totalConsumedKwh = 128.45;
-            meterState.alarmThresholdKwh = 5.00;
             meterState.usedTids = [];
             meterState.tokensAcceptedCount = 0;
-            meterState.inputBuffer = "";
-            meterState.displayMode = "IDLE";
-            meterState.relayClosed = true;
-            setWattLoad(450);
-            setSimSpeed(1);
-            renderSerialPlate();
-            updateLcdDisplay();
-            showToast("Data meteran berhasil di-reset ke pengaturan pabrik.", "info");
+            saveState();
+            document.getElementById("meter-serial-text").textContent = meterState.meterId.match(/.{1,4}/g).join(" ");
+            updateLCD();
+            showToast("Meteran di-reset dan ID baru diacak.", "info");
         }
 
         function showToast(text, type = "info") {
             const box = document.getElementById("toast-box");
             const el = document.createElement("div");
-            const styles = {
-                info: "bg-slate-900/95 border-sky-500/60 text-sky-200",
-                success: "bg-emerald-950/95 border-emerald-500 text-emerald-200",
-                error: "bg-rose-950/95 border-rose-500 text-rose-200"
-            };
-            el.className = `px-3.5 py-2.5 rounded-xl border shadow-2xl text-xs font-semibold flex items-center gap-2 transition-all duration-200 ${styles[type] || styles.info}`;
-            el.innerHTML = `<i class="fa-solid ${type === "success" ? "fa-circle-check text-emerald-400" : type === "error" ? "fa-triangle-exclamation text-rose-400" : "fa-circle-info text-sky-400"}"></i><span>${text}</span>`;
+            el.className = `px-3.5 py-2.5 rounded-xl border shadow-2xl text-xs font-semibold ${type === 'success' ? 'bg-emerald-950 border-emerald-500 text-emerald-200' : type === 'error' ? 'bg-rose-950 border-rose-500 text-rose-200' : 'bg-slate-900 border-sky-500 text-sky-200'}`;
+            el.innerHTML = text;
             box.appendChild(el);
-            setTimeout(() => {
-                el.style.opacity = "0";
-                setTimeout(() => el.remove(), 220);
-            }, 3000);
+            setTimeout(() => el.remove(), 2500);
         }
 
-        document.addEventListener("keydown", (e) => {
-            if (e.target.tagName === "INPUT") return;
-            if (/^[0-9]$/.test(e.key) || e.key === "Backspace" || e.key === "Enter") {
-                e.preventDefault();
-                pressKeypad(e.key);
-            }
-        });
-
-        window.onload = function () {
+        window.onload = function() {
             loadSavedState();
-            renderSerialPlate();
-            setWattLoad(meterState.currentWatt);
-            updateLcdDisplay();
+            document.getElementById("meter-serial-text").textContent = meterState.meterId.match(/.{1,4}/g).join(" ");
+            updateLCD();
         };
     </script>
 </body>
