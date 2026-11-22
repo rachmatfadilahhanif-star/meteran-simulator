@@ -163,6 +163,31 @@
             height: 100%;
         }
 
+        /* Overlay Telemetri ala PC Overlay (FPS, kWh, Watt, CPU) di pojok atas layar game */
+        .game-pc-overlay {
+            position: absolute;
+            top: 22px;
+            left: 6px;
+            z-index: 15;
+            pointer-events: none;
+            background: rgba(5, 9, 18, 0.58);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 6px;
+            padding: 3px 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            line-height: 1.25;
+            color: #e2e8f0;
+            backdrop-filter: blur(2px);
+        }
+
+        @media (min-width: 640px) {
+            .game-pc-overlay {
+                font-size: 10px;
+                padding: 4px 7px;
+            }
+        }
+
         /* Mode Fullscreen Horizontal ala Browser / Konsol */
         .rtx-fullscreen-mode {
             position: fixed !important;
@@ -173,42 +198,18 @@
             max-width: none !important;
             margin: 0 !important;
             border-radius: 0 !important;
-            padding: 6px 10px !important;
+            padding: 4px 8px !important;
             background: #050811 !important;
             display: flex !important;
             flex-direction: column !important;
             justify-content: space-between !important;
-            gap: 4px !important;
+            gap: 2px !important;
         }
 
-        .rtx-fullscreen-mode .rtx-rig-header {
-            padding-bottom: 4px !important;
-            margin-bottom: 2px !important;
-        }
-
-        .rtx-fullscreen-mode .rtx-telemetry-grid {
-            display: grid !important;
-            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-            gap: 4px !important;
-            margin-bottom: 2px !important;
-        }
-
-        .rtx-fullscreen-mode .rtx-telemetry-grid > div {
-            padding: 3px 6px !important;
-        }
-
-        .rtx-fullscreen-mode .rtx-telemetry-grid .text-xs {
-            font-size: 10px !important;
-        }
-
+        .rtx-fullscreen-mode .rtx-rig-header,
+        .rtx-fullscreen-mode .rtx-telemetry-grid,
         .rtx-fullscreen-mode .rtx-boros-box {
-            display: block !important;
-            margin-bottom: 2px !important;
-            padding: 4px 8px !important;
-        }
-
-        .rtx-fullscreen-mode .rtx-boros-box input[type="range"] {
-            margin-top: 4px !important;
+            display: none !important;
         }
 
         .rtx-fullscreen-mode .monitor-bezel {
@@ -217,7 +218,7 @@
             display: flex !important;
             flex-direction: column !important;
             border-radius: 10px !important;
-            padding: 4px 8px !important;
+            padding: 2px 6px !important;
         }
 
         .rtx-fullscreen-mode .game-viewport-box {
@@ -231,7 +232,7 @@
             margin-top: 2px !important;
             padding: 4px 8px !important;
             border-radius: 12px !important;
-            background: rgba(9, 13, 22, 0.95) !important;
+            background: rgba(9, 13, 22, 0.92) !important;
         }
 
         .touch-pad-btn {
@@ -566,6 +567,17 @@
             <!-- Monitor PC & Layar Game Mario -->
             <div class="monitor-bezel rounded-xl p-2 sm:p-2.5">
                 <div class="game-viewport-box relative w-full h-56 sm:h-64 rounded-lg overflow-hidden bg-sky-900 border border-slate-700">
+                    <div id="game-live-overlay" class="game-pc-overlay">
+                        <div class="font-extrabold text-lime-300"><span id="ov-fps">144 FPS</span> • <span id="ov-watt">450W</span></div>
+                        <div class="font-bold text-amber-300">SISA: <span id="ov-kwh">20.00 kWh</span></div>
+                        <div class="font-bold text-sky-300"><span id="ov-cpu">5.80GHz</span> • <span id="ov-deficit">AMAN</span></div>
+                    </div>
+                    <button type="button" id="btn-exit-game-top" onclick="exitGameAndFullscreen(event)"
+                        class="absolute top-1 right-1.5 z-20 px-2 py-0.5 rounded bg-rose-600/90 hover:bg-rose-500 active:scale-95 text-white font-mono text-[9.5px] font-extrabold flex items-center gap-1 shadow border border-rose-300/40 cursor-pointer"
+                        title="Keluar dari Game / Fullscreen (ESC)">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>KELUAR</span>
+                    </button>
                     <canvas id="mario-canvas" width="480" height="270"></canvas>
 
                     <!-- Overlay Saat PC Mati (kWh Habis atau Tombol Matikan PC Ditekan) -->
@@ -1790,16 +1802,31 @@
             showToast("Daya darurat +5.00 kWh masuk! Relay ON & PC menyala.", "success");
         }
 
-        function toggleMarioFullscreenHorizontal() {
+        function setFullscreenUiState(enableFs) {
             const rigEl = document.getElementById("rtx-pc-rig");
             const labelEl = document.getElementById("fullscreen-btn-label");
             const btnEl = document.getElementById("btn-fullscreen-mario");
+            pcRigState.fullscreenHorizontal = Boolean(enableFs);
+            clearAllTouchStates();
 
-            pcRigState.fullscreenHorizontal = !pcRigState.fullscreenHorizontal;
             if (pcRigState.fullscreenHorizontal) {
                 rigEl.classList.add("rtx-fullscreen-mode");
-                labelEl.textContent = "KELUAR FS";
-                btnEl.className = "px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-[11px] font-extrabold flex items-center gap-1 transition shadow";
+                if (labelEl) labelEl.textContent = "KELUAR FS";
+                if (btnEl) btnEl.className = "px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-[11px] font-extrabold flex items-center gap-1 transition shadow";
+            } else {
+                rigEl.classList.remove("rtx-fullscreen-mode");
+                if (labelEl) labelEl.textContent = "FULLSCREEN";
+                if (btnEl) btnEl.className = "px-2.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-extrabold flex items-center gap-1 transition shadow";
+            }
+            resizeMarioCanvas();
+        }
+
+        function toggleMarioFullscreenHorizontal() {
+            const rigEl = document.getElementById("rtx-pc-rig");
+            const nextState = !pcRigState.fullscreenHorizontal;
+            setFullscreenUiState(nextState);
+
+            if (nextState) {
                 if (rigEl.requestFullscreen) {
                     rigEl.requestFullscreen().catch(() => {});
                 }
@@ -1807,24 +1834,56 @@
                     screen.orientation.lock("landscape").catch(() => {});
                 }
             } else {
-                rigEl.classList.remove("rtx-fullscreen-mode");
-                labelEl.textContent = "FULLSCREEN";
-                btnEl.className = "px-2.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-extrabold flex items-center gap-1 transition shadow";
                 if (document.fullscreenElement && document.exitFullscreen) {
                     document.exitFullscreen().catch(() => {});
                 }
+                if (screen.orientation && screen.orientation.unlock) {
+                    try { screen.orientation.unlock(); } catch (e) {}
+                }
             }
-            resizeMarioCanvas();
+        }
+
+        function exitGameAndFullscreen(ev) {
+            if (ev) ev.stopPropagation();
+            clearAllTouchStates();
+            saveMarioProgress();
+            saveState();
+
+            if (pcRigState.fullscreenHorizontal || document.fullscreenElement) {
+                setFullscreenUiState(false);
+                if (document.fullscreenElement && document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
+                if (screen.orientation && screen.orientation.unlock) {
+                    try { screen.orientation.unlock(); } catch (e) {}
+                }
+                showToast("Keluar dari mode fullscreen game. Progres tersimpan!", "info");
+                return;
+            }
+
+            if (pcRigState.pcOn) {
+                togglePcPowerManual();
+            } else {
+                const meterEl = document.querySelector(".meter-casing");
+                if (meterEl) meterEl.scrollIntoView({ behavior: "smooth", block: "center" });
+                showToast("Kembali ke meteran PLN.", "info");
+            }
         }
 
         document.addEventListener("fullscreenchange", () => {
             if (!document.fullscreenElement && pcRigState.fullscreenHorizontal) {
-                const rigEl = document.getElementById("rtx-pc-rig");
-                if (!rigEl.classList.contains("rtx-fullscreen-mode")) {
-                    pcRigState.fullscreenHorizontal = false;
-                }
+                setFullscreenUiState(false);
+            } else {
+                resizeMarioCanvas();
             }
-            resizeMarioCanvas();
+        });
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                clearAllTouchStates();
+                saveMarioProgress();
+                saveState();
+            }
         });
 
         // =====================================================================
@@ -1893,6 +1952,22 @@
             pcRigState.fps = Math.max(30, baseFps + jitter);
             fpsEl.textContent = `${pcRigState.fps} FPS • ${pcRigState.currentRigWatt}W`;
             fpsEl.className = "text-xs font-extrabold text-lime-300 mt-0.5";
+
+            const ovFps = document.getElementById("ov-fps");
+            const ovWatt = document.getElementById("ov-watt");
+            const ovKwh = document.getElementById("ov-kwh");
+            const ovCpu = document.getElementById("ov-cpu");
+            const ovDef = document.getElementById("ov-deficit");
+            if (ovFps) ovFps.textContent = `${pcRigState.fps} FPS`;
+            if (ovWatt) ovWatt.textContent = `${pcRigState.currentRigWatt}W`;
+            if (ovKwh) ovKwh.textContent = `${formatLcdKwhNumber(remKwh)} kWh`;
+            if (ovCpu) ovCpu.textContent = `${pcRigState.cpuClockGhz.toFixed(2)}GHz`;
+            if (ovDef) {
+                if (remKwh <= 0) ovDef.textContent = "HABIS";
+                else if (remKwh < meterState.alarmThresholdKwh) ovDef.textContent = "KRITIS";
+                else if (deficitKwh > 0) ovDef.textContent = `-${deficitKwh.toFixed(2)}kWh`;
+                else ovDef.textContent = "AMAN";
+            }
         }
 
         // =====================================================================
@@ -2096,8 +2171,9 @@
                 grid[r][flagCol] = 7;
             }
 
+            clearAllTouchStates();
             mario.x = 28;
-            mario.y = (groundRow - 1) * TILE;
+            mario.y = (groundRow - 1) * TILE - 1;
             mario.vx = 0;
             mario.vy = 0;
             mario.onGround = false;
@@ -2777,10 +2853,13 @@
         }
 
         function isDesktopPcDevice() {
+            const ua = navigator.userAgent || "";
+            const isMobileUa = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
+            if (isMobileUa) return false;
             const hasTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
-            const isSmallViewport = window.innerWidth <= 900 || (window.screen && Math.min(window.screen.width, window.screen.height) <= 600);
             const coarsePointer = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
-            return !hasTouch && !coarsePointer && !isSmallViewport;
+            const isNarrow = window.innerWidth <= 820;
+            return !hasTouch && !coarsePointer && !isNarrow;
         }
 
         function syncTouchControlsVisibility() {
@@ -3045,6 +3124,11 @@
 
         document.addEventListener("keydown", (e) => {
             if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+            if (e.key === "Escape" && (pcRigState.fullscreenHorizontal || document.fullscreenElement)) {
+                e.preventDefault();
+                exitGameAndFullscreen(e);
+                return;
+            }
             if (/^[0-9]$/.test(e.key) || e.key === "Backspace" || e.key === "Enter") {
                 e.preventDefault();
                 pressKeypad(e.key);
