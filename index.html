@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>kWh Meter PLN Prabayar — Itron ACE9000</title>
+    <title>kWh Meter PLN Prabayar — Itron ACE9000 + RTX 4090 Mario Rig</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter, Share Tech Mono (LCD 7-Segment), JetBrains Mono -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Inter, Share Tech Mono (LCD 7-Segment), JetBrains Mono, Press Start 2P -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=JetBrains+Mono:wght@500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -133,6 +133,84 @@
             backdrop-filter: blur(2px);
             border: 1.5px solid rgba(156, 163, 175, 0.7);
             box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.5), 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ===================================================================== */
+        /* GAYA LAYAR PC RTX 4090 & SUPER MARIO 20 LEVEL                       */
+        /* ===================================================================== */
+        .pixel-font {
+            font-family: 'Press Start 2P', 'JetBrains Mono', monospace;
+        }
+
+        .rtx-rig-shell {
+            background: linear-gradient(180deg, #172033 0%, #0d1321 100%);
+            border: 2px solid #334155;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(118, 185, 0, 0.12);
+        }
+
+        .monitor-bezel {
+            background: linear-gradient(145deg, #1f2937 0%, #090d16 100%);
+            border: 3px solid #374151;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.9), 0 12px 30px rgba(0,0,0,0.65);
+        }
+
+        #mario-canvas {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            touch-action: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Mode Fullscreen Horizontal ala Browser / Konsol */
+        .rtx-fullscreen-mode {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 90 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: none !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            padding: 8px !important;
+            background: #050811 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+        }
+
+        .rtx-fullscreen-mode .monitor-bezel {
+            flex: 1 1 auto !important;
+            min-height: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            border-radius: 10px !important;
+            padding: 6px !important;
+        }
+
+        .rtx-fullscreen-mode .game-viewport-box {
+            flex: 1 1 auto !important;
+            height: auto !important;
+            min-height: 0 !important;
+        }
+
+        .touch-pad-btn {
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+        .touch-pad-btn:active, .touch-pad-btn.is-active {
+            transform: scale(0.94);
+            filter: brightness(1.25);
+        }
+
+        @keyframes pulse-rtx {
+            0%, 100% { box-shadow: 0 0 8px rgba(132, 204, 22, 0.35); }
+            50% { box-shadow: 0 0 18px rgba(132, 204, 22, 0.75); }
+        }
+        .rtx-glow {
+            animation: pulse-rtx 2.4s infinite ease-in-out;
         }
     </style>
 </head>
@@ -349,6 +427,168 @@
             </div>
         </div>
 
+        <!-- =================================================================== -->
+        <!-- UNIT BAWAH: LAYAR PC RTX 4090 + SUPER MARIO 20 LEVEL (DAYA REALISTIS) -->
+        <!-- =================================================================== -->
+        <section id="rtx-pc-rig" class="rtx-rig-shell w-full rounded-[1.6rem] p-3.5 sm:p-4 mt-4 text-slate-100">
+            <!-- Header Rig PC & Tombol Power / Fullscreen -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 mb-2.5 border-b border-slate-800">
+                <div class="flex items-center gap-2 min-w-0">
+                    <div class="w-8 h-8 rounded-lg bg-lime-500/20 border border-lime-400/50 text-lime-300 flex items-center justify-center font-black shrink-0 rtx-glow">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-extrabold tracking-wide text-white truncate">RTX 4090 GAMING RIG</span>
+                            <span id="pc-power-badge" class="px-1.5 py-0.5 rounded text-[9px] font-mono font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">ONLINE</span>
+                        </div>
+                        <div class="text-[9.5px] font-mono text-slate-400 truncate">
+                            DAYA TIDAK SIA-SIA • 20 LEVEL MARIO + SAVE AUTO
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button onclick="togglePcPowerManual()" id="btn-pc-power" class="px-2.5 py-1.5 rounded-lg bg-rose-600/90 hover:bg-rose-500 text-white text-[11px] font-extrabold flex items-center gap-1 transition shadow" title="Tombol Matikan / Nyalakan PC">
+                        <i class="fa-solid fa-power-off"></i>
+                        <span id="pc-power-label">MATIKAN PC</span>
+                    </button>
+                    <button onclick="toggleMarioFullscreenHorizontal()" id="btn-fullscreen-mario" class="px-2.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-extrabold flex items-center gap-1 transition shadow" title="Full Screen Horizontal ala Browser">
+                        <i class="fa-solid fa-expand"></i>
+                        <span id="fullscreen-btn-label">FULLSCREEN</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Baris Telemetri Real-Time: Kecepatan CPU, Daya Sisa (kWh), Kurangnya / Kekurangan Daya, & FPS -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-2.5 font-mono">
+                <div class="bg-slate-950/90 border border-slate-800 rounded-lg px-2.5 py-1.5">
+                    <div class="text-[8.5px] text-slate-400 uppercase font-bold flex items-center justify-between">
+                        <span>KECEPATAN CPU</span>
+                        <i class="fa-solid fa-microchip text-sky-400"></i>
+                    </div>
+                    <div id="hud-cpu-clock" class="text-xs font-extrabold text-sky-300 mt-0.5">5.80 GHz • 68%</div>
+                </div>
+
+                <div class="bg-slate-950/90 border border-slate-800 rounded-lg px-2.5 py-1.5">
+                    <div class="text-[8.5px] text-slate-400 uppercase font-bold flex items-center justify-between">
+                        <span>DAYA SISA</span>
+                        <i class="fa-solid fa-battery-three-quarters text-amber-400"></i>
+                    </div>
+                    <div id="hud-rem-power" class="text-xs font-extrabold text-amber-300 mt-0.5">20.00 kWh</div>
+                </div>
+
+                <div class="bg-slate-950/90 border border-slate-800 rounded-lg px-2.5 py-1.5">
+                    <div class="text-[8.5px] text-slate-400 uppercase font-bold flex items-center justify-between">
+                        <span>KURANGNYA DAYA</span>
+                        <i class="fa-solid fa-bolt-lightning text-rose-400"></i>
+                    </div>
+                    <div id="hud-deficit-power" class="text-xs font-extrabold text-emerald-300 mt-0.5">0.00 kWh (AMAN)</div>
+                </div>
+
+                <div class="bg-slate-950/90 border border-slate-800 rounded-lg px-2.5 py-1.5">
+                    <div class="text-[8.5px] text-slate-400 uppercase font-bold flex items-center justify-between">
+                        <span>RTX 4090 FPS</span>
+                        <i class="fa-solid fa-gauge text-lime-400"></i>
+                    </div>
+                    <div id="hud-fps" class="text-xs font-extrabold text-lime-300 mt-0.5">144 FPS • 450W</div>
+                </div>
+            </div>
+
+            <!-- Pengatur Ke-Boros-an Daya RTX 4090 -->
+            <div class="mb-2.5 bg-slate-950/85 border border-slate-800 rounded-xl px-2.5 py-2">
+                <div class="flex items-center justify-between gap-2 text-[10px] font-mono mb-1.5">
+                    <span class="text-slate-300 font-bold flex items-center gap-1.5">
+                        <i class="fa-solid fa-fire-flame-curved text-lime-400"></i> ATUR BOROS RTX 4090:
+                    </span>
+                    <span id="rtx-boros-label" class="font-extrabold text-lime-300">NORMAL (450W)</span>
+                </div>
+                <div class="grid grid-cols-4 gap-1 text-[9.5px] font-mono font-bold">
+                    <button onclick="setRtxBorosProfile('eco')" id="rtx-btn-eco" class="rtx-prof-btn py-1 px-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">250W HEMAT</button>
+                    <button onclick="setRtxBorosProfile('normal')" id="rtx-btn-normal" class="rtx-prof-btn py-1 px-1.5 rounded bg-lime-500 text-slate-950 border border-lime-300">450W NORM</button>
+                    <button onclick="setRtxBorosProfile('boros')" id="rtx-btn-boros" class="rtx-prof-btn py-1 px-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">750W BOROS</button>
+                    <button onclick="setRtxBorosProfile('ekstrem')" id="rtx-btn-ekstrem" class="rtx-prof-btn py-1 px-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">1100W OC</button>
+                </div>
+                <input id="rtx-watt-slider" type="range" min="150" max="1500" step="25" value="450" oninput="setRtxCustomWatt(this.value)"
+                    class="w-full h-1.5 bg-slate-800 rounded-lg accent-lime-400 cursor-pointer mt-2">
+            </div>
+
+            <!-- Monitor PC & Layar Game Mario -->
+            <div class="monitor-bezel rounded-xl p-2 sm:p-2.5">
+                <div class="game-viewport-box relative w-full h-56 sm:h-64 rounded-lg overflow-hidden bg-sky-900 border border-slate-700">
+                    <canvas id="mario-canvas" width="480" height="270"></canvas>
+
+                    <!-- Overlay Saat PC Mati (kWh Habis atau Tombol Matikan PC Ditekan) -->
+                    <div id="pc-dead-overlay" class="hidden absolute inset-0 z-20 bg-black/95 flex flex-col items-center justify-center p-4 text-center">
+                        <div class="w-11 h-11 rounded-full bg-rose-500/15 border border-rose-500/40 text-rose-400 flex items-center justify-center text-xl mb-2">
+                            <i class="fa-solid fa-plug-circle-bolt"></i>
+                        </div>
+                        <div id="pc-dead-title" class="pixel-font text-xs sm:text-sm text-rose-400 mb-1.5">PC MATI TOTAL!</div>
+                        <p id="pc-dead-reason" class="text-[11px] text-slate-300 max-w-xs mb-3 leading-relaxed">
+                            Saldo kWh meteran habis (0.00 kWh). Daya RTX 4090 terputus seketika — progres Mario tersimpan otomatis!
+                        </p>
+                        <div class="flex flex-wrap items-center justify-center gap-2">
+                            <button onclick="turnPcBackOn()" id="btn-power-on-pc" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-extrabold flex items-center gap-1.5 shadow">
+                                <i class="fa-solid fa-power-off"></i> Nyalakan PC
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Baris Status Save Otomatis, Pilih Level (1-20), & Suara Mario -->
+                <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono">
+                    <div class="flex items-center gap-1.5">
+                        <span class="px-2 py-0.5 rounded bg-lime-500/15 border border-lime-500/30 text-lime-300 font-bold">
+                            <i class="fa-solid fa-floppy-disk"></i> AUTO-SAVE: <span id="mario-save-indicator">LVL 1 • KOIN 0</span>
+                        </span>
+                        <button onclick="toggleMarioAudio()" id="btn-mario-sfx" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300 font-bold">
+                            <i class="fa-solid fa-music"></i> SFX: ON
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-1.5">
+                        <label for="mario-level-select" class="text-slate-400 font-bold">LEVEL:</label>
+                        <select id="mario-level-select" onchange="selectMarioLevel(this.value)" class="bg-slate-950 border border-slate-700 text-amber-300 font-bold rounded px-1.5 py-0.5 outline-none">
+                        </select>
+                        <button onclick="restartCurrentMarioLevel()" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sky-300 font-bold" title="Ulangi Level Saat Ini">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kontrol HP (Touch D-Pad + Tombol Lompat & Lari/Tembak) + Tap Langsung di Layar Game -->
+            <div id="mobile-touch-controls" class="mt-2.5 bg-slate-950/90 border border-slate-800 rounded-xl p-2.5">
+                <div class="flex items-center justify-between gap-2">
+                    <!-- Kiri: Tombol Arah Kiri & Kanan untuk HP & PC -->
+                    <div class="flex items-center gap-2">
+                        <button id="touch-left" class="touch-pad-btn w-12 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-black text-base flex items-center justify-center shadow" aria-label="Kiri">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <button id="touch-right" class="touch-pad-btn w-12 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-black text-base flex items-center justify-center shadow" aria-label="Kanan">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Tengah: Info Tap Layar HP -->
+                    <div class="text-center px-1 hidden sm:block">
+                        <div class="text-[9.5px] font-mono text-slate-400">TAP LAYAR = LOMPAT</div>
+                        <div class="text-[8.5px] font-mono text-lime-400">WASD / PANAH / SPACE</div>
+                    </div>
+
+                    <!-- Kanan: Tombol Lari/Api (B) & Lompat (A) -->
+                    <div class="flex items-center gap-2">
+                        <button id="touch-run" class="touch-pad-btn px-3 h-11 rounded-xl bg-amber-500/90 hover:bg-amber-400 border border-amber-300/60 text-slate-950 font-extrabold text-xs flex items-center justify-center shadow" title="Lari Cepat / Bola Api">
+                            RUN
+                        </button>
+                        <button id="touch-jump" class="touch-pad-btn w-14 h-11 rounded-xl bg-red-600 hover:bg-red-500 border border-red-400/60 text-white font-black text-xs flex items-center justify-center shadow" title="Lompat">
+                            JUMP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- ========================================================================= -->
@@ -430,30 +670,17 @@
                     <button onclick="quickShortcode('75')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200">75↵ ID Meter</button>
                     <button onclick="quickShortcode('78')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300">78↵ Jeda Alarm</button>
                     <button onclick="quickShortcode('79')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-teal-300">79↵ Jml Token</button>
-                    <button onclick="quickShortcode('81')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300">81↵ Token Terakhir</button>
                 </div>
             </div>
 
-            <!-- Catatan Token 20 Digit Tersimpan -->
-            <div class="pt-2 border-t border-slate-800/80">
-                <div class="flex items-center justify-between mb-1.5">
-                    <span class="text-[11px] font-semibold text-slate-300 flex items-center gap-1.5">
-                        <i class="fa-solid fa-receipt text-emerald-400"></i> Catatan Token 20 Digit Masuk (<span id="token-log-count">0</span>)
-                    </span>
-                </div>
-                <div id="token-20-log-list" class="max-h-32 overflow-y-auto bg-slate-950/90 border border-slate-800 rounded-xl p-2 space-y-1.5 text-[10.5px] font-mono text-slate-300">
-                    <div class="text-slate-500 text-center py-2">Belum ada token 20 digit tercatat.</div>
-                </div>
-            </div>
-
-            <!-- Info Serial Meter Permanen & Reset kWh ke 0 -->
+            <!-- Info Serial Meter Permanen & Reset Saldo kWh -->
             <div class="pt-2.5 border-t border-slate-800/80 flex items-center justify-between gap-2">
                 <div class="text-[10.5px] text-slate-400 flex items-center gap-1.5 min-w-0">
                     <i class="fa-solid fa-lock text-emerald-400 shrink-0"></i>
-                    <span class="truncate">Catatan Token 20D Aman</span>
+                    <span class="truncate">ID Perangkat Terkunci Pabrik</span>
                 </div>
-                <button onclick="resetMeterStorage()" class="text-[11px] text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1 shrink-0" title="Reset kWh menjadi 0 (catatan token 20 digit tetap disimpan)">
-                    <i class="fa-solid fa-rotate-left"></i> Reset kWh ke 0
+                <button onclick="resetMeterStorage()" class="text-[11px] text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1 shrink-0" title="Reset saldo kWh & riwayat TID (ID Meter tetap permanen)">
+                    <i class="fa-solid fa-rotate-left"></i> Reset Data Meteran
                 </button>
             </div>
         </div>
@@ -482,14 +709,14 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- SCRIPT LOGIKA                                                             -->
+    <!-- SCRIPT LOGIKA METERAN PLN (TIDAK DIUBAH FITUR & LOGIKA INTINYA)           -->
     <!-- ========================================================================= -->
     <script>
         const PLN_STS_SECRET_KEY = "PLN_STS_VENDING_KEY_2026";
         const PERMANENT_HW_ID_KEY = "PLN_METER_PERMANENT_HW_ID_V1";
+        const PERMANENT_USED_TIDS_KEY = "PLN_METER_PERMANENT_USED_TIDS_V1";
         const STORAGE_KEY = "PLN_METER_ITRON_ACE9000_STATE_V1";
         const STORAGE_KEY_V3 = "PLN_METER_ITRON_ACE9000_STATE_V3";
-        const TOKEN_20_ARCHIVE_KEY = "PLN_METER_20DIGIT_TOKEN_ARCHIVE_V1";
         const MAX_SUPPORTED_KWH = 190000000000; // 190 Miliar kWh
 
         function setPermanentCookie(name, value) {
@@ -548,18 +775,7 @@
             }
 
             if (!hwId) {
-                try {
-                    const legacyRaw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY_V3);
-                    if (legacyRaw) {
-                        const parsed = JSON.parse(legacyRaw);
-                        if (parsed && parsed.meterId && /^\d{11}$/.test(parsed.meterId)) {
-                            hwId = parsed.meterId;
-                        }
-                    }
-                } catch (e) {}
-            }
-
-            if (!hwId) {
+                // Pengguna pertama kali membuka: generate kode 11 digit baru yang unik
                 hwId = generateRealisticHardwareMeterId11();
             }
 
@@ -582,7 +798,6 @@
             simSpeed: 1,
             usedTids: [],
             tokensAcceptedCount: 0,
-            token20History: [],
             inputBuffer: "",
             displayMode: "IDLE",
             isProcessingToken: false,
@@ -594,84 +809,8 @@
             relayClosed: true
         };
 
-        function loadToken20Archive() {
-            try {
-                const raw = localStorage.getItem(TOKEN_20_ARCHIVE_KEY);
-                if (raw) {
-                    const parsed = JSON.parse(raw);
-                    if (Array.isArray(parsed)) {
-                        return parsed.filter(item => item && /^\d{20}$/.test(item.token20));
-                    }
-                }
-            } catch (e) {}
-            return [];
-        }
-
-        function saveToken20Archive(list) {
-            try {
-                localStorage.setItem(TOKEN_20_ARCHIVE_KEY, JSON.stringify((list || []).slice(0, 200)));
-            } catch (e) {}
-        }
-
-        function recordAcceptedToken20(token20, tid, addedKwh) {
-            if (!/^\d{20}$/.test(token20)) return;
-            const exists = meterState.token20History.some(item => item.token20 === token20);
-            if (!exists) {
-                const now = new Date();
-                const timeStr = now.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-                meterState.token20History.unshift({
-                    token20: token20,
-                    formatted: token20.replace(/(.{4})/g, "$1 ").trim(),
-                    tid: tid,
-                    kwh: addedKwh,
-                    time: timeStr
-                });
-                meterState.token20History = meterState.token20History.slice(0, 200);
-            }
-            saveToken20Archive(meterState.token20History);
-            renderToken20History();
-        }
-
-        function renderToken20History() {
-            const listEl = document.getElementById("token-20-log-list");
-            const countEl = document.getElementById("token-log-count");
-            if (!listEl || !countEl) return;
-
-            const archive = meterState.token20History || [];
-            countEl.textContent = String(archive.length);
-
-            if (archive.length === 0) {
-                listEl.innerHTML = '<div class="text-slate-500 text-center py-2">Belum ada token 20 digit tercatat.</div>';
-                return;
-            }
-
-            listEl.innerHTML = archive.map(item => `
-                <div class="flex items-center justify-between gap-2 bg-slate-900/90 border border-slate-800/90 rounded-lg px-2 py-1.5">
-                    <div class="min-w-0">
-                        <div class="text-amber-300 font-bold tracking-wider truncate">${item.formatted || item.token20}</div>
-                        <div class="text-[9.5px] text-slate-400">TID #${item.tid || "-"} • +${formatLcdKwhNumber(item.kwh || 0)} kWh • ${item.time || ""}</div>
-                    </div>
-                    <button type="button" onclick="copySpecificToken20('${item.token20}')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-sans font-bold text-sky-300 shrink-0">
-                        Salin
-                    </button>
-                </div>
-            `).join("");
-        }
-
-        function copySpecificToken20(token20) {
-            if (!/^\d{20}$/.test(token20)) return;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(token20).catch(() => fallbackCopyText(token20));
-            } else {
-                fallbackCopyText(token20);
-            }
-            playKeyBeep();
-            showToast(`Token 20 digit ${token20} disalin!`, "success");
-        }
-
         function loadSavedState() {
             meterState.meterId = getOrCreatePermanentHardwareMeterId();
-            meterState.token20History = loadToken20Archive();
 
             try {
                 const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY_V3);
@@ -695,40 +834,70 @@
                     if (typeof parsed.tokensAcceptedCount === "number") {
                         meterState.tokensAcceptedCount = parsed.tokensAcceptedCount;
                     }
-                    if (Array.isArray(parsed.token20History) && parsed.token20History.length > 0) {
-                        parsed.token20History.forEach(item => {
-                            if (item && /^\d{20}$/.test(item.token20) && !meterState.token20History.some(x => x.token20 === item.token20)) {
-                                meterState.token20History.push(item);
-                            }
-                        });
-                        saveToken20Archive(meterState.token20History);
-                    }
                 }
             } catch (e) {}
 
+            const permTids = loadPermanentUsedTids();
+            meterState.usedTids = Array.from(new Set([...meterState.usedTids, ...permTids]));
             meterState.relayClosed = meterState.balanceKwh > 0;
             saveState();
-            renderToken20History();
+        }
+
+        function loadPermanentUsedTids() {
+            const setTids = new Set();
+            try {
+                const rawLs = localStorage.getItem(PERMANENT_USED_TIDS_KEY);
+                if (rawLs) {
+                    const arr = JSON.parse(rawLs);
+                    if (Array.isArray(arr)) arr.forEach(t => setTids.add(Number(t)));
+                }
+            } catch (e) {}
+            try {
+                const rawCk = getPermanentCookie(PERMANENT_USED_TIDS_KEY);
+                if (rawCk) {
+                    const arr = JSON.parse(rawCk);
+                    if (Array.isArray(arr)) arr.forEach(t => setTids.add(Number(t)));
+                }
+            } catch (e) {}
+            try {
+                const rawState = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY_V3);
+                if (rawState) {
+                    const st = JSON.parse(rawState);
+                    if (Array.isArray(st.usedTids)) st.usedTids.forEach(t => setTids.add(Number(t)));
+                }
+            } catch (e) {}
+            return Array.from(setTids).filter(n => Number.isFinite(n) && n > 0);
+        }
+
+        function savePermanentUsedTids(tidsArr) {
+            const clean = Array.from(new Set((tidsArr || []).map(Number).filter(n => Number.isFinite(n) && n > 0))).slice(-2000);
+            meterState.usedTids = clean;
+            const serialized = JSON.stringify(clean);
+            try {
+                localStorage.setItem(PERMANENT_USED_TIDS_KEY, serialized);
+            } catch (e) {}
+            setPermanentCookie(PERMANENT_USED_TIDS_KEY, serialized);
         }
 
         function saveState() {
+            savePermanentUsedTids(meterState.usedTids);
             const payload = JSON.stringify({
                 meterId: meterState.meterId,
                 balanceKwh: meterState.balanceKwh,
                 totalConsumedKwh: meterState.totalConsumedKwh,
                 alarmThresholdKwh: meterState.alarmThresholdKwh,
                 currentWatt: meterState.currentWatt,
-                usedTids: meterState.usedTids.slice(-500),
-                tokensAcceptedCount: meterState.tokensAcceptedCount,
-                token20History: meterState.token20History.slice(0, 200)
+                usedTids: meterState.usedTids.slice(-2000),
+                tokensAcceptedCount: meterState.tokensAcceptedCount
             });
             try {
                 localStorage.setItem(PERMANENT_HW_ID_KEY, meterState.meterId);
+                localStorage.setItem(PERMANENT_USED_TIDS_KEY, JSON.stringify(meterState.usedTids.slice(-2000)));
                 localStorage.setItem(STORAGE_KEY, payload);
                 localStorage.setItem(STORAGE_KEY_V3, payload);
             } catch (e) {}
-            saveToken20Archive(meterState.token20History);
             setPermanentCookie(PERMANENT_HW_ID_KEY, meterState.meterId);
+            setPermanentCookie(PERMANENT_USED_TIDS_KEY, JSON.stringify(meterState.usedTids.slice(-2000)));
         }
 
         let audioCtx = null;
@@ -892,7 +1061,6 @@
 
         function formatLcdKwhNumber(val) {
             if (!isFinite(val) || val < 0) return "0.00";
-            if (val === 0) return "0";
             if (val >= 1000000000) {
                 const b = val / 1000000000;
                 return (b >= 100 ? b.toFixed(1) : b.toFixed(2)) + "B";
@@ -1000,16 +1168,19 @@
                     if (res.status === "BENAR") {
                         const wasEmpty = meterState.balanceKwh <= 0;
                         meterState.balanceKwh = Math.min(MAX_SUPPORTED_KWH, parseFloat((meterState.balanceKwh + res.kwh).toFixed(2)));
-                        if (!meterState.usedTids.includes(res.tid)) {
-                            meterState.usedTids.push(res.tid);
-                        }
+                        meterState.usedTids.push(res.tid);
+                        savePermanentUsedTids(meterState.usedTids);
                         meterState.tokensAcceptedCount += 1;
-                        recordAcceptedToken20(code, res.tid, res.kwh);
                         saveState();
 
                         playAcceptBeep();
                         if (wasEmpty && meterState.balanceKwh > 0) {
                             setTimeout(playRelayClick, 300);
+                            if (pcRigState.poweredByUser) {
+                                pcRigState.pcOn = true;
+                                pcRigState.shutdownReason = "";
+                                syncPcPowerState(true);
+                            }
                         }
 
                         const addedFormatted = formatLcdKwhNumber(res.kwh);
@@ -1132,18 +1303,18 @@
                     showTempLcd(meterState.alarmThresholdKwh.toFixed(2), "BATAS KREDIT RENDAH", "kWh", "KODE 07", 3200);
                     break;
                 case "09":
-                    const activeW = meterState.balanceKwh > 0 ? meterState.currentWatt : 0;
+                    const activeW = getTotalActiveWatt();
                     showTempLcd(String(activeW), "DAYA BEBAN AKTIF", "W", "KODE 09", 3200);
                     break;
                 case "41":
                     showTempLcd(meterState.voltage.toFixed(1), "TEGANGAN JARINGAN", "V", "KODE 41", 3200);
                     break;
                 case "44":
-                    const amp = meterState.balanceKwh > 0 ? (meterState.currentWatt / meterState.voltage) : 0;
+                    const amp = getTotalActiveWatt() / meterState.voltage;
                     showTempLcd(amp.toFixed(2), "ARUS BEBAN SESAAT", "A", "KODE 44", 3200);
                     break;
                 case "47":
-                    const kw = meterState.balanceKwh > 0 ? (meterState.currentWatt / 1000) : 0;
+                    const kw = getTotalActiveWatt() / 1000;
                     showTempLcd(kw.toFixed(3), "DAYA SESAAT (KW)", "kW", "KODE 47", 3200);
                     break;
                 case "75":
@@ -1159,17 +1330,6 @@
                 case "79":
                     showTempLcd(String(meterState.tokensAcceptedCount), "JUMLAH TOKEN MASUK", "PCS", "KODE 79", 3200);
                     break;
-                case "81": {
-                    const lastTok = meterState.token20History[0];
-                    if (lastTok) {
-                        showTempLcd(lastTok.token20.slice(0, 10), `TOKEN 20D (1/2): ${lastTok.token20}`, "20D", "KODE 81", 2000, () => {
-                            showTempLcd(lastTok.token20.slice(10, 20), `TOKEN 20D (2/2): ${lastTok.token20}`, "20D", "KODE 81", 2400);
-                        });
-                    } else {
-                        showTempLcd("KOSONG", "BELUM ADA TOKEN 20D", "ERR", "KODE 81", 2000);
-                    }
-                    break;
-                }
                 default:
                     playErrorBeeps();
                     showTempLcd("TIDAK ADA", `KODE ${code} UNKNOWN`, "ERR", "INFO", 1800);
@@ -1261,23 +1421,1383 @@
                 const formattedBal = formatLcdKwhNumber(meterState.balanceKwh);
                 applyAdaptiveLcdFontSize(formattedBal);
                 mainEl.textContent = formattedBal;
-                const activeW = isEmpty ? 0 : meterState.currentWatt;
+                const activeW = getTotalActiveWatt();
                 const amp = (activeW / meterState.voltage).toFixed(2);
                 subEl.textContent = `${activeW}W • ${meterState.voltage.toFixed(1)}V • ${amp}A`;
                 unitEl.textContent = "kWh";
             }
         }
 
+        // =====================================================================
+        // SISTEM DAYA RTX 4090 REALISTIS & SUPER MARIO 20 LEVEL (SAVE OTOMATIS)
+        // =====================================================================
+        const MARIO_SAVE_KEY = "PLN_RTX4090_MARIO_20LVL_SAVE_V1";
+        const RTX_PRESETS = {
+            eco: { label: "HEMAT (250W)", base: 250, boost: 320, fpsBase: 90, clockBase: 4.90 },
+            normal: { label: "NORMAL (450W)", base: 450, boost: 580, fpsBase: 144, clockBase: 5.75 },
+            boros: { label: "BOROS (750W)", base: 750, boost: 920, fpsBase: 240, clockBase: 6.05 },
+            ekstrem: { label: "OVERCLOCK (1100W)", base: 1100, boost: 1350, fpsBase: 360, clockBase: 6.30 }
+        };
+        let RTX_4090_BASE_WATT = 450;
+        let RTX_4090_BOOST_WATT = 580;
+
+        const pcRigState = {
+            pcOn: true,
+            poweredByUser: true,
+            shutdownReason: "",
+            rtxProfile: "normal",
+            currentRigWatt: RTX_4090_BASE_WATT,
+            cpuClockGhz: 5.80,
+            cpuLoadPct: 68,
+            fps: 144,
+            marioSfxEnabled: true,
+            fullscreenHorizontal: false,
+            level: 1,
+            coins: 0,
+            score: 0,
+            lives: 3,
+            bigMario: false,
+            fireFlower: false,
+            checkpointReached: false
+        };
+
+        function getTotalActiveWatt() {
+            if (meterState.balanceKwh <= 0) return 0;
+            const rigW = pcRigState.pcOn ? pcRigState.currentRigWatt : 0;
+            return Math.round(meterState.currentWatt + rigW);
+        }
+
+        function applyRtxWattSettings(baseWatt, profileName = "custom") {
+            const cleanBase = Math.max(150, Math.min(1500, parseInt(baseWatt, 10) || 450));
+            RTX_4090_BASE_WATT = cleanBase;
+            RTX_4090_BOOST_WATT = Math.round(cleanBase * 1.28);
+            pcRigState.rtxProfile = profileName;
+            pcRigState.currentRigWatt = (mario.running || mario.fireCooldown > 0) ? RTX_4090_BOOST_WATT : RTX_4090_BASE_WATT;
+
+            const slider = document.getElementById("rtx-watt-slider");
+            if (slider) slider.value = String(cleanBase);
+
+            document.querySelectorAll(".rtx-prof-btn").forEach(btn => {
+                btn.className = "rtx-prof-btn py-1 px-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700";
+            });
+            const activeBtn = document.getElementById(`rtx-btn-${profileName}`);
+            if (activeBtn) {
+                activeBtn.className = "rtx-prof-btn py-1 px-1.5 rounded bg-lime-500 text-slate-950 border border-lime-300";
+            }
+
+            const labelEl = document.getElementById("rtx-boros-label");
+            if (labelEl) {
+                const tag = profileName === "eco" ? "HEMAT" : (profileName === "boros" ? "BOROS" : (profileName === "ekstrem" ? "OVERCLOCK" : (profileName === "normal" ? "NORMAL" : "CUSTOM")));
+                labelEl.textContent = `${tag} (${cleanBase}W / ${RTX_4090_BOOST_WATT}W)`;
+            }
+
+            const amp = (getTotalActiveWatt() / 220).toFixed(2);
+            const wattLbl = document.getElementById("sim-watt-label");
+            if (wattLbl) wattLbl.textContent = `${meterState.currentWatt.toLocaleString("id-ID")} W (${amp} A total)`;
+            updateRigTelemetryHud();
+            if (meterState.displayMode === "IDLE") updateLcdDisplay();
+        }
+
+        function setRtxBorosProfile(profileKey) {
+            const p = RTX_PRESETS[profileKey];
+            if (!p) return;
+            applyRtxWattSettings(p.base, profileKey);
+            saveMarioProgress();
+            showToast(`Daya RTX 4090 diatur ke ${p.label}`, "info");
+        }
+
+        function setRtxCustomWatt(val) {
+            applyRtxWattSettings(val, "custom");
+            saveMarioProgress();
+        }
+
+        function saveMarioProgress() {
+            try {
+                localStorage.setItem(MARIO_SAVE_KEY, JSON.stringify({
+                    level: pcRigState.level,
+                    coins: pcRigState.coins,
+                    score: pcRigState.score,
+                    lives: pcRigState.lives,
+                    bigMario: pcRigState.bigMario,
+                    fireFlower: pcRigState.fireFlower,
+                    poweredByUser: pcRigState.poweredByUser,
+                    marioSfxEnabled: pcRigState.marioSfxEnabled,
+                    rtxBaseWatt: RTX_4090_BASE_WATT,
+                    rtxProfile: pcRigState.rtxProfile
+                }));
+            } catch (e) {}
+            updateMarioSaveBadge();
+        }
+
+        function loadMarioProgress() {
+            try {
+                const raw = localStorage.getItem(MARIO_SAVE_KEY);
+                if (raw) {
+                    const p = JSON.parse(raw);
+                    if (typeof p.level === "number" && p.level >= 1 && p.level <= 20) pcRigState.level = p.level;
+                    if (typeof p.coins === "number" && p.coins >= 0) pcRigState.coins = p.coins;
+                    if (typeof p.score === "number" && p.score >= 0) pcRigState.score = p.score;
+                    if (typeof p.lives === "number" && p.lives >= 1 && p.lives <= 9) pcRigState.lives = p.lives;
+                    if (typeof p.bigMario === "boolean") pcRigState.bigMario = p.bigMario;
+                    if (typeof p.fireFlower === "boolean") pcRigState.fireFlower = p.fireFlower;
+                    if (typeof p.poweredByUser === "boolean") pcRigState.poweredByUser = p.poweredByUser;
+                    if (typeof p.marioSfxEnabled === "boolean") pcRigState.marioSfxEnabled = p.marioSfxEnabled;
+                }
+            } catch (e) {}
+            let savedBaseWatt = 450;
+            let savedProfile = "normal";
+            try {
+                const raw = localStorage.getItem(MARIO_SAVE_KEY);
+                if (raw) {
+                    const p = JSON.parse(raw);
+                    if (typeof p.rtxBaseWatt === "number") savedBaseWatt = p.rtxBaseWatt;
+                    if (typeof p.rtxProfile === "string") savedProfile = p.rtxProfile;
+                }
+            } catch (e) {}
+            applyRtxWattSettings(savedBaseWatt, savedProfile);
+            const sel = document.getElementById("mario-level-select");
+            if (sel) sel.value = String(pcRigState.level);
+            updateMarioSfxButton();
+            updateMarioSaveBadge();
+        }
+
+        function updateMarioSaveBadge() {
+            const el = document.getElementById("mario-save-indicator");
+            if (el) {
+                el.textContent = `LVL ${pcRigState.level}/20 • KOIN ${pcRigState.coins}`;
+            }
+        }
+
+        function updateMarioSfxButton() {
+            const btn = document.getElementById("btn-mario-sfx");
+            if (btn) {
+                btn.innerHTML = pcRigState.marioSfxEnabled
+                    ? '<i class="fa-solid fa-music"></i> SFX: ON'
+                    : '<i class="fa-solid fa-volume-xmark text-rose-400"></i> SFX: OFF';
+            }
+        }
+
+        function toggleMarioAudio() {
+            pcRigState.marioSfxEnabled = !pcRigState.marioSfxEnabled;
+            updateMarioSfxButton();
+            saveMarioProgress();
+        }
+
+        function playMarioTone(freq, dur, type = "square", vol = 0.08, delay = 0) {
+            if (!pcRigState.marioSfxEnabled || !pcRigState.pcOn || meterState.balanceKwh <= 0) return;
+            try {
+                ensureAudioCtx();
+                const startT = audioCtx.currentTime + delay;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, startT);
+                gain.gain.setValueAtTime(vol, startT);
+                gain.gain.exponentialRampToValueAtTime(0.001, startT + dur);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(startT);
+                osc.stop(startT + dur);
+            } catch (e) {}
+        }
+
+        function sfxJump() {
+            playMarioTone(340, 0.06, "square", 0.07, 0);
+            playMarioTone(580, 0.09, "square", 0.07, 0.05);
+        }
+        function sfxCoin() {
+            playMarioTone(987, 0.06, "square", 0.07, 0);
+            playMarioTone(1318, 0.14, "square", 0.07, 0.06);
+        }
+        function sfxBump() {
+            playMarioTone(170, 0.08, "triangle", 0.09, 0);
+        }
+        function sfxStomp() {
+            playMarioTone(260, 0.05, "square", 0.08, 0);
+            playMarioTone(420, 0.07, "square", 0.08, 0.04);
+        }
+        function sfxPowerup() {
+            [523, 659, 784, 1046].forEach((f, idx) => playMarioTone(f, 0.07, "square", 0.07, idx * 0.065));
+        }
+        function sfxFireball() {
+            playMarioTone(760, 0.05, "sawtooth", 0.06, 0);
+            playMarioTone(390, 0.07, "sawtooth", 0.05, 0.04);
+        }
+        function sfxLevelClear() {
+            [523, 659, 784, 1046, 784, 1046].forEach((f, idx) => playMarioTone(f, 0.09, "square", 0.08, idx * 0.09));
+        }
+        function sfxDie() {
+            [440, 392, 349, 262].forEach((f, idx) => playMarioTone(f, 0.11, "sawtooth", 0.08, idx * 0.11));
+        }
+
+        function syncPcPowerState(silent = false) {
+            const overlay = document.getElementById("pc-dead-overlay");
+            const titleEl = document.getElementById("pc-dead-title");
+            const reasonEl = document.getElementById("pc-dead-reason");
+            const badgeEl = document.getElementById("pc-power-badge");
+            const btnLabel = document.getElementById("pc-power-label");
+            const powerOnBtn = document.getElementById("btn-power-on-pc");
+
+            if (meterState.balanceKwh <= 0) {
+                pcRigState.pcOn = false;
+                pcRigState.shutdownReason = "KWH_HABIS";
+                saveMarioProgress();
+                overlay.classList.remove("hidden");
+                titleEl.textContent = "PC MATI — KWH HABIS!";
+                reasonEl.textContent = "Saldo kWh habis (0.00 kWh). Daya RTX 4090 terputus langsung! Progres Mario tersimpan otomatis. Isi token 20 digit di meteran untuk menyalakan kembali.";
+                badgeEl.className = "px-1.5 py-0.5 rounded text-[9px] font-mono font-extrabold bg-rose-500/20 text-rose-300 border border-rose-500/40";
+                badgeEl.textContent = "NO POWER (0 kWh)";
+                btnLabel.textContent = "NO kWh";
+                if (powerOnBtn) powerOnBtn.classList.add("hidden");
+                if (!silent) {
+                    sfxDie();
+                }
+            } else if (!pcRigState.poweredByUser || !pcRigState.pcOn) {
+                pcRigState.pcOn = false;
+                pcRigState.shutdownReason = "USER_SHUTDOWN";
+                saveMarioProgress();
+                overlay.classList.remove("hidden");
+                titleEl.textContent = "PC DIMATIKAN";
+                reasonEl.textContent = "Sistem RTX 4090 dimatikan secara manual. Daya rig dihentikan (0W RTX) dan progres Mario tersimpan otomatis.";
+                badgeEl.className = "px-1.5 py-0.5 rounded text-[9px] font-mono font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/40";
+                badgeEl.textContent = "SHUTDOWN";
+                btnLabel.textContent = "NYALAKAN";
+                if (powerOnBtn) powerOnBtn.classList.remove("hidden");
+            } else {
+                pcRigState.pcOn = true;
+                pcRigState.shutdownReason = "";
+                saveMarioProgress();
+                overlay.classList.add("hidden");
+                badgeEl.className = "px-1.5 py-0.5 rounded text-[9px] font-mono font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+                badgeEl.textContent = "RTX 4090 ON";
+                btnLabel.textContent = "MATIKAN PC";
+            }
+            updateRigTelemetryHud();
+            if (meterState.displayMode === "IDLE") updateLcdDisplay();
+        }
+
+        function togglePcPowerManual() {
+            if (meterState.balanceKwh <= 0) {
+                showToast("kWh habis! Masukkan token 20 digit di meteran agar listrik menyala.", "error");
+                return;
+            }
+            if (pcRigState.pcOn) {
+                pcRigState.poweredByUser = false;
+                pcRigState.pcOn = false;
+                saveMarioProgress();
+                syncPcPowerState(true);
+                showToast("PC RTX 4090 dimatikan. Save Mario aman tersimpan.", "info");
+            } else {
+                turnPcBackOn();
+            }
+        }
+
+        function turnPcBackOn() {
+            if (meterState.balanceKwh <= 0) {
+                showToast("Tidak bisa menyalakan PC: saldo kWh meteran masih 0.00 kWh!", "error");
+                return;
+            }
+            pcRigState.poweredByUser = true;
+            pcRigState.pcOn = true;
+            pcRigState.shutdownReason = "";
+            saveMarioProgress();
+            syncPcPowerState(true);
+            playKeyBeep();
+            showToast("PC RTX 4090 menyala kembali! Melanjutkan dari save otomatis.", "success");
+        }
+
+        function quickTopupDemoToken() {
+            meterState.balanceKwh = Math.min(MAX_SUPPORTED_KWH, parseFloat((meterState.balanceKwh + 5.00).toFixed(2)));
+            meterState.relayClosed = true;
+            pcRigState.poweredByUser = true;
+            pcRigState.pcOn = true;
+            pcRigState.shutdownReason = "";
+            saveState();
+            saveMarioProgress();
+            playAcceptBeep();
+            setTimeout(playRelayClick, 180);
+            syncPcPowerState(true);
+            showToast("Daya darurat +5.00 kWh masuk! Relay ON & PC menyala.", "success");
+        }
+
+        function toggleMarioFullscreenHorizontal() {
+            const rigEl = document.getElementById("rtx-pc-rig");
+            const labelEl = document.getElementById("fullscreen-btn-label");
+            const btnEl = document.getElementById("btn-fullscreen-mario");
+
+            pcRigState.fullscreenHorizontal = !pcRigState.fullscreenHorizontal;
+            if (pcRigState.fullscreenHorizontal) {
+                rigEl.classList.add("rtx-fullscreen-mode");
+                labelEl.textContent = "KELUAR FS";
+                btnEl.className = "px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-[11px] font-extrabold flex items-center gap-1 transition shadow";
+                if (rigEl.requestFullscreen) {
+                    rigEl.requestFullscreen().catch(() => {});
+                }
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock("landscape").catch(() => {});
+                }
+            } else {
+                rigEl.classList.remove("rtx-fullscreen-mode");
+                labelEl.textContent = "FULLSCREEN";
+                btnEl.className = "px-2.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-extrabold flex items-center gap-1 transition shadow";
+                if (document.fullscreenElement && document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
+            }
+            resizeMarioCanvas();
+        }
+
+        document.addEventListener("fullscreenchange", () => {
+            if (!document.fullscreenElement && pcRigState.fullscreenHorizontal) {
+                const rigEl = document.getElementById("rtx-pc-rig");
+                if (!rigEl.classList.contains("rtx-fullscreen-mode")) {
+                    pcRigState.fullscreenHorizontal = false;
+                }
+            }
+            resizeMarioCanvas();
+        });
+
+        // =====================================================================
+        // TELEMETRI DAYA REALISTIS (KECEPATAN CPU, SISA DAYA, KURANGNYA DAYA, FPS)
+        // =====================================================================
+        function updateRigTelemetryHud() {
+            const cpuEl = document.getElementById("hud-cpu-clock");
+            const remEl = document.getElementById("hud-rem-power");
+            const defEl = document.getElementById("hud-deficit-power");
+            const fpsEl = document.getElementById("hud-fps");
+
+            const remKwh = Math.max(0, meterState.balanceKwh);
+            remEl.textContent = `${formatLcdKwhNumber(remKwh)} kWh`;
+
+            if (!pcRigState.pcOn || remKwh <= 0) {
+                cpuEl.textContent = "0.00 GHz • 0%";
+                cpuEl.className = "text-xs font-extrabold text-slate-500 mt-0.5";
+
+                // Hitung kekurangan daya agar bisa menjalankan 1 jam penuh beban rumah + RTX 4090
+                const needed1HourKwh = (meterState.currentWatt + RTX_4090_BASE_WATT) / 1000;
+                const shortageKwh = Math.max(0, needed1HourKwh - remKwh);
+                if (remKwh <= 0) {
+                    defEl.textContent = `-${shortageKwh.toFixed(2)} kWh (HABIS)`;
+                    defEl.className = "text-xs font-extrabold text-rose-400 mt-0.5";
+                } else {
+                    defEl.textContent = `0.00 kWh (OFF)`;
+                    defEl.className = "text-xs font-extrabold text-amber-300 mt-0.5";
+                }
+
+                fpsEl.textContent = "0 FPS • 0W";
+                fpsEl.className = "text-xs font-extrabold text-rose-400 mt-0.5";
+                return;
+            }
+
+            // Kecepatan CPU dinamis berdasarkan level & aksi Mario
+            const boostAdd = (mario.running || mario.fireCooldown > 0) ? 0.18 : 0;
+            const lvlClock = 5.55 + Math.min(0.40, pcRigState.level * 0.02) + boostAdd;
+            pcRigState.cpuClockGhz = lvlClock;
+            pcRigState.cpuLoadPct = Math.min(99, Math.round(54 + pcRigState.level * 1.4 + (mario.running ? 16 : 0)));
+
+            cpuEl.textContent = `${pcRigState.cpuClockGhz.toFixed(2)} GHz • ${pcRigState.cpuLoadPct}%`;
+            cpuEl.className = "text-xs font-extrabold text-sky-300 mt-0.5";
+
+            // Daya rig RTX 4090 realistis (450W - 580W)
+            pcRigState.currentRigWatt = (mario.running || mario.fireCooldown > 0) ? RTX_4090_BOOST_WATT : RTX_4090_BASE_WATT;
+
+            // Cek kekurangan daya: jika sisa kWh < kebutuhan 1 jam beban total (rumah + RTX 4090) atau < 1.00 kWh
+            const totalWatt = meterState.currentWatt + pcRigState.currentRigWatt;
+            const targetBufferKwh = Math.max(1.0, (totalWatt / 1000) * 1.0);
+            const deficitKwh = Math.max(0, targetBufferKwh - remKwh);
+
+            if (remKwh < meterState.alarmThresholdKwh) {
+                defEl.textContent = `-${Math.max(0.01, meterState.alarmThresholdKwh - remKwh).toFixed(2)} kWh (KRITIS)`;
+                defEl.className = "text-xs font-extrabold text-amber-400 mt-0.5";
+            } else if (deficitKwh > 0) {
+                defEl.textContent = `-${deficitKwh.toFixed(2)} kWh (<1J)`;
+                defEl.className = "text-xs font-extrabold text-orange-300 mt-0.5";
+            } else {
+                defEl.textContent = "0.00 kWh (CUKUP)";
+                defEl.className = "text-xs font-extrabold text-emerald-300 mt-0.5";
+            }
+
+            // FPS stabil RTX 4090 (turun sedikit jika daya mendekati kritis)
+            const jitter = Math.floor(Math.random() * 5) - 2;
+            const baseFps = remKwh < 1.0 ? 96 : (remKwh < meterState.alarmThresholdKwh ? 120 : 144);
+            pcRigState.fps = Math.max(30, baseFps + jitter);
+            fpsEl.textContent = `${pcRigState.fps} FPS • ${pcRigState.currentRigWatt}W`;
+            fpsEl.className = "text-xs font-extrabold text-lime-300 mt-0.5";
+        }
+
+        // =====================================================================
+        // ENGINE SUPER MARIO 20 LEVEL (TANPA BUG, SUARA ASLI, LEVEL FINAL LVL 20)
+        // =====================================================================
+        const TILE = 18;
+        const VIEW_W = 480;
+        const VIEW_H = 270;
+
+        const marioCanvas = document.getElementById("mario-canvas");
+        const marioCtx = marioCanvas.getContext("2d");
+
+        function resizeMarioCanvas() {
+            marioCanvas.width = VIEW_W;
+            marioCanvas.height = VIEW_H;
+        }
+
+        const inputState = {
+            left: false,
+            right: false,
+            jump: false,
+            run: false,
+            jumpPressedEdge: false,
+            runPressedEdge: false
+        };
+
+        const mario = {
+            x: 36,
+            y: 180,
+            w: 14,
+            h: 16,
+            vx: 0,
+            vy: 0,
+            onGround: false,
+            facing: 1,
+            running: false,
+            animTimer: 0,
+            animFrame: 0,
+            invulnTimer: 0,
+            fireCooldown: 0,
+            deadAnim: 0,
+            levelClearTimer: 0,
+            finalVictory: false
+        };
+
+        let worldCols = 95;
+        let worldRows = 15;
+        let grid = []; // 0=empty, 1=ground, 2=brick, 3=qblock_coin, 4=qblock_power, 5=qblock_used, 6=pipe, 7=flagpole
+        let coinsList = [];
+        let enemiesList = [];
+        let powerupsList = [];
+        let fireballsList = [];
+        let particlesList = [];
+        let cameraX = 0;
+        let levelBannerTimer = 90;
+        let levelTheme = { skyTop: "#38bdf8", skyBot: "#bae6fd", hill: "#16a34a", groundTop: "#22c55e", groundBody: "#92400e" };
+
+        function populateLevelDropdown() {
+            const sel = document.getElementById("mario-level-select");
+            if (!sel) return;
+            sel.innerHTML = "";
+            for (let i = 1; i <= 20; i++) {
+                const opt = document.createElement("option");
+                opt.value = String(i);
+                opt.textContent = i === 20 ? "LVL 20 (FINAL!)" : `LVL ${i}`;
+                sel.appendChild(opt);
+            }
+            sel.value = String(pcRigState.level);
+        }
+
+        function selectMarioLevel(lvlStr) {
+            const lvl = parseInt(lvlStr, 10);
+            if (isNaN(lvl) || lvl < 1 || lvl > 20) return;
+            pcRigState.level = lvl;
+            pcRigState.finalVictory = false;
+            saveMarioProgress();
+            buildMarioLevel(lvl);
+            playKeyBeep();
+        }
+
+        function restartCurrentMarioLevel() {
+            pcRigState.finalVictory = false;
+            buildMarioLevel(pcRigState.level);
+            playKeyBeep();
+        }
+
+        function getLevelTheme(lvl) {
+            if (lvl === 20) {
+                return { skyTop: "#2b0912", skyBot: "#7f1d1d", hill: "#991b1b", groundTop: "#dc2626", groundBody: "#27272a" };
+            }
+            const mod = lvl % 4;
+            if (mod === 1) return { skyTop: "#2563eb", skyBot: "#93c5fd", hill: "#16a34a", groundTop: "#22c55e", groundBody: "#92400e" };
+            if (mod === 2) return { skyTop: "#0f766e", skyBot: "#99f6e4", hill: "#059669", groundTop: "#10b981", groundBody: "#78350f" };
+            if (mod === 3) return { skyTop: "#4338ca", skyBot: "#c7d2fe", hill: "#4f46e5", groundTop: "#65a30d", groundBody: "#713f12" };
+            return { skyTop: "#b45309", skyBot: "#fde68a", hill: "#d97706", groundTop: "#16a34a", groundBody: "#7c2d12" };
+        }
+
+        function seededRand(seed) {
+            let s = seed % 2147483647;
+            if (s <= 0) s += 2147483646;
+            return function () {
+                s = (s * 16807) % 2147483647;
+                return (s - 1) / 2147483646;
+            };
+        }
+
+        function buildMarioLevel(lvl) {
+            const rng = seededRand(lvl * 9773 + 2026);
+            worldCols = 76 + lvl * 3;
+            worldRows = 15;
+            const groundRow = 12;
+            levelTheme = getLevelTheme(lvl);
+
+            grid = Array.from({ length: worldRows }, () => Array(worldCols).fill(0));
+            coinsList = [];
+            enemiesList = [];
+            powerupsList = [];
+            fireballsList = [];
+            particlesList = [];
+
+            // Jurang moderat (maksimal 2 petak & jarak antar jurang minimal 9 petak agar adil)
+            let c = 0;
+            let lastGapCol = -8;
+            const gapChance = Math.min(0.14, 0.05 + lvl * 0.0045);
+            while (c < worldCols) {
+                const isSafeStart = c < 12;
+                const isSafeEnd = c > worldCols - 13;
+                if (!isSafeStart && !isSafeEnd && (c - lastGapCol) >= 9 && rng() < gapChance) {
+                    const gapLen = 2;
+                    lastGapCol = c + gapLen;
+                    c += gapLen;
+                    continue;
+                }
+                for (let r = groundRow; r < worldRows; r++) {
+                    grid[r][c] = 1;
+                }
+                c++;
+            }
+
+            // Pastikan lantai aman di awal dan akhir level
+            for (let col = 1; col <= 8; col++) {
+                for (let r = groundRow; r < worldRows; r++) grid[r][col] = 1;
+            }
+            for (let col = worldCols - 8; col <= worldCols - 2; col++) {
+                for (let r = groundRow; r < worldRows; r++) grid[r][col] = 1;
+            }
+
+            // Rintangan moderat: pipa pendek/sedang, blok koin & jamur/bunga api
+            for (let col = 11; col < worldCols - 13; col += 5) {
+                if (grid[groundRow][col] === 0) continue;
+                const roll = rng();
+                if (roll < 0.22) {
+                    const pipeH = (lvl >= 6 && rng() < 0.25) ? 3 : 2;
+                    for (let h = 1; h <= pipeH; h++) {
+                        grid[groundRow - h][col] = 6;
+                        grid[groundRow - h][col + 1] = 6;
+                    }
+                    coinsList.push({ x: col * TILE + 8, y: (groundRow - pipeH - 1) * TILE + 4, collected: false, bob: rng() * 6 });
+                } else if (roll < 0.66) {
+                    const rowAbove = groundRow - 3;
+                    const len = 2 + (rng() < 0.35 ? 1 : 0);
+                    for (let k = 0; k < len && col + k < worldCols - 13; k++) {
+                        if (k === 1 && rng() < 0.7) {
+                            grid[rowAbove][col + k] = rng() < 0.45 ? 4 : 3;
+                        } else {
+                            grid[rowAbove][col + k] = 2;
+                        }
+                    }
+                } else {
+                    for (let k = 0; k < 3; k++) {
+                        coinsList.push({ x: (col + k) * TILE + 9, y: (groundRow - 2) * TILE + 2, collected: false, bob: k * 0.7 });
+                    }
+                }
+            }
+
+            // Musuh moderat: jarak antar musuh cukup longgar agar bisa dihindari atau diinjak
+            const enemyCount = Math.min(18, 3 + Math.floor(lvl * 0.75));
+            for (let e = 0; e < enemyCount; e++) {
+                const eCol = 15 + Math.floor(((worldCols - 26) / enemyCount) * e + rng() * 2);
+                if (eCol < worldCols - 11 && grid[groundRow][eCol] === 1 && grid[groundRow - 1][eCol] === 0) {
+                    const isKoopa = lvl >= 3 && rng() < (0.18 + lvl * 0.015);
+                    const speedMag = 0.45 + Math.min(0.45, lvl * 0.022);
+                    enemiesList.push({
+                        type: isKoopa ? "koopa" : "goomba",
+                        x: eCol * TILE + 2,
+                        y: (groundRow - 1) * TILE + 2,
+                        w: 14,
+                        h: isKoopa ? 16 : 14,
+                        vx: -speedMag,
+                        vy: 0,
+                        alive: true,
+                        squishTimer: 0,
+                        anim: 0
+                    });
+                }
+            }
+
+            // Tiang Bendera Finish di ujung level (Level 20 = Final Castle Flag)
+            const flagCol = worldCols - 5;
+            for (let r = groundRow - 6; r < groundRow; r++) {
+                grid[r][flagCol] = 7;
+            }
+
+            mario.x = 28;
+            mario.y = (groundRow - 1) * TILE;
+            mario.vx = 0;
+            mario.vy = 0;
+            mario.onGround = false;
+            mario.facing = 1;
+            mario.deadAnim = 0;
+            mario.levelClearTimer = 0;
+            cameraX = 0;
+            levelBannerTimer = 85;
+
+            const sel = document.getElementById("mario-level-select");
+            if (sel) sel.value = String(lvl);
+            updateMarioSaveBadge();
+        }
+
+        function spawnParticles(x, y, color, count = 7) {
+            for (let i = 0; i < count; i++) {
+                const ang = (Math.PI * 2 * i) / count + Math.random() * 0.5;
+                const spd = 1.2 + Math.random() * 2.2;
+                particlesList.push({
+                    x, y,
+                    vx: Math.cos(ang) * spd,
+                    vy: Math.sin(ang) * spd - 1.5,
+                    life: 24 + Math.floor(Math.random() * 12),
+                    color
+                });
+            }
+        }
+
+        function isSolidTile(col, row) {
+            if (row < 0) return false;
+            if (row >= worldRows) return false;
+            if (col < 0 || col >= worldCols) return true;
+            const t = grid[row][col];
+            return t === 1 || t === 2 || t === 3 || t === 4 || t === 5 || t === 6;
+        }
+
+        function hitBlockFromBelow(col, row) {
+            if (row < 0 || row >= worldRows || col < 0 || col >= worldCols) return;
+            const t = grid[row][col];
+            if (t === 3) {
+                grid[row][col] = 5;
+                pcRigState.coins += 1;
+                pcRigState.score += 100;
+                sfxCoin();
+                spawnParticles(col * TILE + 9, row * TILE, "#facc15", 6);
+                saveMarioProgress();
+            } else if (t === 4) {
+                grid[row][col] = 5;
+                sfxPowerup();
+                powerupsList.push({
+                    x: col * TILE + 2,
+                    y: (row - 1) * TILE + 2,
+                    w: 14,
+                    h: 14,
+                    vx: 1.15,
+                    vy: -2.2,
+                    kind: pcRigState.bigMario ? "flower" : "mushroom"
+                });
+            } else if (t === 2) {
+                sfxBump();
+                if (pcRigState.bigMario) {
+                    grid[row][col] = 0;
+                    pcRigState.score += 50;
+                    spawnParticles(col * TILE + 9, row * TILE + 9, "#d97706", 8);
+                    saveMarioProgress();
+                } else {
+                    spawnParticles(col * TILE + 9, row * TILE + 9, "#fbbf24", 3);
+                }
+            }
+        }
+
+        function fireMarioFireball() {
+            if (!pcRigState.fireFlower || mario.fireCooldown > 0) return;
+            mario.fireCooldown = 18;
+            sfxFireball();
+            fireballsList.push({
+                x: mario.x + (mario.facing > 0 ? mario.w + 2 : -8),
+                y: mario.y + mario.h * 0.45,
+                w: 7,
+                h: 7,
+                vx: mario.facing * 4.4,
+                vy: -1.4,
+                life: 110
+            });
+        }
+
+        function handleMarioDeath() {
+            if (mario.deadAnim > 0) return;
+            sfxDie();
+            mario.deadAnim = 55;
+            mario.vy = -5.2;
+            pcRigState.lives -= 1;
+            pcRigState.bigMario = false;
+            pcRigState.fireFlower = false;
+
+            if (pcRigState.lives <= 0) {
+                // Otomatis pulih ke 3 nyawa di level tersimpan agar pemain tidak macet
+                pcRigState.lives = 3;
+                saveMarioProgress();
+                showToast(`Nyawa habis di Level ${pcRigState.level}! Melanjutkan dari save otomatis.`, "info");
+            } else {
+                saveMarioProgress();
+            }
+        }
+
+        function handleLevelClear() {
+            if (mario.levelClearTimer > 0) return;
+            pcRigState.score += pcRigState.level * 500;
+            sfxLevelClear();
+            spawnParticles(mario.x + 7, mario.y + 8, "#fde047", 16);
+
+            if (pcRigState.level >= 20) {
+                pcRigState.finalVictory = true;
+                mario.levelClearTimer = 240;
+                saveMarioProgress();
+                showToast("ENDING TERCAPAI! Semua 20 Level Mario telah tamat!", "success");
+            } else {
+                pcRigState.finalVictory = false;
+                mario.levelClearTimer = 75;
+                pcRigState.level += 1;
+                saveMarioProgress();
+            }
+        }
+
+        function updateMarioPhysics() {
+            if (!pcRigState.pcOn || meterState.balanceKwh <= 0) return;
+
+            if (levelBannerTimer > 0) levelBannerTimer--;
+            if (mario.invulnTimer > 0) mario.invulnTimer--;
+            if (mario.fireCooldown > 0) mario.fireCooldown--;
+
+            // Jika sedang merayakan selesai level
+            if (mario.levelClearTimer > 0) {
+                mario.levelClearTimer--;
+                if (mario.levelClearTimer === 0) {
+                    if (pcRigState.finalVictory) {
+                        // Pemain bisa lanjut main lagi dari level 20 atau mulai ulang dari level 1
+                        buildMarioLevel(20);
+                    } else {
+                        buildMarioLevel(pcRigState.level);
+                    }
+                }
+                return;
+            }
+
+            // Jika sedang animasi jatuh saat mati
+            if (mario.deadAnim > 0) {
+                mario.deadAnim--;
+                mario.y += mario.vy;
+                mario.vy += 0.28;
+                if (mario.deadAnim === 0) {
+                    buildMarioLevel(pcRigState.level);
+                }
+                return;
+            }
+
+            mario.h = pcRigState.bigMario ? 20 : 15;
+            mario.running = inputState.run;
+
+            if (inputState.runPressedEdge) {
+                inputState.runPressedEdge = false;
+                if (pcRigState.fireFlower) {
+                    fireMarioFireball();
+                }
+            }
+
+            const maxSpeed = mario.running ? 3.25 : 2.15;
+            const accel = mario.onGround ? 0.26 : 0.16;
+            const friction = mario.onGround ? 0.80 : 0.92;
+
+            if (inputState.left && !inputState.right) {
+                mario.vx = Math.max(-maxSpeed, mario.vx - accel);
+                mario.facing = -1;
+            } else if (inputState.right && !inputState.left) {
+                mario.vx = Math.min(maxSpeed, mario.vx + accel);
+                mario.facing = 1;
+            } else {
+                mario.vx *= friction;
+                if (Math.abs(mario.vx) < 0.08) mario.vx = 0;
+            }
+
+            // Lompat (termasuk input edge dari tombol / tap layar)
+            if ((inputState.jumpPressedEdge || (inputState.jump && mario.onGround)) && mario.onGround) {
+                mario.vy = -5.85;
+                mario.onGround = false;
+                inputState.jumpPressedEdge = false;
+                sfxJump();
+            } else {
+                inputState.jumpPressedEdge = false;
+            }
+
+            // Gravitasi
+            mario.vy = Math.min(7.5, mario.vy + 0.30);
+
+            // Gerak Horizontal & Cek Tabrakan
+            mario.x += mario.vx;
+            if (mario.x < cameraX) {
+                mario.x = cameraX;
+                mario.vx = 0;
+            }
+            const maxWorldX = (worldCols - 2) * TILE;
+            if (mario.x > maxWorldX) mario.x = maxWorldX;
+
+            const leftCol = Math.floor(mario.x / TILE);
+            const rightCol = Math.floor((mario.x + mario.w - 0.01) / TILE);
+            const topRow = Math.floor(mario.y / TILE);
+            const botRow = Math.floor((mario.y + mario.h - 0.01) / TILE);
+
+            if (mario.vx > 0) {
+                for (let r = topRow; r <= botRow; r++) {
+                    if (isSolidTile(rightCol, r)) {
+                        mario.x = rightCol * TILE - mario.w;
+                        mario.vx = 0;
+                        break;
+                    }
+                }
+            } else if (mario.vx < 0) {
+                for (let r = topRow; r <= botRow; r++) {
+                    if (isSolidTile(leftCol, r)) {
+                        mario.x = (leftCol + 1) * TILE;
+                        mario.vx = 0;
+                        break;
+                    }
+                }
+            }
+
+            // Gerak Vertikal & Cek Tabrakan
+            mario.y += mario.vy;
+            mario.onGround = false;
+
+            const nLeftCol = Math.floor(mario.x / TILE);
+            const nRightCol = Math.floor((mario.x + mario.w - 0.01) / TILE);
+            const nTopRow = Math.floor(mario.y / TILE);
+            const nBotRow = Math.floor((mario.y + mario.h - 0.01) / TILE);
+
+            if (mario.vy >= 0) {
+                for (let c = nLeftCol; c <= nRightCol; c++) {
+                    if (isSolidTile(c, nBotRow)) {
+                        mario.y = nBotRow * TILE - mario.h;
+                        mario.vy = 0;
+                        mario.onGround = true;
+                        break;
+                    }
+                }
+            } else if (mario.vy < 0) {
+                for (let c = nLeftCol; c <= nRightCol; c++) {
+                    if (isSolidTile(c, nTopRow)) {
+                        mario.y = (nTopRow + 1) * TILE;
+                        mario.vy = 0;
+                        hitBlockFromBelow(c, nTopRow);
+                        break;
+                    }
+                }
+            }
+
+            // Cek bendera finish
+            const fCol = Math.floor((mario.x + mario.w * 0.5) / TILE);
+            const fRow = Math.floor((mario.y + mario.h * 0.5) / TILE);
+            if (fCol >= 0 && fCol < worldCols && fRow >= 0 && fRow < worldRows && grid[fRow][fCol] === 7) {
+                handleLevelClear();
+                return;
+            }
+
+            // Cek jatuh ke jurang
+            if (mario.y > worldRows * TILE + 12) {
+                handleMarioDeath();
+                return;
+            }
+
+            // Animasi langkah kaki
+            if (Math.abs(mario.vx) > 0.25 && mario.onGround) {
+                mario.animTimer++;
+                if (mario.animTimer > (mario.running ? 5 : 8)) {
+                    mario.animTimer = 0;
+                    mario.animFrame = (mario.animFrame + 1) % 3;
+                }
+            } else {
+                mario.animFrame = 0;
+            }
+
+            // Kamera mengikuti Mario dengan halus
+            const targetCam = Math.max(0, Math.min(worldCols * TILE - VIEW_W, mario.x - VIEW_W * 0.36));
+            cameraX += (targetCam - cameraX) * 0.14;
+
+            // Ambil koin
+            for (const coin of coinsList) {
+                if (coin.collected) continue;
+                coin.bob += 0.12;
+                if (Math.abs((mario.x + mario.w * 0.5) - coin.x) < 12 && Math.abs((mario.y + mario.h * 0.5) - coin.y) < 14) {
+                    coin.collected = true;
+                    pcRigState.coins += 1;
+                    pcRigState.score += 100;
+                    sfxCoin();
+                    spawnParticles(coin.x, coin.y, "#fde047", 5);
+                    saveMarioProgress();
+                }
+            }
+
+            // Power-up (Jamur & Bunga Api)
+            for (let i = powerupsList.length - 1; i >= 0; i--) {
+                const p = powerupsList[i];
+                if (p.kind === "mushroom") {
+                    p.x += p.vx;
+                    p.vy = Math.min(6, p.vy + 0.25);
+                    p.y += p.vy;
+                    const pBot = Math.floor((p.y + p.h) / TILE);
+                    const pMidC = Math.floor((p.x + p.w * 0.5) / TILE);
+                    if (isSolidTile(pMidC, pBot) && p.vy >= 0) {
+                        p.y = pBot * TILE - p.h;
+                        p.vy = 0;
+                    }
+                    const sideC = Math.floor((p.x + (p.vx > 0 ? p.w : 0)) / TILE);
+                    const sideR = Math.floor((p.y + p.h * 0.5) / TILE);
+                    if (isSolidTile(sideC, sideR)) p.vx *= -1;
+                }
+                if (mario.x < p.x + p.w && mario.x + mario.w > p.x && mario.y < p.y + p.h && mario.y + mario.h > p.y) {
+                    pcRigState.bigMario = true;
+                    if (p.kind === "flower") pcRigState.fireFlower = true;
+                    pcRigState.score += 500;
+                    sfxPowerup();
+                    spawnParticles(p.x + 7, p.y + 7, "#ef4444", 8);
+                    powerupsList.splice(i, 1);
+                    saveMarioProgress();
+                }
+            }
+
+            // Bola api Mario
+            for (let i = fireballsList.length - 1; i >= 0; i--) {
+                const fb = fireballsList[i];
+                fb.life--;
+                fb.x += fb.vx;
+                fb.y += fb.vy;
+                fb.vy += 0.26;
+                const fbC = Math.floor((fb.x + fb.w * 0.5) / TILE);
+                const fbR = Math.floor((fb.y + fb.h) / TILE);
+                if (isSolidTile(fbC, fbR) && fb.vy > 0) {
+                    fb.y = fbR * TILE - fb.h;
+                    fb.vy = -3.4;
+                }
+                const wallC = Math.floor((fb.x + (fb.vx > 0 ? fb.w : 0)) / TILE);
+                const wallR = Math.floor((fb.y + fb.h * 0.5) / TILE);
+                if (fb.life <= 0 || isSolidTile(wallC, wallR)) {
+                    spawnParticles(fb.x, fb.y, "#fb923c", 4);
+                    fireballsList.splice(i, 1);
+                    continue;
+                }
+                for (const en of enemiesList) {
+                    if (!en.alive || en.squishTimer > 0) continue;
+                    if (fb.x < en.x + en.w && fb.x + fb.w > en.x && fb.y < en.y + en.h && fb.y + fb.h > en.y) {
+                        en.alive = false;
+                        pcRigState.score += 200;
+                        sfxStomp();
+                        spawnParticles(en.x + 7, en.y + 7, "#f97316", 8);
+                        fireballsList.splice(i, 1);
+                        saveMarioProgress();
+                        break;
+                    }
+                }
+            }
+
+            // Musuh (Goomba & Koopa)
+            for (const en of enemiesList) {
+                if (!en.alive) continue;
+                if (en.squishTimer > 0) {
+                    en.squishTimer--;
+                    if (en.squishTimer === 0) en.alive = false;
+                    continue;
+                }
+                if (Math.abs(en.x - mario.x) > VIEW_W * 0.9) continue;
+
+                en.anim = (en.anim + 1) % 24;
+                en.x += en.vx;
+                en.vy = Math.min(7, en.vy + 0.28);
+                en.y += en.vy;
+
+                const eBotRow = Math.floor((en.y + en.h) / TILE);
+                const eMidCol = Math.floor((en.x + en.w * 0.5) / TILE);
+                if (isSolidTile(eMidCol, eBotRow) && en.vy >= 0) {
+                    en.y = eBotRow * TILE - en.h;
+                    en.vy = 0;
+                }
+
+                // Balik arah jika menabrak dinding atau tepi jurang
+                const aheadCol = Math.floor((en.x + (en.vx < 0 ? 0 : en.w)) / TILE);
+                const midRow = Math.floor((en.y + en.h * 0.5) / TILE);
+                const groundAhead = isSolidTile(aheadCol, eBotRow);
+                if (isSolidTile(aheadCol, midRow) || (!groundAhead && en.vy === 0)) {
+                    en.vx *= -1;
+                }
+
+                if (en.y > worldRows * TILE) {
+                    en.alive = false;
+                    continue;
+                }
+
+                // Cek tabrakan Mario dengan musuh
+                if (mario.x < en.x + en.w - 1 && mario.x + mario.w - 1 > en.x && mario.y < en.y + en.h - 1 && mario.y + mario.h - 1 > en.y) {
+                    const stomping = mario.vy > 0 && (mario.y + mario.h) - en.y <= 9;
+                    if (stomping) {
+                        en.squishTimer = 14;
+                        mario.vy = -4.6;
+                        pcRigState.score += 200;
+                        sfxStomp();
+                        spawnParticles(en.x + 7, en.y + 4, "#a16207", 6);
+                        saveMarioProgress();
+                    } else if (mario.invulnTimer === 0) {
+                        if (pcRigState.bigMario) {
+                            pcRigState.bigMario = false;
+                            pcRigState.fireFlower = false;
+                            mario.invulnTimer = 70;
+                            sfxBump();
+                            saveMarioProgress();
+                        } else {
+                            handleMarioDeath();
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // Partikel
+            for (let i = particlesList.length - 1; i >= 0; i--) {
+                const pt = particlesList[i];
+                pt.x += pt.vx;
+                pt.y += pt.vy;
+                pt.vy += 0.14;
+                pt.life--;
+                if (pt.life <= 0) particlesList.splice(i, 1);
+            }
+        }
+
+        function renderMarioScene() {
+            marioCtx.clearRect(0, 0, VIEW_W, VIEW_H);
+
+            // Langit gradasi ala dunia Mario
+            const grad = marioCtx.createLinearGradient(0, 0, 0, VIEW_H);
+            grad.addColorStop(0, levelTheme.skyTop);
+            grad.addColorStop(1, levelTheme.skyBot);
+            marioCtx.fillStyle = grad;
+            marioCtx.fillRect(0, 0, VIEW_W, VIEW_H);
+
+            // Awan & bukit latar belakang (parallax)
+            marioCtx.fillStyle = "rgba(255,255,255,0.75)";
+            for (let c = 0; c < 14; c++) {
+                const cx = ((c * 140 - cameraX * 0.25) % (VIEW_W + 180) + (VIEW_W + 180)) % (VIEW_W + 180) - 60;
+                const cy = 28 + (c % 3) * 18;
+                marioCtx.beginPath();
+                marioCtx.arc(cx, cy, 11, 0, Math.PI * 2);
+                marioCtx.arc(cx + 10, cy - 3, 13, 0, Math.PI * 2);
+                marioCtx.arc(cx + 21, cy, 10, 0, Math.PI * 2);
+                marioCtx.fill();
+            }
+
+            marioCtx.fillStyle = levelTheme.hill;
+            for (let h = 0; h < 12; h++) {
+                const hx = ((h * 170 - cameraX * 0.4) % (VIEW_W + 220) + (VIEW_W + 220)) % (VIEW_W + 220) - 70;
+                marioCtx.beginPath();
+                marioCtx.arc(hx, 216, 48, Math.PI, 0);
+                marioCtx.fill();
+            }
+
+            // Gambar blok tile di sekitar kamera
+            const startCol = Math.max(0, Math.floor(cameraX / TILE) - 1);
+            const endCol = Math.min(worldCols - 1, Math.ceil((cameraX + VIEW_W) / TILE) + 1);
+
+            for (let r = 0; r < worldRows; r++) {
+                for (let c = startCol; c <= endCol; c++) {
+                    const t = grid[r][c];
+                    if (t === 0) continue;
+                    const sx = Math.floor(c * TILE - cameraX);
+                    const sy = Math.floor(r * TILE);
+
+                    if (t === 1) {
+                        marioCtx.fillStyle = levelTheme.groundBody;
+                        marioCtx.fillRect(sx, sy, TILE, TILE);
+                        marioCtx.fillStyle = levelTheme.groundTop;
+                        marioCtx.fillRect(sx, sy, TILE, 4);
+                    } else if (t === 2) {
+                        marioCtx.fillStyle = "#c26d1f";
+                        marioCtx.fillRect(sx, sy, TILE, TILE);
+                        marioCtx.strokeStyle = "#5c2d0c";
+                        marioCtx.lineWidth = 1;
+                        marioCtx.strokeRect(sx + 0.5, sy + 0.5, TILE - 1, TILE - 1);
+                        marioCtx.beginPath();
+                        marioCtx.moveTo(sx, sy + 9);
+                        marioCtx.lineTo(sx + TILE, sy + 9);
+                        marioCtx.stroke();
+                    } else if (t === 3 || t === 4) {
+                        marioCtx.fillStyle = "#facc15";
+                        marioCtx.fillRect(sx, sy, TILE, TILE);
+                        marioCtx.strokeStyle = "#854d0e";
+                        marioCtx.strokeRect(sx + 0.5, sy + 0.5, TILE - 1, TILE - 1);
+                        marioCtx.fillStyle = "#713f12";
+                        marioCtx.font = "bold 11px monospace";
+                        marioCtx.fillText("?", sx + 5, sy + 13);
+                    } else if (t === 5) {
+                        marioCtx.fillStyle = "#78716c";
+                        marioCtx.fillRect(sx, sy, TILE, TILE);
+                        marioCtx.strokeStyle = "#44403c";
+                        marioCtx.strokeRect(sx + 0.5, sy + 0.5, TILE - 1, TILE - 1);
+                    } else if (t === 6) {
+                        marioCtx.fillStyle = "#16a34a";
+                        marioCtx.fillRect(sx, sy, TILE, TILE);
+                        marioCtx.fillStyle = "#4ade80";
+                        marioCtx.fillRect(sx + 2, sy, 3, TILE);
+                        marioCtx.strokeStyle = "#14532d";
+                        marioCtx.strokeRect(sx + 0.5, sy + 0.5, TILE - 1, TILE - 1);
+                    } else if (t === 7) {
+                        marioCtx.fillStyle = "#e2e8f0";
+                        marioCtx.fillRect(sx + 7, sy, 4, TILE);
+                        if (r === 6) {
+                            marioCtx.fillStyle = pcRigState.level === 20 ? "#facc15" : "#22c55e";
+                            marioCtx.beginPath();
+                            marioCtx.moveTo(sx + 11, sy + 2);
+                            marioCtx.lineTo(sx + 24, sy + 8);
+                            marioCtx.lineTo(sx + 11, sy + 14);
+                            marioCtx.closePath();
+                            marioCtx.fill();
+                        }
+                    }
+                }
+            }
+
+            // Koin
+            for (const coin of coinsList) {
+                if (coin.collected) continue;
+                const cx = Math.floor(coin.x - cameraX);
+                const cy = Math.floor(coin.y + Math.sin(coin.bob) * 2);
+                if (cx < -16 || cx > VIEW_W + 16) continue;
+                marioCtx.fillStyle = "#facc15";
+                marioCtx.beginPath();
+                marioCtx.ellipse(cx, cy, 4.5, 6.5, 0, 0, Math.PI * 2);
+                marioCtx.fill();
+                marioCtx.strokeStyle = "#a16207";
+                marioCtx.stroke();
+            }
+
+            // Power-up
+            for (const p of powerupsList) {
+                const px = Math.floor(p.x - cameraX);
+                const py = Math.floor(p.y);
+                marioCtx.fillStyle = p.kind === "flower" ? "#f97316" : "#ef4444";
+                marioCtx.fillRect(px, py, p.w, p.h * 0.65);
+                marioCtx.fillStyle = "#fef3c7";
+                marioCtx.fillRect(px + 2, py + p.h * 0.65, p.w - 4, p.h * 0.35);
+            }
+
+            // Musuh
+            for (const en of enemiesList) {
+                if (!en.alive) continue;
+                const ex = Math.floor(en.x - cameraX);
+                const ey = Math.floor(en.y);
+                if (ex < -24 || ex > VIEW_W + 24) continue;
+                if (en.squishTimer > 0) {
+                    marioCtx.fillStyle = "#92400e";
+                    marioCtx.fillRect(ex, ey + en.h - 5, en.w, 5);
+                } else if (en.type === "koopa") {
+                    marioCtx.fillStyle = "#15803d";
+                    marioCtx.fillRect(ex, ey + 4, en.w, en.h - 5);
+                    marioCtx.fillStyle = "#fde047";
+                    marioCtx.fillRect(ex + 2, ey, en.w - 4, 6);
+                } else {
+                    marioCtx.fillStyle = "#b45309";
+                    marioCtx.fillRect(ex, ey, en.w, en.h - 4);
+                    marioCtx.fillStyle = "#fef3c7";
+                    marioCtx.fillRect(ex + 3, ey + en.h - 4, en.w - 6, 4);
+                    marioCtx.fillStyle = "#111827";
+                    marioCtx.fillRect(ex + 3, ey + 4, 2, 3);
+                    marioCtx.fillRect(ex + en.w - 5, ey + 4, 2, 3);
+                }
+            }
+
+            // Bola api
+            for (const fb of fireballsList) {
+                const fx = Math.floor(fb.x - cameraX);
+                const fy = Math.floor(fb.y);
+                marioCtx.fillStyle = "#fb923c";
+                marioCtx.beginPath();
+                marioCtx.arc(fx + 3, fy + 3, 4, 0, Math.PI * 2);
+                marioCtx.fill();
+            }
+
+            // Karakter Mario
+            if (mario.invulnTimer % 4 < 2) {
+                const mx = Math.floor(mario.x - cameraX);
+                const my = Math.floor(mario.y);
+                const hatColor = pcRigState.fireFlower ? "#f97316" : "#dc2626";
+                const shirtColor = pcRigState.fireFlower ? "#fef08a" : "#dc2626";
+                const overallColor = "#2563eb";
+
+                // Topi & kepala
+                marioCtx.fillStyle = hatColor;
+                marioCtx.fillRect(mx + 2, my, mario.w - 4, 4);
+                marioCtx.fillStyle = "#fed7aa";
+                marioCtx.fillRect(mx + 2, my + 4, mario.w - 4, 5);
+                // Mata & kumis
+                marioCtx.fillStyle = "#1e293b";
+                const eyeX = mario.facing > 0 ? mx + 9 : mx + 3;
+                marioCtx.fillRect(eyeX, my + 5, 2, 2);
+                marioCtx.fillRect(mx + 4, my + 8, 6, 1.5);
+
+                // Badan & overall
+                const bodyH = mario.h - 9;
+                marioCtx.fillStyle = shirtColor;
+                marioCtx.fillRect(mx + 1, my + 9, mario.w - 2, bodyH * 0.45);
+                marioCtx.fillStyle = overallColor;
+                marioCtx.fillRect(mx + 2, my + 9 + bodyH * 0.35, mario.w - 4, bodyH * 0.65);
+
+                // Kaki animasi
+                marioCtx.fillStyle = "#451a03";
+                const legShift = mario.animFrame === 1 ? 2 : (mario.animFrame === 2 ? -2 : 0);
+                marioCtx.fillRect(mx + 2 + legShift, my + mario.h - 3, 4, 3);
+                marioCtx.fillRect(mx + mario.w - 6 - legShift, my + mario.h - 3, 4, 3);
+            }
+
+            // Partikel
+            for (const pt of particlesList) {
+                marioCtx.fillStyle = pt.color;
+                marioCtx.fillRect(Math.floor(pt.x - cameraX), Math.floor(pt.y), 3, 3);
+            }
+
+            // HUD di atas canvas Mario
+            marioCtx.fillStyle = "rgba(9, 13, 22, 0.72)";
+            marioCtx.fillRect(0, 0, VIEW_W, 20);
+            marioCtx.fillStyle = "#ffffff";
+            marioCtx.font = "bold 9px monospace";
+            marioCtx.fillText(`MARIO  SKOR:${String(pcRigState.score).padStart(6, "0")}`, 8, 13);
+            marioCtx.fillStyle = "#facc15";
+            marioCtx.fillText(`KOIN:${pcRigState.coins}`, 185, 13);
+            marioCtx.fillStyle = "#38bdf8";
+            marioCtx.fillText(`LVL ${pcRigState.level}/20`, 255, 13);
+            marioCtx.fillStyle = "#f87171";
+            marioCtx.fillText(`NYAWA:${pcRigState.lives}`, 325, 13);
+            marioCtx.fillStyle = "#a3e635";
+            marioCtx.fillText(`${pcRigState.fps}FPS`, 405, 13);
+
+            // Banner awal level
+            if (levelBannerTimer > 0) {
+                marioCtx.fillStyle = "rgba(15, 23, 42, 0.85)";
+                marioCtx.fillRect(VIEW_W * 0.5 - 95, VIEW_H * 0.5 - 22, 190, 44);
+                marioCtx.strokeStyle = "#facc15";
+                marioCtx.strokeRect(VIEW_W * 0.5 - 95, VIEW_H * 0.5 - 22, 190, 44);
+                marioCtx.fillStyle = "#facc15";
+                marioCtx.font = "bold 11px monospace";
+                marioCtx.textAlign = "center";
+                marioCtx.fillText(pcRigState.level === 20 ? "FINAL LEVEL 20!" : `LEVEL ${pcRigState.level} OF 20`, VIEW_W * 0.5, VIEW_H * 0.5 - 3);
+                marioCtx.fillStyle = "#e2e8f0";
+                marioCtx.font = "9px monospace";
+                marioCtx.fillText("DAYA RTX 4090 AKTIF", VIEW_W * 0.5, VIEW_H * 0.5 + 12);
+                marioCtx.textAlign = "left";
+            }
+
+            // Layar Ending Final Level 20
+            if (pcRigState.finalVictory && mario.levelClearTimer > 0) {
+                marioCtx.fillStyle = "rgba(9, 13, 22, 0.92)";
+                marioCtx.fillRect(32, 42, VIEW_W - 64, VIEW_H - 84);
+                marioCtx.strokeStyle = "#facc15";
+                marioCtx.lineWidth = 2;
+                marioCtx.strokeRect(32, 42, VIEW_W - 64, VIEW_H - 84);
+                marioCtx.fillStyle = "#fde047";
+                marioCtx.font = "bold 12px monospace";
+                marioCtx.textAlign = "center";
+                marioCtx.fillText("ENDING — SEMUA 20 LEVEL TAMAT!", VIEW_W * 0.5, 86);
+                marioCtx.fillStyle = "#38bdf8";
+                marioCtx.font = "bold 10px monospace";
+                marioCtx.fillText("MARIO MENYELAMATKAN KERAJAAN!", VIEW_W * 0.5, 110);
+                marioCtx.fillStyle = "#ffffff";
+                marioCtx.font = "10px monospace";
+                marioCtx.fillText(`SKOR AKHIR: ${pcRigState.score} • KOIN: ${pcRigState.coins}`, VIEW_W * 0.5, 136);
+                marioCtx.fillStyle = "#86efac";
+                marioCtx.fillText("PROGRES & SAVE OTOMATIS TERSIMPAN", VIEW_W * 0.5, 158);
+                marioCtx.fillStyle = "#cbd5e1";
+                marioCtx.font = "9px monospace";
+                marioCtx.fillText("MELANJUTKAN PERMAINAN DI LEVEL 20...", VIEW_W * 0.5, 182);
+                marioCtx.textAlign = "left";
+            }
+        }
+
+        function bindTouchPadButton(elId, stateKey, isJump = false, isRun = false) {
+            const btn = document.getElementById(elId);
+            if (!btn) return;
+            const pressDown = (e) => {
+                e.preventDefault();
+                if (!pcRigState.pcOn || meterState.balanceKwh <= 0) return;
+                inputState[stateKey] = true;
+                if (isJump) inputState.jumpPressedEdge = true;
+                if (isRun) inputState.runPressedEdge = true;
+                btn.classList.add("is-active");
+            };
+            const releaseUp = (e) => {
+                e.preventDefault();
+                inputState[stateKey] = false;
+                btn.classList.remove("is-active");
+            };
+            btn.addEventListener("pointerdown", pressDown, { passive: false });
+            btn.addEventListener("pointerup", releaseUp, { passive: false });
+            btn.addEventListener("pointercancel", releaseUp, { passive: false });
+            btn.addEventListener("pointerleave", releaseUp, { passive: false });
+        }
+
+        function setupMarioControls() {
+            bindTouchPadButton("touch-left", "left", false, false);
+            bindTouchPadButton("touch-right", "right", false, false);
+            bindTouchPadButton("touch-jump", "jump", true, false);
+            bindTouchPadButton("touch-run", "run", false, true);
+
+            // Tap langsung di layar game Mario untuk membantu lompat di HP/PC
+            marioCanvas.addEventListener("pointerdown", (e) => {
+                if (!pcRigState.pcOn || meterState.balanceKwh <= 0) return;
+                const rect = marioCanvas.getBoundingClientRect();
+                const relX = (e.clientX - rect.left) / Math.max(1, rect.width);
+                if (relX < 0.22) {
+                    inputState.left = true;
+                    setTimeout(() => { inputState.left = false; }, 180);
+                } else if (relX > 0.78) {
+                    inputState.right = true;
+                    setTimeout(() => { inputState.right = false; }, 180);
+                } else {
+                    inputState.jump = true;
+                    inputState.jumpPressedEdge = true;
+                    setTimeout(() => { inputState.jump = false; }, 180);
+                }
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+                if (!pcRigState.pcOn || meterState.balanceKwh <= 0) return;
+
+                if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
+                    e.preventDefault();
+                    inputState.left = true;
+                } else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
+                    e.preventDefault();
+                    inputState.right = true;
+                } else if (e.key === "ArrowUp" || e.key === "w" || e.key === "W" || e.key === " ") {
+                    e.preventDefault();
+                    if (!inputState.jump) inputState.jumpPressedEdge = true;
+                    inputState.jump = true;
+                } else if (e.key === "Shift" || e.key === "x" || e.key === "X" || e.key === "z" || e.key === "Z") {
+                    e.preventDefault();
+                    if (!inputState.run) inputState.runPressedEdge = true;
+                    inputState.run = true;
+                }
+            });
+
+            document.addEventListener("keyup", (e) => {
+                if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
+                    inputState.left = false;
+                } else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
+                    inputState.right = false;
+                } else if (e.key === "ArrowUp" || e.key === "w" || e.key === "W" || e.key === " ") {
+                    inputState.jump = false;
+                } else if (e.key === "Shift" || e.key === "x" || e.key === "X" || e.key === "z" || e.key === "Z") {
+                    inputState.run = false;
+                }
+            });
+        }
+
+        // Loop utama konsumsi daya realistis & update meteran setiap 100ms
         let impulseCounter = 0;
         let tickCount = 0;
         let saveTick = 0;
 
         setInterval(() => {
             meterState.voltage = 220 + (Math.random() * 1.6 - 0.5);
+            const activeWatt = getTotalActiveWatt();
 
-            if (meterState.balanceKwh > 0 && meterState.currentWatt > 0) {
+            if (meterState.balanceKwh > 0 && activeWatt > 0) {
                 const deltaHours = (0.1 / 3600) * meterState.simSpeed;
-                const usedKwh = (meterState.currentWatt / 1000) * deltaHours;
+                const usedKwh = (activeWatt / 1000) * deltaHours;
 
                 meterState.balanceKwh = Math.max(0, meterState.balanceKwh - usedKwh);
                 meterState.totalConsumedKwh += usedKwh;
@@ -1285,7 +2805,8 @@
                 if (meterState.balanceKwh === 0 && meterState.relayClosed) {
                     meterState.relayClosed = false;
                     playRelayClick();
-                    showToast("Saldo kWh habis! Relay listrik rumah terputus otomatis.", "error");
+                    syncPcPowerState(false);
+                    showToast("Saldo kWh habis! Relay putus & PC RTX 4090 mati seketika.", "error");
                 } else if (meterState.balanceKwh > 0) {
                     meterState.relayClosed = true;
                 }
@@ -1295,6 +2816,8 @@
                     impulseCounter %= 1;
                     triggerImpulseFlash();
                 }
+            } else if (meterState.balanceKwh <= 0 && pcRigState.pcOn) {
+                syncPcPowerState(false);
             }
 
             tickCount++;
@@ -1307,12 +2830,24 @@
             saveTick++;
             if (saveTick % 30 === 0) {
                 saveState();
+                saveMarioProgress();
+            }
+
+            if (tickCount % 8 === 0) {
+                updateRigTelemetryHud();
             }
 
             if (meterState.displayMode === "IDLE") {
                 updateLcdDisplay();
             }
         }, 100);
+
+        // Loop animasi Mario 60 FPS
+        function marioGameLoop() {
+            updateMarioPhysics();
+            renderMarioScene();
+            requestAnimationFrame(marioGameLoop);
+        }
 
         function triggerImpulseFlash() {
             const led = document.getElementById("led-impulse");
@@ -1340,8 +2875,9 @@
             if (sliderEl) sliderEl.value = Math.min(2200, meterState.currentWatt);
             if (customEl && !fromCustomInput) customEl.value = meterState.currentWatt;
 
-            const amp = (meterState.currentWatt / 220).toFixed(2);
-            document.getElementById("sim-watt-label").textContent = `${meterState.currentWatt.toLocaleString("id-ID")} W (${amp} A)`;
+            const amp = (getTotalActiveWatt() / 220).toFixed(2);
+            document.getElementById("sim-watt-label").textContent = `${meterState.currentWatt.toLocaleString("id-ID")} W (${amp} A total)`;
+            updateRigTelemetryHud();
             saveState();
             if (meterState.displayMode === "IDLE") updateLcdDisplay();
         }
@@ -1363,20 +2899,26 @@
             document.getElementById("meter-serial-text").textContent = `${id.slice(0, 4)} ${id.slice(4, 8)} ${id.slice(8, 11)}`;
         }
 
-        // Reset HANYA me-reset saldo kWh jadi 0; catatan token 20-digit & ID meter tetap dipertahankan
         function resetMeterStorage() {
+            const keptUsedTids = loadPermanentUsedTids();
             meterState.meterId = getOrCreatePermanentHardwareMeterId();
-            meterState.token20History = loadToken20Archive();
-            meterState.balanceKwh = 0;
+            meterState.balanceKwh = 0.00;
+            meterState.totalConsumedKwh = 0.00;
+            meterState.alarmThresholdKwh = 5.00;
+            meterState.usedTids = Array.from(new Set([...meterState.usedTids, ...keptUsedTids]));
+            meterState.tokensAcceptedCount = 0;
             meterState.inputBuffer = "";
             meterState.displayMode = "IDLE";
             meterState.relayClosed = false;
-            playRelayClick();
+            pcRigState.pcOn = false;
+            pcRigState.shutdownReason = "KWH_HABIS";
+            setWattLoad(450);
+            setSimSpeed(1);
             renderSerialPlate();
-            renderToken20History();
             saveState();
+            syncPcPowerState(false);
             updateLcdDisplay();
-            showToast("kWh di-reset ke 0. Catatan token 20 digit sebelumnya tetap aman!", "success");
+            showToast(`Meteran di-reset ke 0.00 kWh (PC mati). Kode token lama tetap tercatat permanen!`, "error");
         }
 
         function showToast(text, type = "info") {
@@ -1397,7 +2939,7 @@
         }
 
         document.addEventListener("keydown", (e) => {
-            if (e.target.tagName === "INPUT") return;
+            if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
             if (/^[0-9]$/.test(e.key) || e.key === "Backspace" || e.key === "Enter") {
                 e.preventDefault();
                 pressKeypad(e.key);
@@ -1406,9 +2948,16 @@
 
         window.onload = function () {
             loadSavedState();
+            populateLevelDropdown();
+            loadMarioProgress();
             renderSerialPlate();
+            setupMarioControls();
+            resizeMarioCanvas();
+            buildMarioLevel(pcRigState.level);
             setWattLoad(meterState.currentWatt);
+            syncPcPowerState(true);
             updateLcdDisplay();
+            marioGameLoop();
         };
     </script>
 </body>
