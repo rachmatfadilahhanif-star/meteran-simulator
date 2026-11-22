@@ -173,11 +173,42 @@
             max-width: none !important;
             margin: 0 !important;
             border-radius: 0 !important;
-            padding: 8px !important;
+            padding: 6px 10px !important;
             background: #050811 !important;
             display: flex !important;
             flex-direction: column !important;
             justify-content: space-between !important;
+            gap: 4px !important;
+        }
+
+        .rtx-fullscreen-mode .rtx-rig-header {
+            padding-bottom: 4px !important;
+            margin-bottom: 2px !important;
+        }
+
+        .rtx-fullscreen-mode .rtx-telemetry-grid {
+            display: grid !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            gap: 4px !important;
+            margin-bottom: 2px !important;
+        }
+
+        .rtx-fullscreen-mode .rtx-telemetry-grid > div {
+            padding: 3px 6px !important;
+        }
+
+        .rtx-fullscreen-mode .rtx-telemetry-grid .text-xs {
+            font-size: 10px !important;
+        }
+
+        .rtx-fullscreen-mode .rtx-boros-box {
+            display: block !important;
+            margin-bottom: 2px !important;
+            padding: 4px 8px !important;
+        }
+
+        .rtx-fullscreen-mode .rtx-boros-box input[type="range"] {
+            margin-top: 4px !important;
         }
 
         .rtx-fullscreen-mode .monitor-bezel {
@@ -186,13 +217,21 @@
             display: flex !important;
             flex-direction: column !important;
             border-radius: 10px !important;
-            padding: 6px !important;
+            padding: 4px 8px !important;
         }
 
         .rtx-fullscreen-mode .game-viewport-box {
             flex: 1 1 auto !important;
-            height: auto !important;
+            width: 100% !important;
+            height: 100% !important;
             min-height: 0 !important;
+        }
+
+        .rtx-fullscreen-mode #mobile-touch-controls {
+            margin-top: 2px !important;
+            padding: 4px 8px !important;
+            border-radius: 12px !important;
+            background: rgba(9, 13, 22, 0.95) !important;
         }
 
         .touch-pad-btn {
@@ -430,9 +469,9 @@
         <!-- =================================================================== -->
         <!-- UNIT BAWAH: LAYAR PC RTX 4090 + SUPER MARIO 20 LEVEL (DAYA REALISTIS) -->
         <!-- =================================================================== -->
-        <section id="rtx-pc-rig" class="rtx-rig-shell w-full rounded-[1.6rem] p-3.5 sm:p-4 mt-4 text-slate-100">
+        <section id="rtx-pc-rig" class="rtx-rig-shell flex flex-col w-full rounded-[1.6rem] p-3.5 sm:p-4 mt-4 text-slate-100">
             <!-- Header Rig PC & Tombol Power / Fullscreen -->
-            <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 mb-2.5 border-b border-slate-800">
+            <div class="rtx-rig-header flex flex-wrap items-center justify-between gap-2 pb-2.5 mb-2.5 border-b border-slate-800">
                 <div class="flex items-center gap-2 min-w-0">
                     <div class="w-8 h-8 rounded-lg bg-lime-500/20 border border-lime-400/50 text-lime-300 flex items-center justify-center font-black shrink-0 rtx-glow">
                         <i class="fa-solid fa-desktop"></i>
@@ -461,7 +500,7 @@
             </div>
 
             <!-- Baris Telemetri Real-Time: Kecepatan CPU, Daya Sisa (kWh), Kurangnya / Kekurangan Daya, & FPS -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-2.5 font-mono">
+            <div class="rtx-telemetry-grid grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-2.5 font-mono">
                 <div class="bg-slate-950/90 border border-slate-800 rounded-lg px-2.5 py-1.5">
                     <div class="text-[8.5px] text-slate-400 uppercase font-bold flex items-center justify-between">
                         <span>KECEPATAN CPU</span>
@@ -495,19 +534,30 @@
                 </div>
             </div>
 
-            <!-- Pengatur Ke-Boros-an Daya RTX 4090 -->
-            <div class="mb-2.5 bg-slate-950/85 border border-slate-800 rounded-xl px-2.5 py-2">
+            <!-- Pengatur Jumlah GPU RTX & Ke-Boros-an Daya -->
+            <div class="rtx-boros-box mb-2.5 bg-slate-950/85 border border-slate-800 rounded-xl px-2.5 py-2">
+                <div class="flex flex-wrap items-center justify-between gap-1 text-[10px] font-mono mb-1.5">
+                    <span class="text-slate-300 font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-microchip text-lime-400"></i> JUMLAH RTX:
+                    </span>
+                    <div class="flex items-center gap-1">
+                        <button type="button" onclick="setRtxGpuCount(1)" id="rtx-cnt-1" class="rtx-cnt-btn px-2 py-0.5 rounded bg-lime-500 text-slate-950 font-extrabold border border-lime-300">1x RTX</button>
+                        <button type="button" onclick="setRtxGpuCount(2)" id="rtx-cnt-2" class="rtx-cnt-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold border border-slate-700">2x RTX</button>
+                        <button type="button" onclick="setRtxGpuCount(4)" id="rtx-cnt-4" class="rtx-cnt-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold border border-slate-700">4x RTX</button>
+                        <button type="button" onclick="setRtxGpuCount(8)" id="rtx-cnt-8" class="rtx-cnt-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold border border-slate-700">8x RTX</button>
+                    </div>
+                </div>
                 <div class="flex items-center justify-between gap-2 text-[10px] font-mono mb-1.5">
                     <span class="text-slate-300 font-bold flex items-center gap-1.5">
-                        <i class="fa-solid fa-fire-flame-curved text-lime-400"></i> ATUR BOROS RTX 4090:
+                        <i class="fa-solid fa-fire-flame-curved text-lime-400"></i> BOROS PER GPU:
                     </span>
                     <span id="rtx-boros-label" class="font-extrabold text-lime-300">NORMAL (450W)</span>
                 </div>
                 <div class="grid grid-cols-4 gap-1 text-[9.5px] font-mono font-bold">
-                    <button onclick="setRtxBorosProfile('eco')" id="rtx-btn-eco" class="rtx-prof-btn py-1 px-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">250W HEMAT</button>
-                    <button onclick="setRtxBorosProfile('normal')" id="rtx-btn-normal" class="rtx-prof-btn py-1 px-1.5 rounded bg-lime-500 text-slate-950 border border-lime-300">450W NORM</button>
-                    <button onclick="setRtxBorosProfile('boros')" id="rtx-btn-boros" class="rtx-prof-btn py-1 px-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">750W BOROS</button>
-                    <button onclick="setRtxBorosProfile('ekstrem')" id="rtx-btn-ekstrem" class="rtx-prof-btn py-1 px-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">1100W OC</button>
+                    <button type="button" onclick="setRtxBorosProfile('eco')" id="rtx-btn-eco" class="rtx-prof-btn py-1 px-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">250W HEMAT</button>
+                    <button type="button" onclick="setRtxBorosProfile('normal')" id="rtx-btn-normal" class="rtx-prof-btn py-1 px-1.5 rounded bg-lime-500 text-slate-950 border border-lime-300">450W NORM</button>
+                    <button type="button" onclick="setRtxBorosProfile('boros')" id="rtx-btn-boros" class="rtx-prof-btn py-1 px-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">750W BOROS</button>
+                    <button type="button" onclick="setRtxBorosProfile('ekstrem')" id="rtx-btn-ekstrem" class="rtx-prof-btn py-1 px-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">1100W OC</button>
                 </div>
                 <input id="rtx-watt-slider" type="range" min="150" max="1500" step="25" value="450" oninput="setRtxCustomWatt(this.value)"
                     class="w-full h-1.5 bg-slate-800 rounded-lg accent-lime-400 cursor-pointer mt-2">
@@ -557,31 +607,23 @@
                 </div>
             </div>
 
-            <!-- Kontrol HP (Touch D-Pad + Tombol Lompat & Lari/Tembak) + Tap Langsung di Layar Game -->
-            <div id="mobile-touch-controls" class="mt-2.5 bg-slate-950/90 border border-slate-800 rounded-xl p-2.5">
+            <!-- Kontrol Sentuh HP di Paling Bawah (Otomatis hilang jika terdeteksi PC) -->
+            <div id="mobile-touch-controls" class="order-last mt-2.5 bg-slate-950/95 border border-slate-800 rounded-2xl p-2.5 shadow-inner">
                 <div class="flex items-center justify-between gap-2">
-                    <!-- Kiri: Tombol Arah Kiri & Kanan untuk HP & PC -->
-                    <div class="flex items-center gap-2">
-                        <button id="touch-left" class="touch-pad-btn w-12 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-black text-base flex items-center justify-center shadow" aria-label="Kiri">
+                    <div class="flex items-center gap-2.5">
+                        <button type="button" id="touch-left" class="touch-pad-btn w-14 h-12 rounded-2xl bg-slate-800 active:bg-slate-600 border border-slate-600 text-white font-black text-lg flex items-center justify-center shadow" aria-label="Kiri">
                             <i class="fa-solid fa-arrow-left"></i>
                         </button>
-                        <button id="touch-right" class="touch-pad-btn w-12 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-black text-base flex items-center justify-center shadow" aria-label="Kanan">
+                        <button type="button" id="touch-right" class="touch-pad-btn w-14 h-12 rounded-2xl bg-slate-800 active:bg-slate-600 border border-slate-600 text-white font-black text-lg flex items-center justify-center shadow" aria-label="Kanan">
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
 
-                    <!-- Tengah: Info Tap Layar HP -->
-                    <div class="text-center px-1 hidden sm:block">
-                        <div class="text-[9.5px] font-mono text-slate-400">TAP LAYAR = LOMPAT</div>
-                        <div class="text-[8.5px] font-mono text-lime-400">WASD / PANAH / SPACE</div>
-                    </div>
-
-                    <!-- Kanan: Tombol Lari/Api (B) & Lompat (A) -->
-                    <div class="flex items-center gap-2">
-                        <button id="touch-run" class="touch-pad-btn px-3 h-11 rounded-xl bg-amber-500/90 hover:bg-amber-400 border border-amber-300/60 text-slate-950 font-extrabold text-xs flex items-center justify-center shadow" title="Lari Cepat / Bola Api">
+                    <div class="flex items-center gap-2.5">
+                        <button type="button" id="touch-run" class="touch-pad-btn px-3.5 h-12 rounded-2xl bg-amber-500 active:bg-amber-300 border border-amber-300/60 text-slate-950 font-extrabold text-xs flex items-center justify-center shadow" title="Lari Cepat / Bola Api">
                             RUN
                         </button>
-                        <button id="touch-jump" class="touch-pad-btn w-14 h-11 rounded-xl bg-red-600 hover:bg-red-500 border border-red-400/60 text-white font-black text-xs flex items-center justify-center shadow" title="Lompat">
+                        <button type="button" id="touch-jump" class="touch-pad-btn w-16 h-12 rounded-2xl bg-red-600 active:bg-red-400 border border-red-400/60 text-white font-black text-xs flex items-center justify-center shadow" title="Lompat">
                             JUMP
                         </button>
                     </div>
@@ -1445,6 +1487,7 @@
             pcOn: true,
             poweredByUser: true,
             shutdownReason: "",
+            rtxCount: 1,
             rtxProfile: "normal",
             currentRigWatt: RTX_4090_BASE_WATT,
             cpuClockGhz: 5.80,
@@ -1467,10 +1510,34 @@
             return Math.round(meterState.currentWatt + rigW);
         }
 
+        function syncRtxCountButtons() {
+            [1, 2, 4, 8].forEach(cnt => {
+                const b = document.getElementById(`rtx-cnt-${cnt}`);
+                if (!b) return;
+                if (pcRigState.rtxCount === cnt) {
+                    b.className = "rtx-cnt-btn px-2 py-0.5 rounded bg-lime-500 text-slate-950 font-extrabold border border-lime-300";
+                } else {
+                    b.className = "rtx-cnt-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold border border-slate-700";
+                }
+            });
+        }
+
+        function setRtxGpuCount(count) {
+            const validCounts = [1, 2, 4, 8];
+            const cleanCount = validCounts.includes(Number(count)) ? Number(count) : 1;
+            pcRigState.rtxCount = cleanCount;
+            syncRtxCountButtons();
+            applyRtxWattSettings(RTX_4090_BASE_WATT, pcRigState.rtxProfile);
+            saveMarioProgress();
+            showToast(`Konfigurasi ${cleanCount}x RTX 4090 aktif!`, "info");
+        }
+
         function applyRtxWattSettings(baseWatt, profileName = "custom") {
             const cleanBase = Math.max(150, Math.min(1500, parseInt(baseWatt, 10) || 450));
-            RTX_4090_BASE_WATT = cleanBase;
-            RTX_4090_BOOST_WATT = Math.round(cleanBase * 1.28);
+            const gpuCount = pcRigState.rtxCount || 1;
+            const systemOverhead = 75 + (gpuCount - 1) * 35;
+            RTX_4090_BASE_WATT = cleanBase * gpuCount + systemOverhead;
+            RTX_4090_BOOST_WATT = Math.round(cleanBase * 1.28) * gpuCount + systemOverhead;
             pcRigState.rtxProfile = profileName;
             pcRigState.currentRigWatt = (mario.running || mario.fireCooldown > 0) ? RTX_4090_BOOST_WATT : RTX_4090_BASE_WATT;
 
@@ -1488,7 +1555,7 @@
             const labelEl = document.getElementById("rtx-boros-label");
             if (labelEl) {
                 const tag = profileName === "eco" ? "HEMAT" : (profileName === "boros" ? "BOROS" : (profileName === "ekstrem" ? "OVERCLOCK" : (profileName === "normal" ? "NORMAL" : "CUSTOM")));
-                labelEl.textContent = `${tag} (${cleanBase}W / ${RTX_4090_BOOST_WATT}W)`;
+                labelEl.textContent = `${gpuCount}x ${tag} (${RTX_4090_BASE_WATT}W / ${RTX_4090_BOOST_WATT}W)`;
             }
 
             const amp = (getTotalActiveWatt() / 220).toFixed(2);
@@ -1522,7 +1589,8 @@
                     fireFlower: pcRigState.fireFlower,
                     poweredByUser: pcRigState.poweredByUser,
                     marioSfxEnabled: pcRigState.marioSfxEnabled,
-                    rtxBaseWatt: RTX_4090_BASE_WATT,
+                    rtxCount: pcRigState.rtxCount,
+                    rtxBaseWatt: Math.round((RTX_4090_BASE_WATT - (75 + ((pcRigState.rtxCount || 1) - 1) * 35)) / (pcRigState.rtxCount || 1)),
                     rtxProfile: pcRigState.rtxProfile
                 }));
             } catch (e) {}
@@ -1551,9 +1619,11 @@
                 if (raw) {
                     const p = JSON.parse(raw);
                     if (typeof p.rtxBaseWatt === "number") savedBaseWatt = p.rtxBaseWatt;
+                    if (typeof p.rtxCount === "number" && [1, 2, 4, 8].includes(p.rtxCount)) pcRigState.rtxCount = p.rtxCount;
                     if (typeof p.rtxProfile === "string") savedProfile = p.rtxProfile;
                 }
             } catch (e) {}
+            syncRtxCountButtons();
             applyRtxWattSettings(savedBaseWatt, savedProfile);
             const sel = document.getElementById("mario-level-select");
             if (sel) sel.value = String(pcRigState.level);
@@ -2706,12 +2776,46 @@
             }
         }
 
+        function isDesktopPcDevice() {
+            const hasTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+            const isSmallViewport = window.innerWidth <= 900 || (window.screen && Math.min(window.screen.width, window.screen.height) <= 600);
+            const coarsePointer = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+            return !hasTouch && !coarsePointer && !isSmallViewport;
+        }
+
+        function syncTouchControlsVisibility() {
+            const touchBox = document.getElementById("mobile-touch-controls");
+            if (!touchBox) return;
+            if (isDesktopPcDevice()) {
+                touchBox.classList.add("hidden");
+                inputState.left = false;
+                inputState.right = false;
+                inputState.jump = false;
+                inputState.run = false;
+            } else {
+                touchBox.classList.remove("hidden");
+            }
+        }
+
+        function clearAllTouchStates() {
+            inputState.left = false;
+            inputState.right = false;
+            inputState.jump = false;
+            inputState.run = false;
+            document.querySelectorAll(".touch-pad-btn").forEach(b => b.classList.remove("is-active"));
+        }
+
         function bindTouchPadButton(elId, stateKey, isJump = false, isRun = false) {
             const btn = document.getElementById(elId);
             if (!btn) return;
             const pressDown = (e) => {
                 e.preventDefault();
                 if (!pcRigState.pcOn || meterState.balanceKwh <= 0) return;
+                try {
+                    if (btn.setPointerCapture && e.pointerId !== undefined) {
+                        btn.setPointerCapture(e.pointerId);
+                    }
+                } catch (err) {}
                 inputState[stateKey] = true;
                 if (isJump) inputState.jumpPressedEdge = true;
                 if (isRun) inputState.runPressedEdge = true;
@@ -2725,7 +2829,8 @@
             btn.addEventListener("pointerdown", pressDown, { passive: false });
             btn.addEventListener("pointerup", releaseUp, { passive: false });
             btn.addEventListener("pointercancel", releaseUp, { passive: false });
-            btn.addEventListener("pointerleave", releaseUp, { passive: false });
+            btn.addEventListener("lostpointercapture", releaseUp, { passive: false });
+            window.addEventListener("blur", clearAllTouchStates);
         }
 
         function setupMarioControls() {
@@ -2956,6 +3061,11 @@
             buildMarioLevel(pcRigState.level);
             setWattLoad(meterState.currentWatt);
             syncPcPowerState(true);
+            syncTouchControlsVisibility();
+            window.addEventListener("resize", () => {
+                syncTouchControlsVisibility();
+                resizeMarioCanvas();
+            });
             updateLcdDisplay();
             marioGameLoop();
         };
