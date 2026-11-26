@@ -1761,13 +1761,61 @@
             return false;
         }
 
+        // Solver kecil: apakah ketiga potongan bisa dipasang berurutan (urutan bebas),
+        // termasuk efek baris/kolom yang terhapus di tengah jalan. Dibatasi anggaran langkah.
+        function bbSolveSet(board, ids, budget) {
+            const fitsOn = (b, id, r, c) => {
+                const sh = BB_SHAPES[id];
+                for (const [dr, dc] of sh.cells) {
+                    const rr = r + dr, cc = c + dc;
+                    if (rr < 0 || cc < 0 || rr >= BB_N || cc >= BB_N || b[rr][cc]) return false;
+                }
+                return true;
+            };
+            const putAndClear = (b, id, r, c) => {
+                BB_SHAPES[id].cells.forEach(([dr, dc]) => { b[r + dr][c + dc] = 1; });
+                const rows = [], cols = [];
+                for (let a = 0; a < BB_N; a++) {
+                    if (b[a].every(v => v)) rows.push(a);
+                    if (b.every(rw => rw[a])) cols.push(a);
+                }
+                rows.forEach(a => { for (let k = 0; k < BB_N; k++) b[a][k] = 0; });
+                cols.forEach(a => { for (let k = 0; k < BB_N; k++) b[k][a] = 0; });
+            };
+            let nodes = budget;
+            const rec = (b, list) => {
+                if (!list.length) return true;
+                if (--nodes < 0) return null;
+                for (let k = 0; k < list.length; k++) {
+                    const rest = list.filter((_, j) => j !== k);
+                    for (let r = 0; r < BB_N; r++) {
+                        for (let c = 0; c < BB_N; c++) {
+                            if (!fitsOn(b, list[k], r, c)) continue;
+                            const nb = b.map(row => row.slice());
+                            putAndClear(nb, list[k], r, c);
+                            const res = rec(nb, rest);
+                            if (res !== false) return res;
+                        }
+                    }
+                }
+                return false;
+            };
+            return rec(board.map(row => row.map(v => (v ? 1 : 0))), ids.slice());
+        }
+
+        // Bagikan 3 potongan yang PASTI bisa diselesaikan (adil, seperti game aslinya).
+        // Jika papan sudah terlalu penuh untuk dijamin, pakai set yang setidaknya satu potongannya muat.
         function bbRefill() {
-            let ids = [0, 0, 0];
+            let fallback = null;
             for (let attempt = 0; attempt < 40; attempt++) {
-                ids = [bbPickShapeId(), bbPickShapeId(), bbPickShapeId()];
-                if (ids.some(id => bbFitsAnywhere(id))) break;
+                const ids = [bbPickShapeId(), bbPickShapeId(), bbPickShapeId()];
+                if (!fallback && ids.some(id => bbFitsAnywhere(id))) fallback = ids;
+                if (bbSolveSet(bb.board, ids, 4000) === true) {
+                    bb.pieces = ids;
+                    return;
+                }
             }
-            bb.pieces = ids;
+            bb.pieces = fallback || [bbPickShapeId(), bbPickShapeId(), bbPickShapeId()];
         }
 
         function bbNewGame() {
