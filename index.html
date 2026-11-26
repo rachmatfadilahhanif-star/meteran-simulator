@@ -738,31 +738,6 @@
                 </button>
             </div>
 
-            <!-- ISI kWh BEBAS TANPA BATAS -->
-            <div class="bg-amber-500/10 border border-amber-500/30 p-2.5 rounded-xl">
-                <div class="text-[11px] text-amber-300 font-semibold mb-1.5 flex items-center gap-1.5">
-                    <i class="fa-solid fa-infinity"></i> Isi kWh Bebas (Tanpa Batas)
-                </div>
-                <div class="flex items-center gap-1.5">
-                    <div class="relative flex-1">
-                        <input id="free-kwh-input" type="text" inputmode="decimal" placeholder="Ketik jumlah kWh sepuasnya..."
-                            onkeydown="if(event.key==='Enter'){topUpFreeKwh();}"
-                            class="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 rounded-lg pl-2.5 pr-11 py-1.5 font-mono text-xs font-bold text-amber-300 outline-none">
-                        <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono font-bold text-slate-400">kWh</span>
-                    </div>
-                    <button onclick="topUpFreeKwh()" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold shrink-0 transition">
-                        Isi
-                    </button>
-                </div>
-                <div class="flex flex-wrap gap-1.5 mt-2">
-                    <button onclick="topUpFreeKwh(100)" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300">+100</button>
-                    <button onclick="topUpFreeKwh(10000)" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300">+10 rb</button>
-                    <button onclick="topUpFreeKwh(1000000)" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300">+1 jt</button>
-                    <button onclick="topUpFreeKwh(1000000000)" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300">+1 miliar</button>
-                    <button onclick="topUpFreeKwh(1000000000000)" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300">+1 triliun</button>
-                </div>
-            </div>
-
             <!-- Pengaturan Beban Watt (Slider + Preset + Ketik Bebas) -->
             <div>
                 <div class="flex justify-between items-center text-xs mb-1.5">
@@ -2581,40 +2556,6 @@
             }
             if (!/^\d*\.?\d*(e[+-]?\d+)?$/i.test(s)) return NaN;
             return Number(s);
-        }
-
-        function topUpFreeKwh(amount) {
-            const input = document.getElementById("free-kwh-input");
-            const raw = (amount === undefined) ? (input ? input.value : "") : amount;
-            const val = (typeof raw === "number") ? raw : parseFreeKwhInput(raw);
-            if (!isFinite(val) || val <= 0) {
-                playErrorBeeps();
-                showToast("Masukkan jumlah kWh yang valid (angka lebih dari 0).", "error");
-                return;
-            }
-            if (val > FREE_TOPUP_FLOAT_CEILING) {
-                playErrorBeeps();
-                showToast("Angka terlalu besar untuk dihitung komputer (maks sekitar 1e300 kWh).", "error");
-                return;
-            }
-            const wasEmpty = meterState.balanceKwh <= 0;
-            meterState.balanceKwh = Math.min(FREE_TOPUP_FLOAT_CEILING, parseFloat((meterState.balanceKwh + val).toFixed(2)));
-            meterState.relayClosed = true;
-            if (wasEmpty) {
-                pcRigState.poweredByUser = true;
-                pcRigState.pcOn = true;
-                pcRigState.shutdownReason = "";
-            }
-            saveState();
-            saveMarioProgress();
-            playAcceptBeep();
-            if (wasEmpty) setTimeout(playRelayClick, 180);
-            syncPcPowerState(true);
-            if (input && amount === undefined) input.value = "";
-            const addedF = formatLcdKwhNumber(val);
-            const balF = formatLcdKwhNumber(meterState.balanceKwh);
-            showToast(`+${addedF} kWh masuk. Saldo: ${balF} kWh`, "success");
-            showTempLcd(`+${addedF}`, `SALDO: ${balF} KWH`, "kWh", "ISI ULANG", 2200);
         }
 
         function quickTopupDemoToken() {
