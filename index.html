@@ -252,6 +252,23 @@
         .rtx-glow {
             animation: pulse-rtx 2.4s infinite ease-in-out;
         }
+
+        /* Block Blast */
+        #bb-canvas {
+            touch-action: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .game-viewport-box.bb-mode { background: #070b16 !important; }
+        .game-tab { user-select: none; -webkit-user-select: none; }
+        .game-viewport-box.bb-mode { height: auto !important; aspect-ratio: 320 / 430; max-height: 82vh; }
+        .rtx-fullscreen-mode .game-viewport-box.bb-mode { height: 100% !important; max-height: none !important; aspect-ratio: auto !important; }
+        .rtx-fullscreen-mode .game-picker { display: none !important; }
     </style>
 </head>
 <body class="text-slate-100 min-h-screen flex flex-col items-center justify-between py-4 px-3 sm:px-6">
@@ -483,7 +500,7 @@
                             <span id="pc-power-badge" class="px-1.5 py-0.5 rounded text-[9px] font-mono font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">ONLINE</span>
                         </div>
                         <div class="text-[9.5px] font-mono text-slate-400 truncate">
-                            DAYA TIDAK SIA-SIA • 20 LEVEL MARIO + SAVE AUTO
+                            DAYA TIDAK SIA-SIA • MARIO 20 LEVEL + BLOCK BLAST • SAVE AUTO
                         </div>
                     </div>
                 </div>
@@ -498,6 +515,24 @@
                         <span id="fullscreen-btn-label">FULLSCREEN</span>
                     </button>
                 </div>
+            </div>
+
+            <!-- Pilihan Game (Mario / Block Blast) -->
+            <div class="game-picker grid grid-cols-2 gap-1.5 mb-2.5 font-mono" role="group" aria-label="Pilih Game">
+                <button type="button" id="gp-mario" onclick="selectGame('mario')" class="game-tab flex items-center gap-2 px-2.5 py-2 rounded-xl border transition text-left bg-lime-500 text-slate-950 border-lime-300 shadow">
+                    <i class="fa-solid fa-gamepad text-base"></i>
+                    <span class="flex flex-col items-start leading-tight">
+                        <span class="text-[11px] font-extrabold">SUPER MARIO</span>
+                        <span class="text-[8.5px] font-bold opacity-80">20 LEVEL &bull; SAVE AUTO</span>
+                    </span>
+                </button>
+                <button type="button" id="gp-bb" onclick="selectGame('bb')" class="game-tab flex items-center gap-2 px-2.5 py-2 rounded-xl border transition text-left bg-slate-950/85 hover:bg-slate-800 text-slate-300 border-slate-700">
+                    <i class="fa-solid fa-table-cells-large text-base"></i>
+                    <span class="flex flex-col items-start leading-tight">
+                        <span class="text-[11px] font-extrabold">BLOCK BLAST</span>
+                        <span class="text-[8.5px] font-bold opacity-80">PUZZLE 8x8 &bull; SAVE AUTO</span>
+                    </span>
+                </button>
             </div>
 
             <!-- Baris Telemetri Real-Time: Kecepatan CPU, Daya Sisa (kWh), Kurangnya / Kekurangan Daya, & FPS -->
@@ -562,6 +597,23 @@
                 </div>
                 <input id="rtx-watt-slider" type="range" min="150" max="1500" step="25" value="450" oninput="setRtxCustomWatt(this.value)"
                     class="w-full h-1.5 bg-slate-800 rounded-lg accent-lime-400 cursor-pointer mt-2">
+                <div class="grid grid-cols-2 gap-1.5 mt-2 text-[10px] font-mono">
+                    <div class="relative">
+                        <input id="rtx-watt-custom" type="text" inputmode="numeric" placeholder="Watt per GPU (bebas)"
+                            onkeydown="if(event.key==='Enter'){applyRtxFreeInputs();}"
+                            class="w-full bg-slate-950 border border-slate-700 focus:border-lime-400 rounded-lg pl-2 pr-7 py-1 font-bold text-lime-300 outline-none">
+                        <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold text-slate-400">W</span>
+                    </div>
+                    <div class="relative">
+                        <input id="rtx-count-custom" type="text" inputmode="numeric" placeholder="Jumlah GPU (bebas)"
+                            onkeydown="if(event.key==='Enter'){applyRtxFreeInputs();}"
+                            class="w-full bg-slate-950 border border-slate-700 focus:border-lime-400 rounded-lg pl-2 pr-9 py-1 font-bold text-lime-300 outline-none">
+                        <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold text-slate-400">GPU</span>
+                    </div>
+                </div>
+                <button type="button" onclick="applyRtxFreeInputs()" class="w-full mt-1.5 py-1 rounded bg-lime-500 hover:bg-lime-400 text-slate-950 font-extrabold text-[10px] font-mono transition">
+                    TERAPKAN WATT &amp; JUMLAH GPU BEBAS
+                </button>
             </div>
 
             <!-- Monitor PC & Layar Game Mario -->
@@ -579,6 +631,7 @@
                         <span>KELUAR</span>
                     </button>
                     <canvas id="mario-canvas" width="480" height="270"></canvas>
+                    <canvas id="bb-canvas" width="480" height="270" style="display:none"></canvas>
 
                     <!-- Overlay Saat PC Mati (kWh Habis atau Tombol Matikan PC Ditekan) -->
                     <div id="pc-dead-overlay" class="hidden absolute inset-0 z-20 bg-black/95 flex flex-col items-center justify-center p-4 text-center">
@@ -598,7 +651,7 @@
                 </div>
 
                 <!-- Baris Status Save Otomatis, Pilih Level (1-20), & Suara Mario -->
-                <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono">
+                <div id="mario-status-row" class="mt-2 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono">
                     <div class="flex items-center gap-1.5">
                         <span class="px-2 py-0.5 rounded bg-lime-500/15 border border-lime-500/30 text-lime-300 font-bold">
                             <i class="fa-solid fa-floppy-disk"></i> AUTO-SAVE: <span id="mario-save-indicator">LVL 1 • KOIN 0</span>
@@ -616,6 +669,21 @@
                             <i class="fa-solid fa-rotate-right"></i>
                         </button>
                     </div>
+                </div>
+
+                <!-- Baris Status Block Blast: Save Otomatis, Suara, Game Baru -->
+                <div id="bb-status-row" class="hidden mt-2 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono">
+                    <div class="flex items-center gap-1.5">
+                        <span class="px-2 py-0.5 rounded bg-lime-500/15 border border-lime-500/30 text-lime-300 font-bold">
+                            <i class="fa-solid fa-floppy-disk"></i> AUTO-SAVE: <span id="bb-save-indicator">SKOR 0 &bull; REKOR 0</span>
+                        </span>
+                        <button onclick="toggleMarioAudio()" id="btn-bb-sfx" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300 font-bold">
+                            <i class="fa-solid fa-music"></i> SFX: ON
+                        </button>
+                    </div>
+                    <button onclick="bbNewGameButton()" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sky-300 font-bold" title="Mulai Block Blast dari awal">
+                        <i class="fa-solid fa-rotate-right"></i> GAME BARU
+                    </button>
                 </div>
             </div>
 
@@ -670,6 +738,31 @@
                 </button>
             </div>
 
+            <!-- ISI kWh BEBAS TANPA BATAS -->
+            <div class="bg-amber-500/10 border border-amber-500/30 p-2.5 rounded-xl">
+                <div class="text-[11px] text-amber-300 font-semibold mb-1.5 flex items-center gap-1.5">
+                    <i class="fa-solid fa-infinity"></i> Isi kWh Bebas (Tanpa Batas)
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <div class="relative flex-1">
+                        <input id="free-kwh-input" type="text" inputmode="decimal" placeholder="Ketik jumlah kWh sepuasnya..."
+                            onkeydown="if(event.key==='Enter'){topUpFreeKwh();}"
+                            class="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 rounded-lg pl-2.5 pr-11 py-1.5 font-mono text-xs font-bold text-amber-300 outline-none">
+                        <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono font-bold text-slate-400">kWh</span>
+                    </div>
+                    <button onclick="topUpFreeKwh()" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold shrink-0 transition">
+                        Isi
+                    </button>
+                </div>
+                <div class="flex flex-wrap gap-1.5 mt-2">
+                    <button onclick="topUpFreeKwh(100)" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300">+100</button>
+                    <button onclick="topUpFreeKwh(10000)" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300">+10 rb</button>
+                    <button onclick="topUpFreeKwh(1000000)" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300">+1 jt</button>
+                    <button onclick="topUpFreeKwh(1000000000)" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300">+1 miliar</button>
+                    <button onclick="topUpFreeKwh(1000000000000)" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300">+1 triliun</button>
+                </div>
+            </div>
+
             <!-- Pengaturan Beban Watt (Slider + Preset + Ketik Bebas) -->
             <div>
                 <div class="flex justify-between items-center text-xs mb-1.5">
@@ -682,7 +775,7 @@
                 <!-- Opsi Ketik Bebas Daya Watt -->
                 <div class="flex items-center gap-1.5 mt-2">
                     <div class="relative flex-1">
-                        <input id="sim-watt-custom" type="number" min="0" max="999999" step="1" value="450" placeholder="Ketik bebas Watt..."
+                        <input id="sim-watt-custom" type="number" min="0" step="1" value="450" placeholder="Ketik bebas Watt..."
                             oninput="setWattLoad(this.value, true)"
                             class="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 rounded-lg pl-2.5 pr-12 py-1.5 font-mono text-xs font-bold text-amber-300 outline-none">
                         <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono font-bold text-slate-400">WATT</span>
@@ -694,9 +787,9 @@
 
                 <div class="grid grid-cols-4 gap-1.5 mt-2">
                     <button onclick="setWattLoad(100)" class="py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 border border-slate-700">💡 100W</button>
-                    <button onclick="setWattLoad(450)" class="py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 border border-slate-700">🧊 450W</button>
-                    <button onclick="setWattLoad(1100)" class="py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 border border-slate-700">❄️ 1100W</button>
-                    <button onclick="setWattLoad(2000)" class="py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 border border-slate-700">🔥 2000W</button>
+                    <button onclick="setWattLoad(450)" class="py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 border border-slate-700">🖥️ 450W</button>
+                    <button onclick="setWattLoad(1100)" class="py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 border border-slate-700">🔥 1100W</button>
+                    <button onclick="setWattLoad(2000)" class="py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 border border-slate-700">⚡ 2000W</button>
                 </div>
             </div>
 
@@ -714,16 +807,16 @@
             <div class="pt-2 border-t border-slate-800/80">
                 <div class="text-[11px] text-slate-400 mb-1.5">Kode Cek Meteran PLN (Klik atau ketik di keypad):</div>
                 <div class="flex flex-wrap gap-1.5">
-                    <button onclick="quickShortcode('00')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400">00↵ Tes LCD</button>
-                    <button onclick="quickShortcode('03')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sky-400">03↵ Total kWh</button>
-                    <button onclick="quickShortcode('07')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-400">07↵ Batas Alarm</button>
-                    <button onclick="quickShortcode('09')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-purple-400">09↵ Daya (W)</button>
-                    <button onclick="quickShortcode('41')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-400">41↵ Voltase</button>
-                    <button onclick="quickShortcode('44')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-pink-400">44↵ Ampere</button>
-                    <button onclick="quickShortcode('47')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-indigo-400">47↵ Daya (kW)</button>
-                    <button onclick="quickShortcode('75')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200">75↵ ID Meter</button>
-                    <button onclick="quickShortcode('78')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300">78↵ Jeda Alarm</button>
-                    <button onclick="quickShortcode('79')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-teal-300">79↵ Jml Token</button>
+                    <button onclick="quickShortcode('00')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400">00 ▸ Tes LCD</button>
+                    <button onclick="quickShortcode('03')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sky-400">03 ▸ Total kWh</button>
+                    <button onclick="quickShortcode('07')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-400">07 ▸ Batas Alarm</button>
+                    <button onclick="quickShortcode('09')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-purple-400">09 ▸ Daya (W)</button>
+                    <button onclick="quickShortcode('41')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-400">41 ▸ Voltase</button>
+                    <button onclick="quickShortcode('44')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-pink-400">44 ▸ Ampere</button>
+                    <button onclick="quickShortcode('47')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-indigo-400">47 ▸ Daya (kW)</button>
+                    <button onclick="quickShortcode('75')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200">75 ▸ ID Meter</button>
+                    <button onclick="quickShortcode('78')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300">78 ▸ Jeda Alarm</button>
+                    <button onclick="quickShortcode('79')" class="text-[10.5px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-teal-300">79 ▸ Jml Token</button>
                 </div>
             </div>
 
@@ -771,7 +864,9 @@
         const PERMANENT_USED_TIDS_KEY = "PLN_METER_PERMANENT_USED_TIDS_V1";
         const STORAGE_KEY = "PLN_METER_ITRON_ACE9000_STATE_V1";
         const STORAGE_KEY_V3 = "PLN_METER_ITRON_ACE9000_STATE_V3";
-        const MAX_SUPPORTED_KWH = 190000000000; // 190 Miliar kWh
+        const MAX_SUPPORTED_KWH = Infinity; // TANPA BATAS: saldo kWh tidak dipotong lagi
+        const TOKEN_CURVE_MAX_KWH = 190000000000; // skala kurva token 17-bit (token lama tetap kompatibel)
+        const FREE_TOPUP_FLOAT_CEILING = 1e300; // hanya batas teknis angka komputer untuk isi manual
 
         function setPermanentCookie(name, value) {
             try {
@@ -1049,11 +1144,11 @@
                 const divisors = [100, 10000, 1000000, 10000000];
                 const mantissa = code17 & 0x3FFF;
                 const cents = mantissa * divisors[top3 - 4];
-                return Math.min(MAX_SUPPORTED_KWH, cents / 100);
+                return cents / 100;
             }
             const norm = (code17 - 100000) / 31071;
-            const kwhVal = 1000 * Math.pow(MAX_SUPPORTED_KWH / 1000, norm);
-            return Math.min(MAX_SUPPORTED_KWH, parseFloat(kwhVal.toFixed(2)));
+            const kwhVal = 1000 * Math.pow(TOKEN_CURVE_MAX_KWH / 1000, norm);
+            return parseFloat(kwhVal.toFixed(2));
         }
 
         function decryptAndValidateToken20(meterId, token20Str) {
@@ -1115,13 +1210,15 @@
 
         function formatLcdKwhNumber(val) {
             if (!isFinite(val) || val < 0) return "0.00";
-            if (val >= 1000000000) {
-                const b = val / 1000000000;
-                return (b >= 100 ? b.toFixed(1) : b.toFixed(2)) + "B";
+            if (val >= 1e24) {
+                return val.toExponential(2).replace("e+", "E");
             }
-            if (val >= 1000000) {
-                const m = val / 1000000;
-                return (m >= 100 ? m.toFixed(1) : m.toFixed(2)) + "M";
+            const bigUnits = [[1e21, "Sx"], [1e18, "Qi"], [1e15, "Qa"], [1e12, "T"], [1e9, "B"], [1e6, "M"]];
+            for (const [limit, suffix] of bigUnits) {
+                if (val >= limit) {
+                    const x = val / limit;
+                    return (x >= 100 ? x.toFixed(1) : x.toFixed(2)) + suffix;
+                }
             }
             if (val >= 10000) {
                 return Math.round(val).toString();
@@ -1460,7 +1557,7 @@
                 const formatted = formatGroupedInput(meterState.inputBuffer);
                 applyAdaptiveLcdFontSize(formatted);
                 mainEl.textContent = formatted;
-                subEl.textContent = meterState.inputBuffer.length === 20 ? "TEKAN ENTER MERAH [↵]" : "MASUKKAN 20 DIGIT TOKEN";
+                subEl.textContent = meterState.inputBuffer.length === 20 ? "TEKAN ENTER MERAH" : "MASUKKAN 20 DIGIT TOKEN";
                 unitEl.textContent = "DIGIT";
             } else if (meterState.displayMode === "TEMP_MSG") {
                 modeEl.textContent = meterState.tempModeLabel;
@@ -1492,6 +1589,8 @@
             boros: { label: "BOROS (750W)", base: 750, boost: 920, fpsBase: 240, clockBase: 6.05 },
             ekstrem: { label: "OVERCLOCK (1100W)", base: 1100, boost: 1350, fpsBase: 360, clockBase: 6.30 }
         };
+        const RTX_FREE_MAX_WATT = 1e12;   // watt per GPU (praktis tanpa batas)
+        const RTX_FREE_MAX_COUNT = 1e6;   // jumlah GPU (praktis tanpa batas)
         let RTX_4090_BASE_WATT = 450;
         let RTX_4090_BOOST_WATT = 580;
 
@@ -1516,6 +1615,602 @@
             checkpointReached: false
         };
 
+        // =====================================================================
+        // PILIHAN GAME (MARIO / BLOCK BLAST) + ENGINE BLOCK BLAST (SAVE OTOMATIS)
+        // Daya kedua game tetap diambil dari saldo kWh PLN lewat RTX 4090 rig.
+        // =====================================================================
+        const BB_SAVE_KEY = "PLN_RTX4090_BLOCKBLAST_SAVE_V1";
+        const BB_BEST_KEY = "PLN_RTX4090_BLOCKBLAST_BEST_V1";
+        let activeGame = "bb"; // Block Blast selalu tampil lebih dulu saat halaman dibuka
+
+        const BB_N = 8;
+        const BB_LAYOUTS = {
+            land: { name: "land", W: 480, H: 270, cell: 30, gx: 12, gy: 15, slotX: [270, 338, 406], slotY: 150, slotW: 66, slotH: 100 },
+            port: { name: "port", W: 320, H: 430, cell: 34, gx: 24, gy: 66, slotX: [16, 114, 212], slotY: 350, slotW: 92, slotH: 72 }
+        };
+        let bbL = BB_LAYOUTS.port;
+        const BB_COLORS = ["#ef4444", "#f97316", "#eab308", "#22c55e", "#06b6d4", "#3b82f6", "#8b5cf6", "#ec4899"];
+
+        const BB_BASES = [
+            { p: ["#"], rot: false },
+            { p: ["##"], rot: true },
+            { p: ["###"], rot: true },
+            { p: ["####"], rot: true },
+            { p: ["#####"], rot: true },
+            { p: ["##", "##"], rot: false },
+            { p: ["###", "###", "###"], rot: false },
+            { p: ["###", "###"], rot: true },
+            { p: ["#.", "##"], rot: true },
+            { p: ["#..", "#..", "###"], rot: true },
+            { p: ["#.", "#.", "##"], rot: true },
+            { p: [".#", ".#", "##"], rot: true },
+            { p: ["###", ".#."], rot: true },
+            { p: [".##", "##."], rot: true },
+            { p: ["##", ".##"], rot: true }
+        ];
+
+        function bbRotate(m) {
+            const h = m.length, w = m[0].length, out = [];
+            for (let c = 0; c < w; c++) {
+                let row = "";
+                for (let r = h - 1; r >= 0; r--) row += m[r][c];
+                out.push(row);
+            }
+            return out;
+        }
+
+        const BB_SHAPES = [];
+        BB_BASES.forEach((b, bi) => {
+            let m = b.p;
+            const seen = new Set();
+            for (let k = 0; k < (b.rot ? 4 : 1); k++) {
+                const key = m.join("/");
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    const cells = [];
+                    m.forEach((row, r) => { for (let c = 0; c < row.length; c++) if (row[c] === "#") cells.push([r, c]); });
+                    BB_SHAPES.push({ cells, w: m[0].length, h: m.length, color: bi % BB_COLORS.length });
+                }
+                m = bbRotate(m);
+            }
+        });
+
+        const bb = {
+            board: [],
+            pieces: [null, null, null],
+            score: 0,
+            best: 0,
+            combo: 0,
+            moves: 0,
+            gameOver: false,
+            drag: null,
+            lastAct: 0,
+            fx: [],
+            floats: [],
+            confirmUntil: 0,
+            layoutName: ""
+        };
+
+        function bbSetLayout(name) {
+            const cv = document.getElementById("bb-canvas");
+            bbL = BB_LAYOUTS[name] || BB_LAYOUTS.port;
+            bb.layoutName = bbL.name;
+            if (cv) {
+                if (cv.width !== bbL.W) cv.width = bbL.W;
+                if (cv.height !== bbL.H) cv.height = bbL.H;
+            }
+            bb.fx = [];
+            bb.floats = [];
+        }
+
+        function bbAutoLayout() {
+            const cv = document.getElementById("bb-canvas");
+            if (!cv || !cv.parentElement) return;
+            const bw = cv.parentElement.clientWidth;
+            const bh = cv.parentElement.clientHeight;
+            const want = (bw > 0 && bh > 0 && bw / bh > 1.25) ? "land" : "port";
+            if (want !== bb.layoutName) bbSetLayout(want);
+        }
+
+        function bbFitFont(ctx, text, maxW, startPx, weight) {
+            let px = startPx;
+            while (px > 9) {
+                ctx.font = `${weight} ${px}px 'JetBrains Mono', monospace`;
+                if (ctx.measureText(text).width <= maxW) break;
+                px -= 1;
+            }
+            return px;
+        }
+
+        function bbEmptyBoard() {
+            const b = [];
+            for (let r = 0; r < BB_N; r++) b.push(new Array(BB_N).fill(0));
+            return b;
+        }
+
+        function bbPickShapeId() {
+            let total = 0;
+            const weights = BB_SHAPES.map(s => {
+                const n = s.cells.length;
+                const w = n >= 9 ? 0.45 : (n === 5 && (s.w === 5 || s.h === 5)) ? 0.7 : 1;
+                total += w;
+                return w;
+            });
+            let x = Math.random() * total;
+            for (let i = 0; i < weights.length; i++) {
+                x -= weights[i];
+                if (x <= 0) return i;
+            }
+            return 0;
+        }
+
+        function bbFits(shapeId, r, c) {
+            const sh = BB_SHAPES[shapeId];
+            for (const [dr, dc] of sh.cells) {
+                const rr = r + dr, cc = c + dc;
+                if (rr < 0 || cc < 0 || rr >= BB_N || cc >= BB_N) return false;
+                if (bb.board[rr][cc]) return false;
+            }
+            return true;
+        }
+
+        function bbFitsAnywhere(shapeId) {
+            for (let r = 0; r < BB_N; r++)
+                for (let c = 0; c < BB_N; c++)
+                    if (bbFits(shapeId, r, c)) return true;
+            return false;
+        }
+
+        function bbRefill() {
+            let ids = [0, 0, 0];
+            for (let attempt = 0; attempt < 40; attempt++) {
+                ids = [bbPickShapeId(), bbPickShapeId(), bbPickShapeId()];
+                if (ids.some(id => bbFitsAnywhere(id))) break;
+            }
+            bb.pieces = ids;
+        }
+
+        function bbNewGame() {
+            bb.board = bbEmptyBoard();
+            bb.score = 0;
+            bb.combo = 0;
+            bb.moves = 0;
+            bb.gameOver = false;
+            bb.drag = null;
+            bb.fx = [];
+            bb.floats = [];
+            bbRefill();
+            saveBlockBlast();
+            updateMarioSaveBadge();
+        }
+
+        function bbNewGameButton() {
+            const now = Date.now();
+            if (bb.score > 0 && !bb.gameOver && now > bb.confirmUntil) {
+                bb.confirmUntil = now + 3000;
+                showToast("Skor sedang berjalan. Tekan GAME BARU sekali lagi untuk mengulang.", "info");
+                return;
+            }
+            bb.confirmUntil = 0;
+            bbNewGame();
+            playKeyBeep();
+        }
+
+        function saveBlockBlast() {
+            try {
+                localStorage.setItem(BB_SAVE_KEY, JSON.stringify({
+                    board: bb.board,
+                    pieces: bb.pieces,
+                    score: bb.score,
+                    best: bb.best,
+                    combo: bb.combo,
+                    moves: bb.moves,
+                    gameOver: bb.gameOver
+                }));
+                localStorage.setItem(BB_BEST_KEY, String(bb.best));
+            } catch (e) {}
+        }
+
+        function loadBlockBlast() {
+            let ok = false;
+            try {
+                const raw = localStorage.getItem(BB_SAVE_KEY);
+                if (raw) {
+                    const p = JSON.parse(raw);
+                    const boardOk = Array.isArray(p.board) && p.board.length === BB_N &&
+                        p.board.every(row => Array.isArray(row) && row.length === BB_N && row.every(v => Number.isInteger(v) && v >= 0 && v <= BB_COLORS.length));
+                    const piecesOk = Array.isArray(p.pieces) && p.pieces.length === 3 &&
+                        p.pieces.every(v => v === null || (Number.isInteger(v) && v >= 0 && v < BB_SHAPES.length));
+                    if (boardOk && piecesOk) {
+                        bb.board = p.board;
+                        bb.pieces = p.pieces;
+                        bb.score = Number.isFinite(p.score) && p.score >= 0 ? p.score : 0;
+                        bb.best = Number.isFinite(p.best) && p.best >= 0 ? p.best : 0;
+                        bb.combo = Number.isFinite(p.combo) && p.combo >= 0 ? p.combo : 0;
+                        bb.moves = Number.isFinite(p.moves) && p.moves >= 0 ? p.moves : 0;
+                        bb.gameOver = p.gameOver === true;
+                        ok = true;
+                    }
+                }
+            } catch (e) {}
+            try {
+                const bestRaw = Number(localStorage.getItem(BB_BEST_KEY));
+                if (Number.isFinite(bestRaw) && bestRaw > bb.best) bb.best = bestRaw;
+            } catch (e) {}
+            if (!ok) {
+                bb.board = bbEmptyBoard();
+                bbRefill();
+            }
+            if (bb.pieces.every(v => v === null)) bbRefill();
+        }
+        loadBlockBlast();
+
+        function sfxBbPick() { playMarioTone(520, 0.05, "square", 0.05, 0); }
+        function sfxBbPlace() { playMarioTone(260, 0.07, "square", 0.07, 0); playMarioTone(330, 0.06, "square", 0.05, 0.04); }
+        function sfxBbBad() { playMarioTone(150, 0.12, "sawtooth", 0.05, 0); }
+        function sfxBbClear(n) {
+            const base = 440;
+            for (let i = 0; i < Math.min(6, 3 + n); i++) playMarioTone(base * Math.pow(1.122, i * 2), 0.09, "square", 0.07, i * 0.06);
+        }
+        function sfxBbOver() {
+            [392, 330, 262, 196].forEach((f, i) => playMarioTone(f, 0.18, "triangle", 0.08, i * 0.16));
+        }
+
+        function bbLinesFor(board) {
+            const rows = [], cols = [];
+            for (let r = 0; r < BB_N; r++) if (board[r].every(v => v)) rows.push(r);
+            for (let c = 0; c < BB_N; c++) {
+                let full = true;
+                for (let r = 0; r < BB_N; r++) if (!board[r][c]) { full = false; break; }
+                if (full) cols.push(c);
+            }
+            return { rows, cols };
+        }
+
+        function bbPlace(slot, r, c) {
+            const id = bb.pieces[slot];
+            if (id === null || !bbFits(id, r, c)) return false;
+            const sh = BB_SHAPES[id];
+            sh.cells.forEach(([dr, dc]) => { bb.board[r + dr][c + dc] = sh.color + 1; });
+            let pts = sh.cells.length;
+
+            const { rows, cols } = bbLinesFor(bb.board);
+            const lines = rows.length + cols.length;
+            let cleared = 0;
+            if (lines > 0) {
+                const toClear = new Set();
+                rows.forEach(rr => { for (let cc = 0; cc < BB_N; cc++) toClear.add(rr * BB_N + cc); });
+                cols.forEach(cc => { for (let rr = 0; rr < BB_N; rr++) toClear.add(rr * BB_N + cc); });
+                toClear.forEach(k => {
+                    const rr = Math.floor(k / BB_N), cc = k % BB_N;
+                    const col = BB_COLORS[(bb.board[rr][cc] - 1 + BB_COLORS.length) % BB_COLORS.length];
+                    for (let i = 0; i < 4; i++) {
+                        bb.fx.push({
+                            x: bbL.gx + cc * bbL.cell + bbL.cell / 2,
+                            y: bbL.gy + rr * bbL.cell + bbL.cell / 2,
+                            vx: (Math.random() - 0.5) * 4.2,
+                            vy: (Math.random() - 0.9) * 3.6,
+                            life: 30 + Math.random() * 18,
+                            color: col
+                        });
+                    }
+                    bb.board[rr][cc] = 0;
+                });
+                cleared = toClear.size;
+                bb.combo += 1;
+                pts += lines * lines * 10 + (bb.combo > 1 ? (bb.combo - 1) * 15 : 0);
+                bb.floats.push({ text: `+${pts}`, x: bbL.gx + BB_N * bbL.cell / 2, y: bbL.gy + BB_N * bbL.cell / 2, life: 55, color: "#fde047" });
+                if (bb.combo > 1) bb.floats.push({ text: `COMBO x${bb.combo}`, x: bbL.gx + BB_N * bbL.cell / 2, y: bbL.gy + BB_N * bbL.cell / 2 + 22, life: 55, color: "#f9a8d4" });
+            } else {
+                bb.combo = 0;
+            }
+
+            const empty = bb.board.every(row => row.every(v => !v));
+            if (empty && cleared > 0) {
+                pts += 120;
+                bb.floats.push({ text: "PERFECT CLEAR +120", x: bbL.gx + BB_N * bbL.cell / 2, y: bbL.gy + BB_N * bbL.cell / 2 - 24, life: 70, color: "#86efac" });
+            }
+
+            bb.score += pts;
+            bb.moves += 1;
+            bb.pieces[slot] = null;
+            if (bb.pieces.every(v => v === null)) bbRefill();
+
+            if (cleared > 0) sfxBbClear(lines); else sfxBbPlace();
+
+            const playable = bb.pieces.some(v => v !== null && bbFitsAnywhere(v));
+            if (!playable) {
+                bb.gameOver = true;
+                sfxBbOver();
+                setTimeout(() => showToast(`Block Blast selesai! Skor akhir ${bb.score}.`, "info"), 150);
+            }
+            if (bb.score > bb.best) bb.best = bb.score;
+            saveBlockBlast();
+            updateMarioSaveBadge();
+            return true;
+        }
+
+        function bbCanvasPos(e) {
+            const cv = document.getElementById("bb-canvas");
+            const rect = cv.getBoundingClientRect();
+            const s = Math.min(rect.width / cv.width, rect.height / cv.height) || 1;
+            const ox = (rect.width - cv.width * s) / 2;
+            const oy = (rect.height - cv.height * s) / 2;
+            return { x: (e.clientX - rect.left - ox) / s, y: (e.clientY - rect.top - oy) / s };
+        }
+
+        function bbDropCell() {
+            const d = bb.drag;
+            if (!d) return null;
+            const sh = BB_SHAPES[bb.pieces[d.slot]];
+            const tlx = d.x - (sh.w * bbL.cell) / 2;
+            const tly = d.y - d.off - (sh.h * bbL.cell) / 2;
+            const c = Math.round((tlx - bbL.gx) / bbL.cell);
+            const r = Math.round((tly - bbL.gy) / bbL.cell);
+            return { r, c, tlx, tly, valid: bbFits(bb.pieces[d.slot], r, c) };
+        }
+
+        (function setupBlockBlastControls() {
+            const cv = document.getElementById("bb-canvas");
+            if (!cv) return;
+            cv.addEventListener("pointerdown", (e) => {
+                if (activeGame !== "bb") return;
+                if (!pcRigState.pcOn || meterState.balanceKwh <= 0) return;
+                e.preventDefault();
+                const p = bbCanvasPos(e);
+                bb.lastAct = performance.now();
+                if (bb.gameOver) {
+                    bbNewGame();
+                    playKeyBeep();
+                    return;
+                }
+                for (let i = 0; i < 3; i++) {
+                    if (bb.pieces[i] === null) continue;
+                    if (p.x >= bbL.slotX[i] && p.x <= bbL.slotX[i] + bbL.slotW && p.y >= bbL.slotY - 8 && p.y <= bbL.slotY + bbL.slotH + 8) {
+                        bb.drag = { slot: i, x: p.x, y: p.y, off: e.pointerType === "mouse" ? 0 : 46, pid: e.pointerId };
+                        try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+                        sfxBbPick();
+                        break;
+                    }
+                }
+            }, { passive: false });
+            cv.addEventListener("pointermove", (e) => {
+                if (!bb.drag || bb.drag.pid !== e.pointerId) return;
+                e.preventDefault();
+                const p = bbCanvasPos(e);
+                bb.drag.x = p.x;
+                bb.drag.y = p.y;
+                bb.lastAct = performance.now();
+            }, { passive: false });
+            const finish = (e, cancelled) => {
+                if (!bb.drag || bb.drag.pid !== e.pointerId) return;
+                const drop = bbDropCell();
+                const slot = bb.drag.slot;
+                bb.drag = null;
+                bb.lastAct = performance.now();
+                if (cancelled || !drop) return;
+                if (drop.valid) bbPlace(slot, drop.r, drop.c);
+                else sfxBbBad();
+            };
+            cv.addEventListener("pointerup", (e) => finish(e, false));
+            cv.addEventListener("pointercancel", (e) => finish(e, true));
+        })();
+
+        function bbDrawCell(ctx, x, y, size, color, alpha) {
+            ctx.globalAlpha = alpha;
+            ctx.fillStyle = color;
+            ctx.fillRect(x + 1, y + 1, size - 2, size - 2);
+            ctx.fillStyle = "rgba(255,255,255,0.28)";
+            ctx.fillRect(x + 1, y + 1, size - 2, Math.max(2, size * 0.16));
+            ctx.fillRect(x + 1, y + 1, Math.max(2, size * 0.16), size - 2);
+            ctx.fillStyle = "rgba(0,0,0,0.25)";
+            ctx.fillRect(x + 1, y + size - 1 - Math.max(2, size * 0.14), size - 2, Math.max(2, size * 0.14));
+            ctx.globalAlpha = 1;
+        }
+
+        function renderBlockBlast() {
+            bbAutoLayout();
+            const ctx = document.getElementById("bb-canvas").getContext("2d");
+            const VIEW_W = bbL.W, VIEW_H = bbL.H;
+            const g = ctx.createLinearGradient(0, 0, VIEW_W, VIEW_H);
+            g.addColorStop(0, "#0b1226");
+            g.addColorStop(1, "#1e1b4b");
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+
+            // papan 8x8
+            ctx.fillStyle = "#111a33";
+            ctx.fillRect(bbL.gx - 4, bbL.gy - 4, BB_N * bbL.cell + 8, BB_N * bbL.cell + 8);
+            for (let r = 0; r < BB_N; r++) {
+                for (let c = 0; c < BB_N; c++) {
+                    const x = bbL.gx + c * bbL.cell, y = bbL.gy + r * bbL.cell;
+                    ctx.fillStyle = ((r >> 1) + (c >> 1)) % 2 === 0 ? "#1b2748" : "#17213f";
+                    ctx.fillRect(x + 1, y + 1, bbL.cell - 2, bbL.cell - 2);
+                    const v = bb.board[r][c];
+                    if (v) bbDrawCell(ctx, x, y, bbL.cell, BB_COLORS[v - 1], 1);
+                }
+            }
+
+            // bayangan penempatan + highlight baris/kolom yang akan hilang
+            const drop = bb.drag ? bbDropCell() : null;
+            if (drop && drop.valid) {
+                const id = bb.pieces[bb.drag.slot];
+                const sh = BB_SHAPES[id];
+                const tmp = bb.board.map(row => row.slice());
+                sh.cells.forEach(([dr, dc]) => { tmp[drop.r + dr][drop.c + dc] = sh.color + 1; });
+                const { rows, cols } = bbLinesFor(tmp);
+                ctx.fillStyle = "rgba(255,255,255,0.22)";
+                rows.forEach(r => ctx.fillRect(bbL.gx, bbL.gy + r * bbL.cell, BB_N * bbL.cell, bbL.cell));
+                cols.forEach(c => ctx.fillRect(bbL.gx + c * bbL.cell, bbL.gy, bbL.cell, BB_N * bbL.cell));
+                sh.cells.forEach(([dr, dc]) => {
+                    bbDrawCell(ctx, bbL.gx + (drop.c + dc) * bbL.cell, bbL.gy + (drop.r + dr) * bbL.cell, bbL.cell, BB_COLORS[sh.color], 0.4);
+                });
+            }
+
+            if (bbL.name === "land") {
+                // panel kanan: skor
+                ctx.textAlign = "left";
+                ctx.fillStyle = "#94a3b8";
+                ctx.font = "700 10px 'JetBrains Mono', monospace";
+                ctx.fillText("SKOR", 270, 78);
+                const scTxt = String(bb.score);
+                const fs = bbFitFont(ctx, scTxt, 200, 26, 800);
+                ctx.fillStyle = "#fde047";
+                ctx.font = `800 ${fs}px 'JetBrains Mono', monospace`;
+                ctx.fillText(scTxt, 270, 104);
+                ctx.fillStyle = "#94a3b8";
+                ctx.font = "700 10px 'JetBrains Mono', monospace";
+                ctx.fillText(`REKOR ${bb.best}`, 270, 122);
+                if (bb.combo > 1) {
+                    ctx.fillStyle = "#f9a8d4";
+                    ctx.fillText(`COMBO x${bb.combo}`, 380, 122);
+                }
+                ctx.fillStyle = "#64748b";
+                ctx.font = "700 9px 'JetBrains Mono', monospace";
+                ctx.fillText("SERET BLOK KE PAPAN", 270, 142);
+            } else {
+                // HUD atas (portrait): kiri atas dipakai overlay telemetri, jadi teks rata kanan
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#94a3b8";
+                ctx.font = "700 11px 'JetBrains Mono', monospace";
+                ctx.fillText(`REKOR ${bb.best}` + (bb.combo > 1 ? `   COMBO x${bb.combo}` : ""), 312, 36);
+                const scTxt = String(bb.score);
+                const fs = bbFitFont(ctx, scTxt, 150, 28, 800);
+                ctx.fillStyle = "#fde047";
+                ctx.font = `800 ${fs}px 'JetBrains Mono', monospace`;
+                const wTxt = ctx.measureText(scTxt).width;
+                ctx.fillText(scTxt, 312, 62);
+                ctx.fillStyle = "#94a3b8";
+                ctx.font = "700 10px 'JetBrains Mono', monospace";
+                ctx.fillText("SKOR", 312 - wTxt - 8, 62);
+                ctx.textAlign = "left";
+            }
+
+            // tray 3 potongan
+            for (let i = 0; i < 3; i++) {
+                const sx = bbL.slotX[i];
+                ctx.fillStyle = "rgba(15,23,42,0.9)";
+                ctx.fillRect(sx, bbL.slotY, bbL.slotW, bbL.slotH);
+                ctx.strokeStyle = "rgba(100,116,139,0.45)";
+                ctx.strokeRect(sx + 0.5, bbL.slotY + 0.5, bbL.slotW - 1, bbL.slotH - 1);
+                const id = bb.pieces[i];
+                if (id === null) continue;
+                const sh = BB_SHAPES[id];
+                const dragging = bb.drag && bb.drag.slot === i;
+                const cs = Math.max(6, Math.min(20, Math.floor((bbL.slotW - 8) / sh.w), Math.floor((bbL.slotH - 8) / sh.h)));
+                const ox = sx + (bbL.slotW - sh.w * cs) / 2;
+                const oy = bbL.slotY + (bbL.slotH - sh.h * cs) / 2;
+                const playableHere = bbFitsAnywhere(id);
+                sh.cells.forEach(([dr, dc]) => {
+                    bbDrawCell(ctx, ox + dc * cs, oy + dr * cs, cs, BB_COLORS[sh.color], dragging ? 0.2 : (playableHere ? 1 : 0.35));
+                });
+            }
+
+            // potongan yang sedang diseret
+            if (bb.drag && bb.pieces[bb.drag.slot] !== null) {
+                const sh = BB_SHAPES[bb.pieces[bb.drag.slot]];
+                const tlx = bb.drag.x - (sh.w * bbL.cell) / 2;
+                const tly = bb.drag.y - bb.drag.off - (sh.h * bbL.cell) / 2;
+                sh.cells.forEach(([dr, dc]) => {
+                    bbDrawCell(ctx, tlx + dc * bbL.cell, tly + dr * bbL.cell, bbL.cell, BB_COLORS[sh.color], 0.92);
+                });
+            }
+
+            // partikel & teks melayang
+            for (let i = bb.fx.length - 1; i >= 0; i--) {
+                const p = bb.fx[i];
+                p.x += p.vx; p.y += p.vy; p.vy += 0.14; p.life -= 1;
+                if (p.life <= 0) { bb.fx.splice(i, 1); continue; }
+                ctx.globalAlpha = Math.min(1, p.life / 20);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(p.x - 2, p.y - 2, 4, 4);
+                ctx.globalAlpha = 1;
+            }
+            ctx.textAlign = "center";
+            for (let i = bb.floats.length - 1; i >= 0; i--) {
+                const f = bb.floats[i];
+                f.y -= 0.45; f.life -= 1;
+                if (f.life <= 0) { bb.floats.splice(i, 1); continue; }
+                ctx.globalAlpha = Math.min(1, f.life / 20);
+                ctx.fillStyle = f.color;
+                ctx.font = "800 15px 'JetBrains Mono', monospace";
+                ctx.fillText(f.text, f.x, f.y);
+                ctx.globalAlpha = 1;
+            }
+            ctx.textAlign = "left";
+
+            // layar game over
+            if (bb.gameOver) {
+                ctx.fillStyle = "rgba(2,6,23,0.8)";
+                ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+                ctx.textAlign = "center";
+                ctx.fillStyle = "#fb7185";
+                ctx.font = "16px 'Press Start 2P', monospace";
+                ctx.fillText("GAME OVER", VIEW_W / 2, VIEW_H / 2 - 36);
+                ctx.fillStyle = "#fde047";
+                const goTxt = `SKOR ${bb.score}  •  REKOR ${bb.best}`;
+                const goFs = bbFitFont(ctx, goTxt, VIEW_W - 30, 18, 800);
+                ctx.font = `800 ${goFs}px 'JetBrains Mono', monospace`;
+                ctx.fillText(goTxt, VIEW_W / 2, VIEW_H / 2);
+                ctx.fillStyle = "#cbd5e1";
+                ctx.font = "700 11px 'JetBrains Mono', monospace";
+                ctx.fillText("Ketuk layar untuk main lagi", VIEW_W / 2, VIEW_H / 2 + 28);
+                ctx.textAlign = "left";
+            }
+        }
+
+        function selectGame(g) {
+            if (g !== "mario" && g !== "bb") return;
+            const changed = g !== activeGame;
+            activeGame = g;
+            bb.drag = null;
+            clearAllTouchStates();
+            applyGameUi();
+            if (changed) {
+                playKeyBeep();
+                showToast(g === "bb" ? "Game: Block Blast. Daya tetap dari kWh PLN." : "Game: Super Mario. Daya tetap dari kWh PLN.", "info");
+            }
+            if (typeof updateRigTelemetryHud === "function") updateRigTelemetryHud();
+        }
+
+        function applyGameUi() {
+            const isBB = activeGame === "bb";
+            const mc = document.getElementById("mario-canvas");
+            const bc = document.getElementById("bb-canvas");
+            const box = document.querySelector(".game-viewport-box");
+            if (mc) mc.style.display = isBB ? "none" : "block";
+            if (bc) bc.style.display = isBB ? "block" : "none";
+            if (box) box.classList.toggle("bb-mode", isBB);
+            const mr = document.getElementById("mario-status-row");
+            const br = document.getElementById("bb-status-row");
+            if (mr) mr.classList.toggle("hidden", isBB);
+            if (br) br.classList.toggle("hidden", !isBB);
+            const base = "game-tab flex items-center gap-2 px-2.5 py-2 rounded-xl border transition text-left ";
+            const on = "bg-lime-500 text-slate-950 border-lime-300 shadow";
+            const off = "bg-slate-950/85 hover:bg-slate-800 text-slate-300 border-slate-700";
+            const gm = document.getElementById("gp-mario");
+            const gb = document.getElementById("gp-bb");
+            if (gm) { gm.className = base + (isBB ? off : on); gm.setAttribute("aria-pressed", String(!isBB)); }
+            if (gb) { gb.className = base + (isBB ? on : off); gb.setAttribute("aria-pressed", String(isBB)); }
+            if (typeof syncTouchControlsVisibility === "function") syncTouchControlsVisibility();
+            updateMarioSaveBadge();
+            updateMarioSfxButton();
+        }
+
+        function rigIsBoosting() {
+            if (activeGame === "bb") return (performance.now() - bb.lastAct) < 1500;
+            return Boolean(mario.running || mario.fireCooldown > 0);
+        }
+
+        function rigLevelFactor() {
+            if (activeGame === "bb") return Math.min(20, 1 + Math.floor(bb.score / 400));
+            return pcRigState.level;
+        }
+
+        window.addEventListener("pagehide", () => {
+            try { saveBlockBlast(); saveMarioProgress(); saveState(); } catch (e) {}
+        });
+
         function getTotalActiveWatt() {
             if (meterState.balanceKwh <= 0) return 0;
             const rigW = pcRigState.pcOn ? pcRigState.currentRigWatt : 0;
@@ -1523,6 +2218,8 @@
         }
 
         function syncRtxCountButtons() {
+            const cntInput = document.getElementById("rtx-count-custom");
+            if (cntInput && document.activeElement !== cntInput) cntInput.value = String(pcRigState.rtxCount);
             [1, 2, 4, 8].forEach(cnt => {
                 const b = document.getElementById(`rtx-cnt-${cnt}`);
                 if (!b) return;
@@ -1535,26 +2232,30 @@
         }
 
         function setRtxGpuCount(count) {
-            const validCounts = [1, 2, 4, 8];
-            const cleanCount = validCounts.includes(Number(count)) ? Number(count) : 1;
+            const n = Math.floor(Number(count));
+            const cleanCount = (isFinite(n) && n >= 1) ? Math.min(RTX_FREE_MAX_COUNT, n) : 1;
             pcRigState.rtxCount = cleanCount;
             syncRtxCountButtons();
-            applyRtxWattSettings(RTX_4090_BASE_WATT, pcRigState.rtxProfile);
+            applyRtxWattSettings(pcRigState.rtxPerGpuWatt || 450, pcRigState.rtxProfile);
             saveMarioProgress();
             showToast(`Konfigurasi ${cleanCount}x RTX 4090 aktif!`, "info");
         }
 
         function applyRtxWattSettings(baseWatt, profileName = "custom") {
-            const cleanBase = Math.max(150, Math.min(1500, parseInt(baseWatt, 10) || 450));
+            const nbRaw = Number(baseWatt);
+            const cleanBase = (isFinite(nbRaw) && nbRaw >= 1) ? Math.min(RTX_FREE_MAX_WATT, Math.round(nbRaw)) : 450;
+            pcRigState.rtxPerGpuWatt = cleanBase;
             const gpuCount = pcRigState.rtxCount || 1;
             const systemOverhead = 75 + (gpuCount - 1) * 35;
             RTX_4090_BASE_WATT = cleanBase * gpuCount + systemOverhead;
             RTX_4090_BOOST_WATT = Math.round(cleanBase * 1.28) * gpuCount + systemOverhead;
             pcRigState.rtxProfile = profileName;
-            pcRigState.currentRigWatt = (mario.running || mario.fireCooldown > 0) ? RTX_4090_BOOST_WATT : RTX_4090_BASE_WATT;
+            pcRigState.currentRigWatt = rigIsBoosting() ? RTX_4090_BOOST_WATT : RTX_4090_BASE_WATT;
 
             const slider = document.getElementById("rtx-watt-slider");
-            if (slider) slider.value = String(cleanBase);
+            if (slider) slider.value = String(Math.min(1500, cleanBase));
+            const wInput = document.getElementById("rtx-watt-custom");
+            if (wInput && document.activeElement !== wInput) wInput.value = String(cleanBase);
 
             document.querySelectorAll(".rtx-prof-btn").forEach(btn => {
                 btn.className = "rtx-prof-btn py-1 px-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700";
@@ -1585,6 +2286,32 @@
             showToast(`Daya RTX 4090 diatur ke ${p.label}`, "info");
         }
 
+        function applyRtxFreeInputs() {
+            const wEl = document.getElementById("rtx-watt-custom");
+            const cEl = document.getElementById("rtx-count-custom");
+            const wv = parseFreeKwhInput(wEl ? wEl.value : "");
+            const cv = parseFreeKwhInput(cEl ? cEl.value : "");
+            let changed = false;
+            if (isFinite(cv) && cv >= 1) {
+                pcRigState.rtxCount = Math.min(RTX_FREE_MAX_COUNT, Math.floor(cv));
+                syncRtxCountButtons();
+                changed = true;
+            }
+            if (isFinite(wv) && wv >= 1) {
+                applyRtxWattSettings(wv, "custom");
+                changed = true;
+            } else if (changed) {
+                applyRtxWattSettings(pcRigState.rtxPerGpuWatt || 450, pcRigState.rtxProfile);
+            }
+            if (!changed) {
+                playErrorBeeps();
+                showToast("Isi Watt per GPU dan/atau Jumlah GPU dengan angka minimal 1.", "error");
+                return;
+            }
+            saveMarioProgress();
+            showToast(`RTX diatur: ${pcRigState.rtxCount}x GPU @ ${pcRigState.rtxPerGpuWatt}W (total ${RTX_4090_BASE_WATT.toLocaleString("id-ID")}W)`, "success");
+        }
+
         function setRtxCustomWatt(val) {
             applyRtxWattSettings(val, "custom");
             saveMarioProgress();
@@ -1606,6 +2333,7 @@
                     rtxProfile: pcRigState.rtxProfile
                 }));
             } catch (e) {}
+            try { saveBlockBlast(); } catch (e) {}
             updateMarioSaveBadge();
         }
 
@@ -1631,7 +2359,7 @@
                 if (raw) {
                     const p = JSON.parse(raw);
                     if (typeof p.rtxBaseWatt === "number") savedBaseWatt = p.rtxBaseWatt;
-                    if (typeof p.rtxCount === "number" && [1, 2, 4, 8].includes(p.rtxCount)) pcRigState.rtxCount = p.rtxCount;
+                    if (typeof p.rtxCount === "number" && isFinite(p.rtxCount) && p.rtxCount >= 1) pcRigState.rtxCount = Math.min(RTX_FREE_MAX_COUNT, Math.floor(p.rtxCount));
                     if (typeof p.rtxProfile === "string") savedProfile = p.rtxProfile;
                 }
             } catch (e) {}
@@ -1648,15 +2376,20 @@
             if (el) {
                 el.textContent = `LVL ${pcRigState.level}/20 • KOIN ${pcRigState.coins}`;
             }
+            const bel = document.getElementById("bb-save-indicator");
+            if (bel) {
+                bel.textContent = `SKOR ${bb.score} • REKOR ${bb.best}`;
+            }
         }
 
         function updateMarioSfxButton() {
+            const html = pcRigState.marioSfxEnabled
+                ? '<i class="fa-solid fa-music"></i> SFX: ON'
+                : '<i class="fa-solid fa-volume-xmark text-rose-400"></i> SFX: OFF';
             const btn = document.getElementById("btn-mario-sfx");
-            if (btn) {
-                btn.innerHTML = pcRigState.marioSfxEnabled
-                    ? '<i class="fa-solid fa-music"></i> SFX: ON'
-                    : '<i class="fa-solid fa-volume-xmark text-rose-400"></i> SFX: OFF';
-            }
+            if (btn) btn.innerHTML = html;
+            const btn2 = document.getElementById("btn-bb-sfx");
+            if (btn2) btn2.innerHTML = html;
         }
 
         function toggleMarioAudio() {
@@ -1786,6 +2519,54 @@
             syncPcPowerState(true);
             playKeyBeep();
             showToast("PC RTX 4090 menyala kembali! Melanjutkan dari save otomatis.", "success");
+        }
+
+        function parseFreeKwhInput(raw) {
+            let s = String(raw == null ? "" : raw).trim().replace(/[\s_]/g, "");
+            if (!s) return NaN;
+            if (/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(s)) {
+                s = s.replace(/\./g, "").replace(",", ".");
+            } else if (/^\d{1,3}(,\d{3})+(\.\d+)?$/.test(s)) {
+                s = s.replace(/,/g, "");
+            } else {
+                s = s.replace(",", ".");
+            }
+            if (!/^\d*\.?\d*(e[+-]?\d+)?$/i.test(s)) return NaN;
+            return Number(s);
+        }
+
+        function topUpFreeKwh(amount) {
+            const input = document.getElementById("free-kwh-input");
+            const raw = (amount === undefined) ? (input ? input.value : "") : amount;
+            const val = (typeof raw === "number") ? raw : parseFreeKwhInput(raw);
+            if (!isFinite(val) || val <= 0) {
+                playErrorBeeps();
+                showToast("Masukkan jumlah kWh yang valid (angka lebih dari 0).", "error");
+                return;
+            }
+            if (val > FREE_TOPUP_FLOAT_CEILING) {
+                playErrorBeeps();
+                showToast("Angka terlalu besar untuk dihitung komputer (maks sekitar 1e300 kWh).", "error");
+                return;
+            }
+            const wasEmpty = meterState.balanceKwh <= 0;
+            meterState.balanceKwh = Math.min(FREE_TOPUP_FLOAT_CEILING, parseFloat((meterState.balanceKwh + val).toFixed(2)));
+            meterState.relayClosed = true;
+            if (wasEmpty) {
+                pcRigState.poweredByUser = true;
+                pcRigState.pcOn = true;
+                pcRigState.shutdownReason = "";
+            }
+            saveState();
+            saveMarioProgress();
+            playAcceptBeep();
+            if (wasEmpty) setTimeout(playRelayClick, 180);
+            syncPcPowerState(true);
+            if (input && amount === undefined) input.value = "";
+            const addedF = formatLcdKwhNumber(val);
+            const balF = formatLcdKwhNumber(meterState.balanceKwh);
+            showToast(`+${addedF} kWh masuk. Saldo: ${balF} kWh`, "success");
+            showTempLcd(`+${addedF}`, `SALDO: ${balF} KWH`, "kWh", "ISI ULANG", 2200);
         }
 
         function quickTopupDemoToken() {
@@ -1919,16 +2700,17 @@
             }
 
             // Kecepatan CPU dinamis berdasarkan level & aksi Mario
-            const boostAdd = (mario.running || mario.fireCooldown > 0) ? 0.18 : 0;
-            const lvlClock = 5.55 + Math.min(0.40, pcRigState.level * 0.02) + boostAdd;
+            const rigBoost = rigIsBoosting();
+            const boostAdd = rigBoost ? 0.18 : 0;
+            const lvlClock = 5.55 + Math.min(0.40, rigLevelFactor() * 0.02) + boostAdd;
             pcRigState.cpuClockGhz = lvlClock;
-            pcRigState.cpuLoadPct = Math.min(99, Math.round(54 + pcRigState.level * 1.4 + (mario.running ? 16 : 0)));
+            pcRigState.cpuLoadPct = Math.min(99, Math.round(54 + rigLevelFactor() * 1.4 + (rigBoost ? 16 : 0)));
 
             cpuEl.textContent = `${pcRigState.cpuClockGhz.toFixed(2)} GHz • ${pcRigState.cpuLoadPct}%`;
             cpuEl.className = "text-xs font-extrabold text-sky-300 mt-0.5";
 
             // Daya rig RTX 4090 realistis (450W - 580W)
-            pcRigState.currentRigWatt = (mario.running || mario.fireCooldown > 0) ? RTX_4090_BOOST_WATT : RTX_4090_BASE_WATT;
+            pcRigState.currentRigWatt = rigIsBoosting() ? RTX_4090_BOOST_WATT : RTX_4090_BASE_WATT;
 
             // Cek kekurangan daya: jika sisa kWh < kebutuhan 1 jam beban total (rumah + RTX 4090) atau < 1.00 kWh
             const totalWatt = meterState.currentWatt + pcRigState.currentRigWatt;
@@ -2865,6 +3647,10 @@
         function syncTouchControlsVisibility() {
             const touchBox = document.getElementById("mobile-touch-controls");
             if (!touchBox) return;
+            if (activeGame === "bb") {
+                touchBox.classList.add("hidden");
+                return;
+            }
             if (isDesktopPcDevice()) {
                 touchBox.classList.add("hidden");
                 inputState.left = false;
@@ -2939,6 +3725,7 @@
             document.addEventListener("keydown", (e) => {
                 if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
                 if (!pcRigState.pcOn || meterState.balanceKwh <= 0) return;
+                if (activeGame !== "mario") return;
 
                 if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
                     e.preventDefault();
@@ -3028,8 +3815,12 @@
 
         // Loop animasi Mario 60 FPS
         function marioGameLoop() {
-            updateMarioPhysics();
-            renderMarioScene();
+            if (activeGame === "bb") {
+                renderBlockBlast();
+            } else {
+                updateMarioPhysics();
+                renderMarioScene();
+            }
             requestAnimationFrame(marioGameLoop);
         }
 
@@ -3049,9 +3840,9 @@
         }
 
         function setWattLoad(watt, fromCustomInput = false) {
-            let parsed = parseInt(watt, 10);
-            if (isNaN(parsed) || parsed < 0) parsed = 0;
-            if (parsed > 999999) parsed = 999999;
+            let parsed = Math.round(Number(watt));
+            if (!isFinite(parsed) || parsed < 0) parsed = 0;
+            if (parsed > 1e12) parsed = 1e12;
 
             meterState.currentWatt = parsed;
             const sliderEl = document.getElementById("sim-watt-slider");
@@ -3135,6 +3926,8 @@
             }
         });
 
+        applyGameUi();
+
         window.onload = function () {
             loadSavedState();
             populateLevelDropdown();
@@ -3143,6 +3936,7 @@
             setupMarioControls();
             resizeMarioCanvas();
             buildMarioLevel(pcRigState.level);
+            applyGameUi();
             setWattLoad(meterState.currentWatt);
             syncPcPowerState(true);
             syncTouchControlsVisibility();
